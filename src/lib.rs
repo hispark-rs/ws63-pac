@@ -302,16 +302,18 @@
 #[doc = " ```"]
 #[doc = " Other fields will have the value they had before the call to `modify`."]
 #[inline (always)] pub fn from_modify < F , T > (& self , f : F) -> T where for < 'w > F : FnOnce (& R < REG > , & 'w mut W < REG >) -> T , { let bits = self . register . get () ; let mut writer = W { bits : bits & ! REG :: ONE_TO_MODIFY_FIELDS_BITMAP | REG :: ZERO_TO_MODIFY_FIELDS_BITMAP , _reg : marker :: PhantomData , } ; let result = f (& R { bits , _reg : marker :: PhantomData , } , & mut writer ,) ; self . register . set (writer . bits) ; result } } impl < REG : Readable > core :: fmt :: Debug for crate :: generic :: Reg < REG > where R < REG > : core :: fmt :: Debug , { fn fmt (& self , f : & mut core :: fmt :: Formatter < '_ >) -> core :: fmt :: Result { core :: fmt :: Debug :: fmt (& self . read () , f) } } }
-#[cfg (feature = "rt")] unsafe extern "C" { fn TIMER_INT0 () ; fn TIMER_INT1 () ; fn TIMER_INT2 () ; fn RTC_IRQ () ; fn I2C0_INT () ; fn I2C1_INT () ; fn GPIO_INT0 () ; fn GPIO_INT1 () ; fn GPIO_INT2 () ; fn COEX_WL_INT () ; fn COEX_BT_INT () ; fn COEX_WIFI_RESUME_INT () ; fn SPI_INT () ; fn WLPHY_INT () ; fn WLMAC_INT () ; fn BLE_INT () ; fn SLE_INT () ; fn TSENSOR_INT () ; fn PMU_CMU_ERR_INT () ; fn DIAG_INT () ; fn I2S_INT () ; fn QSPI_INT () ; fn UART0_INT () ; fn UART1_INT () ; fn UART2_INT () ; fn PWM_ABNOR_INT () ; fn PWM_CFG_INT () ; fn SFC_INT () ; fn DMA_INT () ; fn TIMER_ABNOR_INT () ; fn I2S_TX_INT () ; fn I2S_RX_INT () ; fn PKE_REE_INT () ; fn SPACC_REE_INT () ; fn RKP_REE_INT () ; fn KLAD_REE_INT () ; fn MAC_MONITOR_INT () ; fn MEM_MONITOR_INT () ; fn TCM_MONITOR_INT () ; fn LSADC_INTR () ; }
-#[doc (hidden)]
-#[repr (C)] pub union Vector { pub _handler : unsafe extern "C" fn () , pub _reserved : usize , }
-#[cfg (feature = "rt")]
-#[doc (hidden)]
-#[unsafe (no_mangle)] pub static __EXTERNAL_INTERRUPTS : [Vector ; 73] = [Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _handler : TIMER_INT0 } , Vector { _handler : TIMER_INT1 } , Vector { _handler : TIMER_INT2 } , Vector { _handler : RTC_IRQ } , Vector { _reserved : 0 } , Vector { _handler : I2C0_INT } , Vector { _handler : I2C1_INT } , Vector { _handler : GPIO_INT0 } , Vector { _handler : GPIO_INT1 } , Vector { _handler : GPIO_INT2 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _handler : COEX_WL_INT } , Vector { _handler : COEX_BT_INT } , Vector { _handler : COEX_WIFI_RESUME_INT } , Vector { _handler : SPI_INT } , Vector { _handler : WLPHY_INT } , Vector { _handler : WLMAC_INT } , Vector { _handler : BLE_INT } , Vector { _handler : SLE_INT } , Vector { _handler : TSENSOR_INT } , Vector { _handler : PMU_CMU_ERR_INT } , Vector { _handler : DIAG_INT } , Vector { _handler : I2S_INT } , Vector { _handler : QSPI_INT } , Vector { _handler : UART0_INT } , Vector { _handler : UART1_INT } , Vector { _handler : UART2_INT } , Vector { _handler : PWM_ABNOR_INT } , Vector { _handler : PWM_CFG_INT } , Vector { _handler : SFC_INT } , Vector { _handler : DMA_INT } , Vector { _handler : TIMER_ABNOR_INT } , Vector { _handler : I2S_TX_INT } , Vector { _handler : I2S_RX_INT } , Vector { _handler : PKE_REE_INT } , Vector { _handler : SPACC_REE_INT } , Vector { _handler : RKP_REE_INT } , Vector { _handler : KLAD_REE_INT } , Vector { _reserved : 0 } , Vector { _reserved : 0 } , Vector { _handler : MAC_MONITOR_INT } , Vector { _handler : MEM_MONITOR_INT } , Vector { _handler : TCM_MONITOR_INT } , Vector { _handler : LSADC_INTR } ,] ;
-#[doc (hidden)] pub mod interrupt {
-#[doc = r"Enumeration of all the interrupts."]
-#[derive (Copy , Clone , Debug , PartialEq , Eq)]
-#[repr (u16)] pub enum Interrupt {
+#[doc = r" Interrupt numbers, priority levels, and HART IDs."] pub mod interrupt { pub use riscv :: interrupt :: Interrupt as CoreInterrupt ; pub use riscv :: interrupt :: Exception ; pub use riscv :: { InterruptNumber , ExceptionNumber , PriorityNumber , HartIdNumber , interrupt :: { enable , disable , free , nested } } ; pub type Trap = riscv :: interrupt :: Trap < CoreInterrupt , Exception > ;
+#[doc = r" Retrieves the cause of a trap in the current hart."]
+#[doc = r""]
+#[doc = r" If the raw cause is not a valid interrupt or exception for the target, it returns an error."]
+#[inline] pub fn try_cause () -> riscv :: result :: Result < Trap > { riscv :: interrupt :: try_cause () }
+#[doc = r" Retrieves the cause of a trap in the current hart (machine mode)."]
+#[doc = r""]
+#[doc = r" If the raw cause is not a valid interrupt or exception for the target, it panics."]
+#[inline] pub fn cause () -> Trap { try_cause () . unwrap () }
+#[doc = r" External interrupts. These interrupts are handled by the external peripherals."]
+#[riscv :: pac_enum (unsafe ExternalInterruptNumber)]
+#[derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum ExternalInterrupt {
 #[doc = "26 - TIMER_INT0"] TIMER_INT0 = 26 ,
 #[doc = "27 - TIMER_INT1"] TIMER_INT1 = 27 ,
 #[doc = "28 - TIMER_INT2"] TIMER_INT2 = 28 ,
@@ -351,53 +353,7 @@
 #[doc = "69 - MAC_MONITOR_INT"] MAC_MONITOR_INT = 69 ,
 #[doc = "70 - MEM_MONITOR_INT"] MEM_MONITOR_INT = 70 ,
 #[doc = "71 - TCM_MONITOR_INT"] TCM_MONITOR_INT = 71 ,
-#[doc = "72 - LSADC_INTR"] LSADC_INTR = 72 , }
-#[doc = r" TryFromInterruptError"]
-#[derive (Debug , Copy , Clone)] pub struct TryFromInterruptError (()) ; impl Interrupt {
-#[doc = r" Attempt to convert a given value into an `Interrupt`"]
-#[inline] pub fn try_from (value : u8) -> Result < Self , TryFromInterruptError > { match value { 26 => Ok (Interrupt :: TIMER_INT0) , 27 => Ok (Interrupt :: TIMER_INT1) , 28 => Ok (Interrupt :: TIMER_INT2) , 29 => Ok (Interrupt :: RTC_IRQ) , 31 => Ok (Interrupt :: I2C0_INT) , 32 => Ok (Interrupt :: I2C1_INT) , 33 => Ok (Interrupt :: GPIO_INT0) , 34 => Ok (Interrupt :: GPIO_INT1) , 35 => Ok (Interrupt :: GPIO_INT2) , 40 => Ok (Interrupt :: COEX_WL_INT) , 41 => Ok (Interrupt :: COEX_BT_INT) , 42 => Ok (Interrupt :: COEX_WIFI_RESUME_INT) , 43 => Ok (Interrupt :: SPI_INT) , 44 => Ok (Interrupt :: WLPHY_INT) , 45 => Ok (Interrupt :: WLMAC_INT) , 46 => Ok (Interrupt :: BLE_INT) , 47 => Ok (Interrupt :: SLE_INT) , 48 => Ok (Interrupt :: TSENSOR_INT) , 49 => Ok (Interrupt :: PMU_CMU_ERR_INT) , 50 => Ok (Interrupt :: DIAG_INT) , 51 => Ok (Interrupt :: I2S_INT) , 52 => Ok (Interrupt :: QSPI_INT) , 53 => Ok (Interrupt :: UART0_INT) , 54 => Ok (Interrupt :: UART1_INT) , 55 => Ok (Interrupt :: UART2_INT) , 56 => Ok (Interrupt :: PWM_ABNOR_INT) , 57 => Ok (Interrupt :: PWM_CFG_INT) , 58 => Ok (Interrupt :: SFC_INT) , 59 => Ok (Interrupt :: DMA_INT) , 60 => Ok (Interrupt :: TIMER_ABNOR_INT) , 61 => Ok (Interrupt :: I2S_TX_INT) , 62 => Ok (Interrupt :: I2S_RX_INT) , 63 => Ok (Interrupt :: PKE_REE_INT) , 64 => Ok (Interrupt :: SPACC_REE_INT) , 65 => Ok (Interrupt :: RKP_REE_INT) , 66 => Ok (Interrupt :: KLAD_REE_INT) , 69 => Ok (Interrupt :: MAC_MONITOR_INT) , 70 => Ok (Interrupt :: MEM_MONITOR_INT) , 71 => Ok (Interrupt :: TCM_MONITOR_INT) , 72 => Ok (Interrupt :: LSADC_INTR) , _ => Err (TryFromInterruptError (())) , } } }
-#[cfg (feature = "rt")]
-#[macro_export]
-#[doc = r" Assigns a handler to an interrupt"]
-#[doc = r""]
-#[doc = r" This macro takes two arguments: the name of an interrupt and the path to the"]
-#[doc = r" function that will be used as the handler of that interrupt. That function"]
-#[doc = r" must have signature `fn()`."]
-#[doc = r""]
-#[doc = r" Optionally, a third argument may be used to declare interrupt local data."]
-#[doc = r" The handler will have exclusive access to these *local* variables on each"]
-#[doc = r" invocation. If the third argument is used then the signature of the handler"]
-#[doc = r" function must be `fn(&mut $NAME::Locals)` where `$NAME` is the first argument"]
-#[doc = r" passed to the macro."]
-#[doc = r""]
-#[doc = r" # Example"]
-#[doc = r""]
-#[doc = r" ``` ignore"]
-#[doc = r" interrupt!(TIM2, periodic);"]
-#[doc = r""]
-#[doc = r" fn periodic() {"]
-#[doc = r#"     print!(".");"#]
-#[doc = r" }"]
-#[doc = r""]
-#[doc = r" interrupt!(TIM3, tick, locals: {"]
-#[doc = r"     tick: bool = false;"]
-#[doc = r" });"]
-#[doc = r""]
-#[doc = r" fn tick(locals: &mut TIM3::Locals) {"]
-#[doc = r"     locals.tick = !locals.tick;"]
-#[doc = r""]
-#[doc = r"     if locals.tick {"]
-#[doc = r#"         println!("Tick");"#]
-#[doc = r"     } else {"]
-#[doc = r#"         println!("Tock");"#]
-#[doc = r"     }"]
-#[doc = r" }"]
-#[doc = r" ```"] macro_rules ! interrupt { ($ NAME : ident , $ path : path , locals : { $ ($ lvar : ident : $ lty : ty = $ lval : expr ;) * }) => {
-#[allow (non_snake_case)] mod $ NAME { pub struct Locals { $ (pub $ lvar : $ lty ,) * } }
-#[allow (non_snake_case)]
-#[unsafe (no_mangle)] pub extern "C" fn $ NAME () { let _ = $ crate :: interrupt :: Interrupt :: $ NAME ; static mut LOCALS : self :: $ NAME :: Locals = self :: $ NAME :: Locals { $ ($ lvar : $ lval ,) * } ; let f : fn (& mut self :: $ NAME :: Locals) = $ path ; f (unsafe { & mut LOCALS }) ; } } ; ($ NAME : ident , $ path : path) => {
-#[allow (non_snake_case)]
-#[unsafe (no_mangle)] pub extern "C" fn $ NAME () { let _ = $ crate :: interrupt :: Interrupt :: $ NAME ; let f : fn () = $ path ; f () ; } } } } pub use self :: interrupt :: Interrupt ;
+#[doc = "72 - LSADC_INTR"] LSADC_INTR = 72 , } }
 #[doc = "System Control 1 - Interrupt Controller"] pub type SysCtl1 = crate :: Periph < sys_ctl1 :: RegisterBlock , 0x4400_0000 > ; impl core :: fmt :: Debug for SysCtl1 { fn fmt (& self , f : & mut core :: fmt :: Formatter) -> core :: fmt :: Result { f . debug_struct ("SysCtl1") . finish () } }
 #[doc = "System Control 1 - Interrupt Controller"] pub mod sys_ctl1 {
 #[repr (C)]

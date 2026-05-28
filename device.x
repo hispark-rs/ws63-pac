@@ -1,3 +1,4 @@
+/* External interrupt sources */
 PROVIDE(TIMER_INT0 = DefaultHandler);
 PROVIDE(TIMER_INT1 = DefaultHandler);
 PROVIDE(TIMER_INT2 = DefaultHandler);

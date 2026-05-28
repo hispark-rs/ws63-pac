@@ -9,6 +9,7 @@ repository = "https://github.com/sanchuanhehe/ws63-pac"
 [dependencies]
 critical-section = { version = "1", optional = true }
 vcell = "0.1"
+riscv = "0.13"
 
 [features]
 default = ["critical-section"]
