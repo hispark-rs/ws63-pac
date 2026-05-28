@@ -1,0 +1,19 @@
+[package]
+name = "ws63-pac"
+version = "0.1.0"
+edition = "2024"
+description = "Peripheral Access Crate for HiSilicon WS63 (RISC-V) — generated via svd2rust"
+license = "MIT"
+repository = "https://github.com/sanchuanhehe/ws63-svd"
+
+[dependencies]
+critical-section = { version = "1", optional = true }
+vcell = "0.1"
+
+[features]
+default = ["critical-section"]
+rt = []
+
+[profile.release]
+opt-level = "s"
+lto = true
