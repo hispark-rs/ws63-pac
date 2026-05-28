@@ -5,6 +5,8 @@ edition = "2024"
 description = "Peripheral Access Crate for HiSilicon WS63 (RISC-V) — generated via svd2rust"
 license = "MIT"
 repository = "https://github.com/sanchuanhehe/ws63-pac"
+keywords = ["ws63", "hisilicon", "riscv", "embedded", "svd2rust"]
+categories = ["embedded", "no-std", "hardware-support"]
 
 [dependencies]
 critical-section = { version = "1", optional = true }
