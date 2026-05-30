@@ -27479,7 +27479,11 @@ pub mod km {
         kl_alarm_info: KlAlarmInfo,
         _reserved15: [u8; 0x04fc],
         kc_teecpu_lock_cmd: KcTeecpuLockCmd,
-        _reserved16: [u8; 0x30],
+        kc_reecpu_lock_cmd: KcReecpuLockCmd,
+        kc_pcpu_lock_cmd: KcPcpuLockCmd,
+        kc_aidsp_lock_cmd: KcAidspLockCmd,
+        _reserved16: [u8; 0x20],
+        kc_rd_slot_num: KcRdSlotNum,
         kc_rd_lock_status: KcRdLockStatus,
     }
     impl RegisterBlock {
@@ -27562,6 +27566,26 @@ pub mod km {
         #[inline(always)]
         pub const fn kc_teecpu_lock_cmd(&self) -> &KcTeecpuLockCmd {
             &self.kc_teecpu_lock_cmd
+        }
+        #[doc = "0x1b04 - REE CPU keyslot lock command"]
+        #[inline(always)]
+        pub const fn kc_reecpu_lock_cmd(&self) -> &KcReecpuLockCmd {
+            &self.kc_reecpu_lock_cmd
+        }
+        #[doc = "0x1b08 - PCPU keyslot lock command"]
+        #[inline(always)]
+        pub const fn kc_pcpu_lock_cmd(&self) -> &KcPcpuLockCmd {
+            &self.kc_pcpu_lock_cmd
+        }
+        #[doc = "0x1b0c - AIDSP keyslot lock command"]
+        #[inline(always)]
+        pub const fn kc_aidsp_lock_cmd(&self) -> &KcAidspLockCmd {
+            &self.kc_aidsp_lock_cmd
+        }
+        #[doc = "0x1b30 - Keyslot query slot number selection"]
+        #[inline(always)]
+        pub const fn kc_rd_slot_num(&self) -> &KcRdSlotNum {
+            &self.kc_rd_slot_num
         }
         #[doc = "0x1b34 - Keyslot lock status readback"]
         #[inline(always)]
@@ -28387,6 +28411,212 @@ pub mod km {
         }
         #[doc = "`reset()` method sets KC_TEECPU_LOCK_CMD to value 0"]
         impl crate::Resettable for KcTeecpuLockCmdSpec {}
+    }
+    #[doc = "KC_REECPU_LOCK_CMD (rw) register accessor: REE CPU keyslot lock command\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_reecpu_lock_cmd::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_reecpu_lock_cmd::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_reecpu_lock_cmd`] module"]
+    #[doc(alias = "KC_REECPU_LOCK_CMD")]
+    pub type KcReecpuLockCmd = crate::Reg<kc_reecpu_lock_cmd::KcReecpuLockCmdSpec>;
+    #[doc = "REE CPU keyslot lock command"]
+    pub mod kc_reecpu_lock_cmd {
+        #[doc = "Register `KC_REECPU_LOCK_CMD` reader"]
+        pub type R = crate::R<KcReecpuLockCmdSpec>;
+        #[doc = "Register `KC_REECPU_LOCK_CMD` writer"]
+        pub type W = crate::W<KcReecpuLockCmdSpec>;
+        #[doc = "Field `key_slot_num` reader - Key slot number"]
+        pub type KeySlotNumR = crate::FieldReader<u16>;
+        #[doc = "Field `key_slot_num` writer - Key slot number"]
+        pub type KeySlotNumW<'a, REG> = crate::FieldWriter<'a, REG, 10, u16>;
+        #[doc = "Field `flush_hmac_kslot_ind` reader - Keyslot type: 0=mcipher; 1=HMAC"]
+        pub type FlushHmacKslotIndR = crate::BitReader;
+        #[doc = "Field `flush_hmac_kslot_ind` writer - Keyslot type: 0=mcipher; 1=HMAC"]
+        pub type FlushHmacKslotIndW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `tscipher_ind` reader - TSCipher indicator"]
+        pub type TscipherIndR = crate::BitReader;
+        #[doc = "Field `tscipher_ind` writer - TSCipher indicator"]
+        pub type TscipherIndW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `lock_cmd` writer - Lock command: 1=lock; 0=unlock"]
+        pub type LockCmdW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bits 0:9 - Key slot number"]
+            #[inline(always)]
+            pub fn key_slot_num(&self) -> KeySlotNumR {
+                KeySlotNumR::new((self.bits & 0x03ff) as u16)
+            }
+            #[doc = "Bit 15 - Keyslot type: 0=mcipher; 1=HMAC"]
+            #[inline(always)]
+            pub fn flush_hmac_kslot_ind(&self) -> FlushHmacKslotIndR {
+                FlushHmacKslotIndR::new(((self.bits >> 15) & 1) != 0)
+            }
+            #[doc = "Bit 16 - TSCipher indicator"]
+            #[inline(always)]
+            pub fn tscipher_ind(&self) -> TscipherIndR {
+                TscipherIndR::new(((self.bits >> 16) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:9 - Key slot number"]
+            #[inline(always)]
+            pub fn key_slot_num(&mut self) -> KeySlotNumW<'_, KcReecpuLockCmdSpec> {
+                KeySlotNumW::new(self, 0)
+            }
+            #[doc = "Bit 15 - Keyslot type: 0=mcipher; 1=HMAC"]
+            #[inline(always)]
+            pub fn flush_hmac_kslot_ind(&mut self) -> FlushHmacKslotIndW<'_, KcReecpuLockCmdSpec> {
+                FlushHmacKslotIndW::new(self, 15)
+            }
+            #[doc = "Bit 16 - TSCipher indicator"]
+            #[inline(always)]
+            pub fn tscipher_ind(&mut self) -> TscipherIndW<'_, KcReecpuLockCmdSpec> {
+                TscipherIndW::new(self, 16)
+            }
+            #[doc = "Bit 20 - Lock command: 1=lock; 0=unlock"]
+            #[inline(always)]
+            pub fn lock_cmd(&mut self) -> LockCmdW<'_, KcReecpuLockCmdSpec> {
+                LockCmdW::new(self, 20)
+            }
+        }
+        #[doc = "REE CPU keyslot lock command\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_reecpu_lock_cmd::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_reecpu_lock_cmd::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct KcReecpuLockCmdSpec;
+        impl crate::RegisterSpec for KcReecpuLockCmdSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`kc_reecpu_lock_cmd::R`](R) reader structure"]
+        impl crate::Readable for KcReecpuLockCmdSpec {}
+        #[doc = "`write(|w| ..)` method takes [`kc_reecpu_lock_cmd::W`](W) writer structure"]
+        impl crate::Writable for KcReecpuLockCmdSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets KC_REECPU_LOCK_CMD to value 0"]
+        impl crate::Resettable for KcReecpuLockCmdSpec {}
+    }
+    #[doc = "KC_PCPU_LOCK_CMD (rw) register accessor: PCPU keyslot lock command\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_pcpu_lock_cmd::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_pcpu_lock_cmd::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_pcpu_lock_cmd`] module"]
+    #[doc(alias = "KC_PCPU_LOCK_CMD")]
+    pub type KcPcpuLockCmd = crate::Reg<kc_pcpu_lock_cmd::KcPcpuLockCmdSpec>;
+    #[doc = "PCPU keyslot lock command"]
+    pub mod kc_pcpu_lock_cmd {
+        #[doc = "Register `KC_PCPU_LOCK_CMD` reader"]
+        pub type R = crate::R<KcPcpuLockCmdSpec>;
+        #[doc = "Register `KC_PCPU_LOCK_CMD` writer"]
+        pub type W = crate::W<KcPcpuLockCmdSpec>;
+        pub type KeySlotNumR = crate::FieldReader<u16>;
+        pub type KeySlotNumW<'a, REG> = crate::FieldWriter<'a, REG, 10, u16>;
+        pub type LockCmdW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[inline(always)]
+            pub fn key_slot_num(&self) -> KeySlotNumR {
+                KeySlotNumR::new((self.bits & 0x03ff) as u16)
+            }
+        }
+        impl W {
+            #[inline(always)]
+            pub fn key_slot_num(&mut self) -> KeySlotNumW<'_, KcPcpuLockCmdSpec> {
+                KeySlotNumW::new(self, 0)
+            }
+            #[inline(always)]
+            pub fn lock_cmd(&mut self) -> LockCmdW<'_, KcPcpuLockCmdSpec> {
+                LockCmdW::new(self, 20)
+            }
+        }
+        #[doc = "PCPU keyslot lock command"]
+        pub struct KcPcpuLockCmdSpec;
+        impl crate::RegisterSpec for KcPcpuLockCmdSpec {
+            type Ux = u32;
+        }
+        impl crate::Readable for KcPcpuLockCmdSpec {}
+        impl crate::Writable for KcPcpuLockCmdSpec {
+            type Safety = crate::Unsafe;
+        }
+        impl crate::Resettable for KcPcpuLockCmdSpec {}
+    }
+    #[doc = "KC_AIDSP_LOCK_CMD (rw) register accessor: AIDSP keyslot lock command\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_aidsp_lock_cmd::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_aidsp_lock_cmd::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_aidsp_lock_cmd`] module"]
+    #[doc(alias = "KC_AIDSP_LOCK_CMD")]
+    pub type KcAidspLockCmd = crate::Reg<kc_aidsp_lock_cmd::KcAidspLockCmdSpec>;
+    #[doc = "AIDSP keyslot lock command"]
+    pub mod kc_aidsp_lock_cmd {
+        #[doc = "Register `KC_AIDSP_LOCK_CMD` reader"]
+        pub type R = crate::R<KcAidspLockCmdSpec>;
+        #[doc = "Register `KC_AIDSP_LOCK_CMD` writer"]
+        pub type W = crate::W<KcAidspLockCmdSpec>;
+        pub type KeySlotNumR = crate::FieldReader<u16>;
+        pub type KeySlotNumW<'a, REG> = crate::FieldWriter<'a, REG, 10, u16>;
+        pub type LockCmdW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[inline(always)]
+            pub fn key_slot_num(&self) -> KeySlotNumR {
+                KeySlotNumR::new((self.bits & 0x03ff) as u16)
+            }
+        }
+        impl W {
+            #[inline(always)]
+            pub fn key_slot_num(&mut self) -> KeySlotNumW<'_, KcAidspLockCmdSpec> {
+                KeySlotNumW::new(self, 0)
+            }
+            #[inline(always)]
+            pub fn lock_cmd(&mut self) -> LockCmdW<'_, KcAidspLockCmdSpec> {
+                LockCmdW::new(self, 20)
+            }
+        }
+        #[doc = "AIDSP keyslot lock command"]
+        pub struct KcAidspLockCmdSpec;
+        impl crate::RegisterSpec for KcAidspLockCmdSpec {
+            type Ux = u32;
+        }
+        impl crate::Readable for KcAidspLockCmdSpec {}
+        impl crate::Writable for KcAidspLockCmdSpec {
+            type Safety = crate::Unsafe;
+        }
+        impl crate::Resettable for KcAidspLockCmdSpec {}
+    }
+    #[doc = "KC_RD_SLOT_NUM (rw) register accessor: Keyslot query slot number selection\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_rd_slot_num::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_rd_slot_num::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_rd_slot_num`] module"]
+    #[doc(alias = "KC_RD_SLOT_NUM")]
+    pub type KcRdSlotNum = crate::Reg<kc_rd_slot_num::KcRdSlotNumSpec>;
+    #[doc = "Keyslot query slot number selection"]
+    pub mod kc_rd_slot_num {
+        #[doc = "Register `KC_RD_SLOT_NUM` reader"]
+        pub type R = crate::R<KcRdSlotNumSpec>;
+        #[doc = "Register `KC_RD_SLOT_NUM` writer"]
+        pub type W = crate::W<KcRdSlotNumSpec>;
+        #[doc = "Field `slot_num_cfg` reader - Slot number to query"]
+        pub type SlotNumCfgR = crate::FieldReader<u16>;
+        #[doc = "Field `slot_num_cfg` writer - Slot number to query"]
+        pub type SlotNumCfgW<'a, REG> = crate::FieldWriter<'a, REG, 10, u16>;
+        #[doc = "Field `slot_cfg_type` reader - Keyslot type: 0=mcipher; 1=HMAC"]
+        pub type SlotCfgTypeR = crate::BitReader;
+        #[doc = "Field `slot_cfg_type` writer - Keyslot type: 0=mcipher; 1=HMAC"]
+        pub type SlotCfgTypeW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bits 0:9 - Slot number to query"]
+            #[inline(always)]
+            pub fn slot_num_cfg(&self) -> SlotNumCfgR {
+                SlotNumCfgR::new((self.bits & 0x03ff) as u16)
+            }
+            #[doc = "Bit 15 - Keyslot type: 0=mcipher; 1=HMAC"]
+            #[inline(always)]
+            pub fn slot_cfg_type(&self) -> SlotCfgTypeR {
+                SlotCfgTypeR::new(((self.bits >> 15) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:9 - Slot number to query"]
+            #[inline(always)]
+            pub fn slot_num_cfg(&mut self) -> SlotNumCfgW<'_, KcRdSlotNumSpec> {
+                SlotNumCfgW::new(self, 0)
+            }
+            #[doc = "Bit 15 - Keyslot type: 0=mcipher; 1=HMAC"]
+            #[inline(always)]
+            pub fn slot_cfg_type(&mut self) -> SlotCfgTypeW<'_, KcRdSlotNumSpec> {
+                SlotCfgTypeW::new(self, 15)
+            }
+        }
+        #[doc = "Keyslot query slot number selection\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_rd_slot_num::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_rd_slot_num::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct KcRdSlotNumSpec;
+        impl crate::RegisterSpec for KcRdSlotNumSpec {
+            type Ux = u32;
+        }
+        impl crate::Readable for KcRdSlotNumSpec {}
+        impl crate::Writable for KcRdSlotNumSpec {
+            type Safety = crate::Unsafe;
+        }
+        impl crate::Resettable for KcRdSlotNumSpec {}
     }
     #[doc = "KC_RD_LOCK_STATUS (rw) register accessor: Keyslot lock status readback\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_rd_lock_status::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_rd_lock_status::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_rd_lock_status`] module"]
     #[doc(alias = "KC_RD_LOCK_STATUS")]
