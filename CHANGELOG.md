@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1]
+
+### Added
+
+- KM keyslot registers: `KC_REECPU_LOCK_CMD`, `KC_PCPU_LOCK_CMD`, `KC_AIDSP_LOCK_CMD`,
+  `KC_RD_SLOT_NUM` (additive, backwards-compatible API surface — hence the 0.1.1 bump).
+
+### Note
+
+- This 0.1.1 bump exists because public registers were added after the `v0.1.0` tag.
+  Re-publishing `0.1.0` with a changed API would violate SemVer; downstream consumers
+  (`ws63-hal`) require these registers, so the version is bumped accordingly.
+
+## [0.1.0]
+
 ### Added
 
 - SVD-based peripheral access crate for HiSilicon WS63 (RISC-V RV32IMFC_Zicsr)
@@ -19,4 +34,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `ws63-pac` is a git dependency consumed by `ws63-hal` and `ws63-rt`
+- Consumed by `ws63-hal` and `ws63-rt` as a registry (`version`) dependency; inside the
+  `ws63-rs` monorepo it is redirected to the local path via `[patch.crates-io]`.
