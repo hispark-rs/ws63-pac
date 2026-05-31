@@ -21168,110 +21168,183 @@ pub mod lsadc {
         lsadc_ctrl_4: LsadcCtrl4,
         lsadc_ctrl_6: LsadcCtrl6,
         lsadc_ctrl_7: LsadcCtrl7,
-        _reserved7: [u8; 0xe4],
-        lsadc_fifo_data: LsadcFifoData,
-        _reserved8: [u8; 0xfc],
-        cfg_cic_filter_en: CfgCicFilterEn,
-        cfg_cic_osr: CfgCicOsr,
+        lsadc_ctrl_8: LsadcCtrl8,
+        lsadc_ctrl_9: LsadcCtrl9,
+        lsadc_ctrl_11: LsadcCtrl11,
+        lsadc_ctrl_12: LsadcCtrl12,
+        _reserved11: [u8; 0xb0],
         cfg_data_sel: CfgDataSel,
         cfg_offset: CfgOffset,
         cfg_gain: CfgGain,
+        cfg_cic_filter_en: CfgCicFilterEn,
+        cfg_cic_osr: CfgCicOsr,
     }
     impl RegisterBlock {
-        #[doc = "0x00 - ADC control register 0"]
+        #[doc = "0x00 - Scan config (adc_ctrl_data): per-channel enable + sample timing. Set via hal_adc_auto_scan_mode_set."]
         #[inline(always)]
         pub const fn lsadc_ctrl_0(&self) -> &LsadcCtrl0 {
             &self.lsadc_ctrl_0
         }
-        #[doc = "0x04 - ADC control register 1"]
+        #[doc = "0x04 - FIFO status + interrupt waterline (adc_fifo_data)"]
         #[inline(always)]
         pub const fn lsadc_ctrl_1(&self) -> &LsadcCtrl1 {
             &self.lsadc_ctrl_1
         }
-        #[doc = "0x08 - ADC control register 2"]
+        #[doc = "0x08 - Interrupt mask/status (adc_irg_data)"]
         #[inline(always)]
         pub const fn lsadc_ctrl_2(&self) -> &LsadcCtrl2 {
             &self.lsadc_ctrl_2
         }
-        #[doc = "0x0c - ADC control register 3"]
+        #[doc = "0x0c - ADC control register 3 (analog, reserved)"]
         #[inline(always)]
         pub const fn lsadc_ctrl_3(&self) -> &LsadcCtrl3 {
             &self.lsadc_ctrl_3
         }
-        #[doc = "0x10 - ADC control register 4"]
+        #[doc = "0x10 - ADC control register 4 (analog, reserved)"]
         #[inline(always)]
         pub const fn lsadc_ctrl_4(&self) -> &LsadcCtrl4 {
             &self.lsadc_ctrl_4
         }
-        #[doc = "0x14 - ADC scan start/stop register"]
+        #[doc = "0x14 - ADC control register 6 (analog, reserved)"]
         #[inline(always)]
         pub const fn lsadc_ctrl_6(&self) -> &LsadcCtrl6 {
             &self.lsadc_ctrl_6
         }
-        #[doc = "0x18 - ADC enable register"]
+        #[doc = "0x18 - ADC control register 7 (analog, reserved)"]
         #[inline(always)]
         pub const fn lsadc_ctrl_7(&self) -> &LsadcCtrl7 {
             &self.lsadc_ctrl_7
         }
-        #[doc = "0x100 - ADC FIFO data register"]
+        #[doc = "0x1c - Scan start/stop (adc_scan_start_and_stop_data)"]
         #[inline(always)]
-        pub const fn lsadc_fifo_data(&self) -> &LsadcFifoData {
-            &self.lsadc_fifo_data
+        pub const fn lsadc_ctrl_8(&self) -> &LsadcCtrl8 {
+            &self.lsadc_ctrl_8
         }
-        #[doc = "0x200 - CIC filter enable register"]
+        #[doc = "0x20 - FIFO read data (adc_fifo_read_data): 14-bit code + 3-bit channel"]
         #[inline(always)]
-        pub const fn cfg_cic_filter_en(&self) -> &CfgCicFilterEn {
-            &self.cfg_cic_filter_en
+        pub const fn lsadc_ctrl_9(&self) -> &LsadcCtrl9 {
+            &self.lsadc_ctrl_9
         }
-        #[doc = "0x204 - CIC oversampling ratio register"]
+        #[doc = "0x24 - Analog enable/reset (adc_enable_data)"]
         #[inline(always)]
-        pub const fn cfg_cic_osr(&self) -> &CfgCicOsr {
-            &self.cfg_cic_osr
+        pub const fn lsadc_ctrl_11(&self) -> &LsadcCtrl11 {
+            &self.lsadc_ctrl_11
         }
-        #[doc = "0x208 - Data select register"]
+        #[doc = "0x28 - ADC control register 12 (analog, reserved)"]
+        #[inline(always)]
+        pub const fn lsadc_ctrl_12(&self) -> &LsadcCtrl12 {
+            &self.lsadc_ctrl_12
+        }
+        #[doc = "0xdc - Data output select (base+0xDC)"]
         #[inline(always)]
         pub const fn cfg_data_sel(&self) -> &CfgDataSel {
             &self.cfg_data_sel
         }
-        #[doc = "0x20c - Offset register"]
+        #[doc = "0xe0 - Offset correction (base+0xE0)"]
         #[inline(always)]
         pub const fn cfg_offset(&self) -> &CfgOffset {
             &self.cfg_offset
         }
-        #[doc = "0x210 - Gain register"]
+        #[doc = "0xe4 - Gain correction (base+0xE4)"]
         #[inline(always)]
         pub const fn cfg_gain(&self) -> &CfgGain {
             &self.cfg_gain
         }
+        #[doc = "0xe8 - CIC filter enable (base+0xE8)"]
+        #[inline(always)]
+        pub const fn cfg_cic_filter_en(&self) -> &CfgCicFilterEn {
+            &self.cfg_cic_filter_en
+        }
+        #[doc = "0xec - CIC oversampling ratio (base+0xEC)"]
+        #[inline(always)]
+        pub const fn cfg_cic_osr(&self) -> &CfgCicOsr {
+            &self.cfg_cic_osr
+        }
     }
-    #[doc = "LSADC_CTRL_0 (rw) register accessor: ADC control register 0\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_0::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_0::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_0`] module"]
+    #[doc = "LSADC_CTRL_0 (rw) register accessor: Scan config (adc_ctrl_data): per-channel enable + sample timing. Set via hal_adc_auto_scan_mode_set.\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_0::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_0::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_0`] module"]
     #[doc(alias = "LSADC_CTRL_0")]
     pub type LsadcCtrl0 = crate::Reg<lsadc_ctrl_0::LsadcCtrl0Spec>;
-    #[doc = "ADC control register 0"]
+    #[doc = "Scan config (adc_ctrl_data): per-channel enable + sample timing. Set via hal_adc_auto_scan_mode_set."]
     pub mod lsadc_ctrl_0 {
         #[doc = "Register `LSADC_CTRL_0` reader"]
         pub type R = crate::R<LsadcCtrl0Spec>;
         #[doc = "Register `LSADC_CTRL_0` writer"]
         pub type W = crate::W<LsadcCtrl0Spec>;
-        #[doc = "Field `lsadc_ctrl_0` reader - ADC control 0 configuration"]
-        pub type LsadcCtrl0R = crate::FieldReader<u32>;
-        #[doc = "Field `lsadc_ctrl_0` writer - ADC control 0 configuration"]
-        pub type LsadcCtrl0W<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        #[doc = "Field `channel` reader - Per-channel enable bitmask (bit n enables channel n, 0-5)"]
+        pub type ChannelR = crate::FieldReader;
+        #[doc = "Field `channel` writer - Per-channel enable bitmask (bit n enables channel n, 0-5)"]
+        pub type ChannelW<'a, REG> = crate::FieldWriter<'a, REG, 6>;
+        #[doc = "Field `equ_model_sel` reader - Averaging mode: 0=1x, 1=2x, 2=4x, 3=8x samples"]
+        pub type EquModelSelR = crate::FieldReader;
+        #[doc = "Field `equ_model_sel` writer - Averaging mode: 0=1x, 1=2x, 2=4x, 3=8x samples"]
+        pub type EquModelSelW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `sample_cnt` reader - Sample count (5-bit)"]
+        pub type SampleCntR = crate::FieldReader;
+        #[doc = "Field `sample_cnt` writer - Sample count (5-bit)"]
+        pub type SampleCntW<'a, REG> = crate::FieldWriter<'a, REG, 5>;
+        #[doc = "Field `start_cnt` reader - Start count (8-bit; SDK field name satrt_cnt)"]
+        pub type StartCntR = crate::FieldReader;
+        #[doc = "Field `start_cnt` writer - Start count (8-bit; SDK field name satrt_cnt)"]
+        pub type StartCntW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+        #[doc = "Field `cast_cnt` reader - Cast count (7-bit)"]
+        pub type CastCntR = crate::FieldReader;
+        #[doc = "Field `cast_cnt` writer - Cast count (7-bit)"]
+        pub type CastCntW<'a, REG> = crate::FieldWriter<'a, REG, 7>;
         impl R {
-            #[doc = "Bits 0:31 - ADC control 0 configuration"]
+            #[doc = "Bits 0:5 - Per-channel enable bitmask (bit n enables channel n, 0-5)"]
             #[inline(always)]
-            pub fn lsadc_ctrl_0(&self) -> LsadcCtrl0R {
-                LsadcCtrl0R::new(self.bits)
+            pub fn channel(&self) -> ChannelR {
+                ChannelR::new((self.bits & 0x3f) as u8)
+            }
+            #[doc = "Bits 6:7 - Averaging mode: 0=1x, 1=2x, 2=4x, 3=8x samples"]
+            #[inline(always)]
+            pub fn equ_model_sel(&self) -> EquModelSelR {
+                EquModelSelR::new(((self.bits >> 6) & 3) as u8)
+            }
+            #[doc = "Bits 8:12 - Sample count (5-bit)"]
+            #[inline(always)]
+            pub fn sample_cnt(&self) -> SampleCntR {
+                SampleCntR::new(((self.bits >> 8) & 0x1f) as u8)
+            }
+            #[doc = "Bits 13:20 - Start count (8-bit; SDK field name satrt_cnt)"]
+            #[inline(always)]
+            pub fn start_cnt(&self) -> StartCntR {
+                StartCntR::new(((self.bits >> 13) & 0xff) as u8)
+            }
+            #[doc = "Bits 21:27 - Cast count (7-bit)"]
+            #[inline(always)]
+            pub fn cast_cnt(&self) -> CastCntR {
+                CastCntR::new(((self.bits >> 21) & 0x7f) as u8)
             }
         }
         impl W {
-            #[doc = "Bits 0:31 - ADC control 0 configuration"]
+            #[doc = "Bits 0:5 - Per-channel enable bitmask (bit n enables channel n, 0-5)"]
             #[inline(always)]
-            pub fn lsadc_ctrl_0(&mut self) -> LsadcCtrl0W<'_, LsadcCtrl0Spec> {
-                LsadcCtrl0W::new(self, 0)
+            pub fn channel(&mut self) -> ChannelW<'_, LsadcCtrl0Spec> {
+                ChannelW::new(self, 0)
+            }
+            #[doc = "Bits 6:7 - Averaging mode: 0=1x, 1=2x, 2=4x, 3=8x samples"]
+            #[inline(always)]
+            pub fn equ_model_sel(&mut self) -> EquModelSelW<'_, LsadcCtrl0Spec> {
+                EquModelSelW::new(self, 6)
+            }
+            #[doc = "Bits 8:12 - Sample count (5-bit)"]
+            #[inline(always)]
+            pub fn sample_cnt(&mut self) -> SampleCntW<'_, LsadcCtrl0Spec> {
+                SampleCntW::new(self, 8)
+            }
+            #[doc = "Bits 13:20 - Start count (8-bit; SDK field name satrt_cnt)"]
+            #[inline(always)]
+            pub fn start_cnt(&mut self) -> StartCntW<'_, LsadcCtrl0Spec> {
+                StartCntW::new(self, 13)
+            }
+            #[doc = "Bits 21:27 - Cast count (7-bit)"]
+            #[inline(always)]
+            pub fn cast_cnt(&mut self) -> CastCntW<'_, LsadcCtrl0Spec> {
+                CastCntW::new(self, 21)
             }
         }
-        #[doc = "ADC control register 0\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_0::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_0::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Scan config (adc_ctrl_data): per-channel enable + sample timing. Set via hal_adc_auto_scan_mode_set.\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_0::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_0::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct LsadcCtrl0Spec;
         impl crate::RegisterSpec for LsadcCtrl0Spec {
             type Ux = u32;
@@ -21285,76 +21358,55 @@ pub mod lsadc {
         #[doc = "`reset()` method sets LSADC_CTRL_0 to value 0"]
         impl crate::Resettable for LsadcCtrl0Spec {}
     }
-    #[doc = "LSADC_CTRL_1 (rw) register accessor: ADC control register 1\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_1::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_1::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_1`] module"]
+    #[doc = "LSADC_CTRL_1 (rw) register accessor: FIFO status + interrupt waterline (adc_fifo_data)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_1::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_1::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_1`] module"]
     #[doc(alias = "LSADC_CTRL_1")]
     pub type LsadcCtrl1 = crate::Reg<lsadc_ctrl_1::LsadcCtrl1Spec>;
-    #[doc = "ADC control register 1"]
+    #[doc = "FIFO status + interrupt waterline (adc_fifo_data)"]
     pub mod lsadc_ctrl_1 {
         #[doc = "Register `LSADC_CTRL_1` reader"]
         pub type R = crate::R<LsadcCtrl1Spec>;
         #[doc = "Register `LSADC_CTRL_1` writer"]
         pub type W = crate::W<LsadcCtrl1Spec>;
-        #[doc = "Field `equ_model_sel` reader - Equal model select (6-bit)"]
-        pub type EquModelSelR = crate::FieldReader;
-        #[doc = "Field `equ_model_sel` writer - Equal model select (6-bit)"]
-        pub type EquModelSelW<'a, REG> = crate::FieldWriter<'a, REG, 6>;
-        #[doc = "Field `sample_cnt` reader - Sample count"]
-        pub type SampleCntR = crate::FieldReader;
-        #[doc = "Field `sample_cnt` writer - Sample count"]
-        pub type SampleCntW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
-        #[doc = "Field `start_cnt` reader - Start count"]
-        pub type StartCntR = crate::FieldReader;
-        #[doc = "Field `start_cnt` writer - Start count"]
-        pub type StartCntW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
-        #[doc = "Field `cast_cnt` reader - Cast count"]
-        pub type CastCntR = crate::FieldReader;
-        #[doc = "Field `cast_cnt` writer - Cast count"]
-        pub type CastCntW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `rxintsize` reader - RX FIFO interrupt waterline (3-bit)"]
+        pub type RxintsizeR = crate::FieldReader;
+        #[doc = "Field `rxintsize` writer - RX FIFO interrupt waterline (3-bit)"]
+        pub type RxintsizeW<'a, REG> = crate::FieldWriter<'a, REG, 3>;
+        #[doc = "Field `rne` reader - RX FIFO not empty"]
+        pub type RneR = crate::BitReader;
+        #[doc = "Field `rff` reader - RX FIFO full"]
+        pub type RffR = crate::BitReader;
+        #[doc = "Field `bsy` reader - ADC busy"]
+        pub type BsyR = crate::BitReader;
         impl R {
-            #[doc = "Bits 1:6 - Equal model select (6-bit)"]
+            #[doc = "Bits 0:2 - RX FIFO interrupt waterline (3-bit)"]
             #[inline(always)]
-            pub fn equ_model_sel(&self) -> EquModelSelR {
-                EquModelSelR::new(((self.bits >> 1) & 0x3f) as u8)
+            pub fn rxintsize(&self) -> RxintsizeR {
+                RxintsizeR::new((self.bits & 7) as u8)
             }
-            #[doc = "Bits 8:11 - Sample count"]
+            #[doc = "Bit 3 - RX FIFO not empty"]
             #[inline(always)]
-            pub fn sample_cnt(&self) -> SampleCntR {
-                SampleCntR::new(((self.bits >> 8) & 0x0f) as u8)
+            pub fn rne(&self) -> RneR {
+                RneR::new(((self.bits >> 3) & 1) != 0)
             }
-            #[doc = "Bits 16:19 - Start count"]
+            #[doc = "Bit 4 - RX FIFO full"]
             #[inline(always)]
-            pub fn start_cnt(&self) -> StartCntR {
-                StartCntR::new(((self.bits >> 16) & 0x0f) as u8)
+            pub fn rff(&self) -> RffR {
+                RffR::new(((self.bits >> 4) & 1) != 0)
             }
-            #[doc = "Bits 24:27 - Cast count"]
+            #[doc = "Bit 5 - ADC busy"]
             #[inline(always)]
-            pub fn cast_cnt(&self) -> CastCntR {
-                CastCntR::new(((self.bits >> 24) & 0x0f) as u8)
+            pub fn bsy(&self) -> BsyR {
+                BsyR::new(((self.bits >> 5) & 1) != 0)
             }
         }
         impl W {
-            #[doc = "Bits 1:6 - Equal model select (6-bit)"]
+            #[doc = "Bits 0:2 - RX FIFO interrupt waterline (3-bit)"]
             #[inline(always)]
-            pub fn equ_model_sel(&mut self) -> EquModelSelW<'_, LsadcCtrl1Spec> {
-                EquModelSelW::new(self, 1)
-            }
-            #[doc = "Bits 8:11 - Sample count"]
-            #[inline(always)]
-            pub fn sample_cnt(&mut self) -> SampleCntW<'_, LsadcCtrl1Spec> {
-                SampleCntW::new(self, 8)
-            }
-            #[doc = "Bits 16:19 - Start count"]
-            #[inline(always)]
-            pub fn start_cnt(&mut self) -> StartCntW<'_, LsadcCtrl1Spec> {
-                StartCntW::new(self, 16)
-            }
-            #[doc = "Bits 24:27 - Cast count"]
-            #[inline(always)]
-            pub fn cast_cnt(&mut self) -> CastCntW<'_, LsadcCtrl1Spec> {
-                CastCntW::new(self, 24)
+            pub fn rxintsize(&mut self) -> RxintsizeW<'_, LsadcCtrl1Spec> {
+                RxintsizeW::new(self, 0)
             }
         }
-        #[doc = "ADC control register 1\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_1::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_1::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "FIFO status + interrupt waterline (adc_fifo_data)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_1::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_1::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct LsadcCtrl1Spec;
         impl crate::RegisterSpec for LsadcCtrl1Spec {
             type Ux = u32;
@@ -21368,34 +21420,76 @@ pub mod lsadc {
         #[doc = "`reset()` method sets LSADC_CTRL_1 to value 0"]
         impl crate::Resettable for LsadcCtrl1Spec {}
     }
-    #[doc = "LSADC_CTRL_2 (rw) register accessor: ADC control register 2\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_2::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_2::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_2`] module"]
+    #[doc = "LSADC_CTRL_2 (rw) register accessor: Interrupt mask/status (adc_irg_data)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_2::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_2::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_2`] module"]
     #[doc(alias = "LSADC_CTRL_2")]
     pub type LsadcCtrl2 = crate::Reg<lsadc_ctrl_2::LsadcCtrl2Spec>;
-    #[doc = "ADC control register 2"]
+    #[doc = "Interrupt mask/status (adc_irg_data)"]
     pub mod lsadc_ctrl_2 {
         #[doc = "Register `LSADC_CTRL_2` reader"]
         pub type R = crate::R<LsadcCtrl2Spec>;
         #[doc = "Register `LSADC_CTRL_2` writer"]
         pub type W = crate::W<LsadcCtrl2Spec>;
-        #[doc = "Field `lsadc_ctrl_2` reader - ADC control 2 configuration"]
-        pub type LsadcCtrl2R = crate::FieldReader<u32>;
-        #[doc = "Field `lsadc_ctrl_2` writer - ADC control 2 configuration"]
-        pub type LsadcCtrl2W<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        #[doc = "Field `rorim` reader - RX overflow interrupt mask"]
+        pub type RorimR = crate::BitReader;
+        #[doc = "Field `rorim` writer - RX overflow interrupt mask"]
+        pub type RorimW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `rxim` reader - RX FIFO interrupt mask"]
+        pub type RximR = crate::BitReader;
+        #[doc = "Field `rxim` writer - RX FIFO interrupt mask"]
+        pub type RximW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `rormis` reader - RX overflow masked interrupt status"]
+        pub type RormisR = crate::BitReader;
+        #[doc = "Field `rxmis` reader - RX FIFO masked interrupt status"]
+        pub type RxmisR = crate::BitReader;
+        #[doc = "Field `rorris` reader - RX overflow raw interrupt status"]
+        pub type RorrisR = crate::BitReader;
+        #[doc = "Field `rxris` reader - RX FIFO raw interrupt status"]
+        pub type RxrisR = crate::BitReader;
         impl R {
-            #[doc = "Bits 0:31 - ADC control 2 configuration"]
+            #[doc = "Bit 0 - RX overflow interrupt mask"]
             #[inline(always)]
-            pub fn lsadc_ctrl_2(&self) -> LsadcCtrl2R {
-                LsadcCtrl2R::new(self.bits)
+            pub fn rorim(&self) -> RorimR {
+                RorimR::new((self.bits & 1) != 0)
+            }
+            #[doc = "Bit 1 - RX FIFO interrupt mask"]
+            #[inline(always)]
+            pub fn rxim(&self) -> RximR {
+                RximR::new(((self.bits >> 1) & 1) != 0)
+            }
+            #[doc = "Bit 2 - RX overflow masked interrupt status"]
+            #[inline(always)]
+            pub fn rormis(&self) -> RormisR {
+                RormisR::new(((self.bits >> 2) & 1) != 0)
+            }
+            #[doc = "Bit 3 - RX FIFO masked interrupt status"]
+            #[inline(always)]
+            pub fn rxmis(&self) -> RxmisR {
+                RxmisR::new(((self.bits >> 3) & 1) != 0)
+            }
+            #[doc = "Bit 4 - RX overflow raw interrupt status"]
+            #[inline(always)]
+            pub fn rorris(&self) -> RorrisR {
+                RorrisR::new(((self.bits >> 4) & 1) != 0)
+            }
+            #[doc = "Bit 5 - RX FIFO raw interrupt status"]
+            #[inline(always)]
+            pub fn rxris(&self) -> RxrisR {
+                RxrisR::new(((self.bits >> 5) & 1) != 0)
             }
         }
         impl W {
-            #[doc = "Bits 0:31 - ADC control 2 configuration"]
+            #[doc = "Bit 0 - RX overflow interrupt mask"]
             #[inline(always)]
-            pub fn lsadc_ctrl_2(&mut self) -> LsadcCtrl2W<'_, LsadcCtrl2Spec> {
-                LsadcCtrl2W::new(self, 0)
+            pub fn rorim(&mut self) -> RorimW<'_, LsadcCtrl2Spec> {
+                RorimW::new(self, 0)
+            }
+            #[doc = "Bit 1 - RX FIFO interrupt mask"]
+            #[inline(always)]
+            pub fn rxim(&mut self) -> RximW<'_, LsadcCtrl2Spec> {
+                RximW::new(self, 1)
             }
         }
-        #[doc = "ADC control register 2\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_2::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_2::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Interrupt mask/status (adc_irg_data)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_2::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_2::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct LsadcCtrl2Spec;
         impl crate::RegisterSpec for LsadcCtrl2Spec {
             type Ux = u32;
@@ -21409,34 +21503,34 @@ pub mod lsadc {
         #[doc = "`reset()` method sets LSADC_CTRL_2 to value 0"]
         impl crate::Resettable for LsadcCtrl2Spec {}
     }
-    #[doc = "LSADC_CTRL_3 (rw) register accessor: ADC control register 3\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_3::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_3::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_3`] module"]
+    #[doc = "LSADC_CTRL_3 (rw) register accessor: ADC control register 3 (analog, reserved)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_3::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_3::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_3`] module"]
     #[doc(alias = "LSADC_CTRL_3")]
     pub type LsadcCtrl3 = crate::Reg<lsadc_ctrl_3::LsadcCtrl3Spec>;
-    #[doc = "ADC control register 3"]
+    #[doc = "ADC control register 3 (analog, reserved)"]
     pub mod lsadc_ctrl_3 {
         #[doc = "Register `LSADC_CTRL_3` reader"]
         pub type R = crate::R<LsadcCtrl3Spec>;
         #[doc = "Register `LSADC_CTRL_3` writer"]
         pub type W = crate::W<LsadcCtrl3Spec>;
-        #[doc = "Field `lsadc_ctrl_3` reader - ADC control 3 configuration"]
-        pub type LsadcCtrl3R = crate::FieldReader<u32>;
-        #[doc = "Field `lsadc_ctrl_3` writer - ADC control 3 configuration"]
-        pub type LsadcCtrl3W<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        #[doc = "Field `val` reader - Raw register value"]
+        pub type ValR = crate::FieldReader<u32>;
+        #[doc = "Field `val` writer - Raw register value"]
+        pub type ValW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
         impl R {
-            #[doc = "Bits 0:31 - ADC control 3 configuration"]
+            #[doc = "Bits 0:31 - Raw register value"]
             #[inline(always)]
-            pub fn lsadc_ctrl_3(&self) -> LsadcCtrl3R {
-                LsadcCtrl3R::new(self.bits)
+            pub fn val(&self) -> ValR {
+                ValR::new(self.bits)
             }
         }
         impl W {
-            #[doc = "Bits 0:31 - ADC control 3 configuration"]
+            #[doc = "Bits 0:31 - Raw register value"]
             #[inline(always)]
-            pub fn lsadc_ctrl_3(&mut self) -> LsadcCtrl3W<'_, LsadcCtrl3Spec> {
-                LsadcCtrl3W::new(self, 0)
+            pub fn val(&mut self) -> ValW<'_, LsadcCtrl3Spec> {
+                ValW::new(self, 0)
             }
         }
-        #[doc = "ADC control register 3\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_3::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_3::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "ADC control register 3 (analog, reserved)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_3::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_3::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct LsadcCtrl3Spec;
         impl crate::RegisterSpec for LsadcCtrl3Spec {
             type Ux = u32;
@@ -21450,34 +21544,34 @@ pub mod lsadc {
         #[doc = "`reset()` method sets LSADC_CTRL_3 to value 0"]
         impl crate::Resettable for LsadcCtrl3Spec {}
     }
-    #[doc = "LSADC_CTRL_4 (rw) register accessor: ADC control register 4\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_4::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_4::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_4`] module"]
+    #[doc = "LSADC_CTRL_4 (rw) register accessor: ADC control register 4 (analog, reserved)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_4::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_4::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_4`] module"]
     #[doc(alias = "LSADC_CTRL_4")]
     pub type LsadcCtrl4 = crate::Reg<lsadc_ctrl_4::LsadcCtrl4Spec>;
-    #[doc = "ADC control register 4"]
+    #[doc = "ADC control register 4 (analog, reserved)"]
     pub mod lsadc_ctrl_4 {
         #[doc = "Register `LSADC_CTRL_4` reader"]
         pub type R = crate::R<LsadcCtrl4Spec>;
         #[doc = "Register `LSADC_CTRL_4` writer"]
         pub type W = crate::W<LsadcCtrl4Spec>;
-        #[doc = "Field `lsadc_ctrl_4` reader - ADC control 4 configuration"]
-        pub type LsadcCtrl4R = crate::FieldReader<u32>;
-        #[doc = "Field `lsadc_ctrl_4` writer - ADC control 4 configuration"]
-        pub type LsadcCtrl4W<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        #[doc = "Field `val` reader - Raw register value"]
+        pub type ValR = crate::FieldReader<u32>;
+        #[doc = "Field `val` writer - Raw register value"]
+        pub type ValW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
         impl R {
-            #[doc = "Bits 0:31 - ADC control 4 configuration"]
+            #[doc = "Bits 0:31 - Raw register value"]
             #[inline(always)]
-            pub fn lsadc_ctrl_4(&self) -> LsadcCtrl4R {
-                LsadcCtrl4R::new(self.bits)
+            pub fn val(&self) -> ValR {
+                ValR::new(self.bits)
             }
         }
         impl W {
-            #[doc = "Bits 0:31 - ADC control 4 configuration"]
+            #[doc = "Bits 0:31 - Raw register value"]
             #[inline(always)]
-            pub fn lsadc_ctrl_4(&mut self) -> LsadcCtrl4W<'_, LsadcCtrl4Spec> {
-                LsadcCtrl4W::new(self, 0)
+            pub fn val(&mut self) -> ValW<'_, LsadcCtrl4Spec> {
+                ValW::new(self, 0)
             }
         }
-        #[doc = "ADC control register 4\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_4::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_4::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "ADC control register 4 (analog, reserved)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_4::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_4::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct LsadcCtrl4Spec;
         impl crate::RegisterSpec for LsadcCtrl4Spec {
             type Ux = u32;
@@ -21491,32 +21585,34 @@ pub mod lsadc {
         #[doc = "`reset()` method sets LSADC_CTRL_4 to value 0"]
         impl crate::Resettable for LsadcCtrl4Spec {}
     }
-    #[doc = "LSADC_CTRL_6 (rw) register accessor: ADC scan start/stop register\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_6::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_6::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_6`] module"]
+    #[doc = "LSADC_CTRL_6 (rw) register accessor: ADC control register 6 (analog, reserved)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_6::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_6::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_6`] module"]
     #[doc(alias = "LSADC_CTRL_6")]
     pub type LsadcCtrl6 = crate::Reg<lsadc_ctrl_6::LsadcCtrl6Spec>;
-    #[doc = "ADC scan start/stop register"]
+    #[doc = "ADC control register 6 (analog, reserved)"]
     pub mod lsadc_ctrl_6 {
         #[doc = "Register `LSADC_CTRL_6` reader"]
         pub type R = crate::R<LsadcCtrl6Spec>;
         #[doc = "Register `LSADC_CTRL_6` writer"]
         pub type W = crate::W<LsadcCtrl6Spec>;
-        #[doc = "Field `lsadc_start` writer - Start ADC scan: 1=start"]
-        pub type LsadcStartW<'a, REG> = crate::BitWriter<'a, REG>;
-        #[doc = "Field `lsadc_stop` writer - Stop ADC scan: 1=stop"]
-        pub type LsadcStopW<'a, REG> = crate::BitWriter<'a, REG>;
-        impl W {
-            #[doc = "Bit 0 - Start ADC scan: 1=start"]
+        #[doc = "Field `val` reader - Raw register value"]
+        pub type ValR = crate::FieldReader<u32>;
+        #[doc = "Field `val` writer - Raw register value"]
+        pub type ValW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Raw register value"]
             #[inline(always)]
-            pub fn lsadc_start(&mut self) -> LsadcStartW<'_, LsadcCtrl6Spec> {
-                LsadcStartW::new(self, 0)
-            }
-            #[doc = "Bit 1 - Stop ADC scan: 1=stop"]
-            #[inline(always)]
-            pub fn lsadc_stop(&mut self) -> LsadcStopW<'_, LsadcCtrl6Spec> {
-                LsadcStopW::new(self, 1)
+            pub fn val(&self) -> ValR {
+                ValR::new(self.bits)
             }
         }
-        #[doc = "ADC scan start/stop register\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_6::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_6::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        impl W {
+            #[doc = "Bits 0:31 - Raw register value"]
+            #[inline(always)]
+            pub fn val(&mut self) -> ValW<'_, LsadcCtrl6Spec> {
+                ValW::new(self, 0)
+            }
+        }
+        #[doc = "ADC control register 6 (analog, reserved)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_6::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_6::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct LsadcCtrl6Spec;
         impl crate::RegisterSpec for LsadcCtrl6Spec {
             type Ux = u32;
@@ -21530,48 +21626,34 @@ pub mod lsadc {
         #[doc = "`reset()` method sets LSADC_CTRL_6 to value 0"]
         impl crate::Resettable for LsadcCtrl6Spec {}
     }
-    #[doc = "LSADC_CTRL_7 (rw) register accessor: ADC enable register\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_7::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_7::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_7`] module"]
+    #[doc = "LSADC_CTRL_7 (rw) register accessor: ADC control register 7 (analog, reserved)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_7::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_7::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_7`] module"]
     #[doc(alias = "LSADC_CTRL_7")]
     pub type LsadcCtrl7 = crate::Reg<lsadc_ctrl_7::LsadcCtrl7Spec>;
-    #[doc = "ADC enable register"]
+    #[doc = "ADC control register 7 (analog, reserved)"]
     pub mod lsadc_ctrl_7 {
         #[doc = "Register `LSADC_CTRL_7` reader"]
         pub type R = crate::R<LsadcCtrl7Spec>;
         #[doc = "Register `LSADC_CTRL_7` writer"]
         pub type W = crate::W<LsadcCtrl7Spec>;
-        #[doc = "Field `da_lsadc_rstn` reader - ADC reset (active low)"]
-        pub type DaLsadcRstnR = crate::BitReader;
-        #[doc = "Field `da_lsadc_rstn` writer - ADC reset (active low)"]
-        pub type DaLsadcRstnW<'a, REG> = crate::BitWriter<'a, REG>;
-        #[doc = "Field `da_lsadc_en` reader - ADC enable (16-bit, one per channel)"]
-        pub type DaLsadcEnR = crate::FieldReader<u16>;
-        #[doc = "Field `da_lsadc_en` writer - ADC enable (16-bit, one per channel)"]
-        pub type DaLsadcEnW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        #[doc = "Field `val` reader - Raw register value"]
+        pub type ValR = crate::FieldReader<u32>;
+        #[doc = "Field `val` writer - Raw register value"]
+        pub type ValW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
         impl R {
-            #[doc = "Bit 0 - ADC reset (active low)"]
+            #[doc = "Bits 0:31 - Raw register value"]
             #[inline(always)]
-            pub fn da_lsadc_rstn(&self) -> DaLsadcRstnR {
-                DaLsadcRstnR::new((self.bits & 1) != 0)
-            }
-            #[doc = "Bits 16:31 - ADC enable (16-bit, one per channel)"]
-            #[inline(always)]
-            pub fn da_lsadc_en(&self) -> DaLsadcEnR {
-                DaLsadcEnR::new(((self.bits >> 16) & 0xffff) as u16)
+            pub fn val(&self) -> ValR {
+                ValR::new(self.bits)
             }
         }
         impl W {
-            #[doc = "Bit 0 - ADC reset (active low)"]
+            #[doc = "Bits 0:31 - Raw register value"]
             #[inline(always)]
-            pub fn da_lsadc_rstn(&mut self) -> DaLsadcRstnW<'_, LsadcCtrl7Spec> {
-                DaLsadcRstnW::new(self, 0)
-            }
-            #[doc = "Bits 16:31 - ADC enable (16-bit, one per channel)"]
-            #[inline(always)]
-            pub fn da_lsadc_en(&mut self) -> DaLsadcEnW<'_, LsadcCtrl7Spec> {
-                DaLsadcEnW::new(self, 16)
+            pub fn val(&mut self) -> ValW<'_, LsadcCtrl7Spec> {
+                ValW::new(self, 0)
             }
         }
-        #[doc = "ADC enable register\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_7::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_7::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "ADC control register 7 (analog, reserved)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_7::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_7::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct LsadcCtrl7Spec;
         impl crate::RegisterSpec for LsadcCtrl7Spec {
             type Ux = u32;
@@ -21585,156 +21667,225 @@ pub mod lsadc {
         #[doc = "`reset()` method sets LSADC_CTRL_7 to value 0"]
         impl crate::Resettable for LsadcCtrl7Spec {}
     }
-    #[doc = "LSADC_FIFO_DATA (rw) register accessor: ADC FIFO data register\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_fifo_data::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_fifo_data::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_fifo_data`] module"]
-    #[doc(alias = "LSADC_FIFO_DATA")]
-    pub type LsadcFifoData = crate::Reg<lsadc_fifo_data::LsadcFifoDataSpec>;
-    #[doc = "ADC FIFO data register"]
-    pub mod lsadc_fifo_data {
-        #[doc = "Register `LSADC_FIFO_DATA` reader"]
-        pub type R = crate::R<LsadcFifoDataSpec>;
-        #[doc = "Register `LSADC_FIFO_DATA` writer"]
-        pub type W = crate::W<LsadcFifoDataSpec>;
-        #[doc = "Field `data` reader - ADC conversion data (14-bit)"]
+    #[doc = "LSADC_CTRL_8 (rw) register accessor: Scan start/stop (adc_scan_start_and_stop_data)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_8::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_8::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_8`] module"]
+    #[doc(alias = "LSADC_CTRL_8")]
+    pub type LsadcCtrl8 = crate::Reg<lsadc_ctrl_8::LsadcCtrl8Spec>;
+    #[doc = "Scan start/stop (adc_scan_start_and_stop_data)"]
+    pub mod lsadc_ctrl_8 {
+        #[doc = "Register `LSADC_CTRL_8` reader"]
+        pub type R = crate::R<LsadcCtrl8Spec>;
+        #[doc = "Register `LSADC_CTRL_8` writer"]
+        pub type W = crate::W<LsadcCtrl8Spec>;
+        #[doc = "Field `lsadc_start` reader - Write 1 to start a scan"]
+        pub type LsadcStartR = crate::BitReader;
+        #[doc = "Field `lsadc_start` writer - Write 1 to start a scan"]
+        pub type LsadcStartW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `lsadc_stop` reader - Write 1 to stop a scan"]
+        pub type LsadcStopR = crate::BitReader;
+        #[doc = "Field `lsadc_stop` writer - Write 1 to stop a scan"]
+        pub type LsadcStopW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - Write 1 to start a scan"]
+            #[inline(always)]
+            pub fn lsadc_start(&self) -> LsadcStartR {
+                LsadcStartR::new((self.bits & 1) != 0)
+            }
+            #[doc = "Bit 1 - Write 1 to stop a scan"]
+            #[inline(always)]
+            pub fn lsadc_stop(&self) -> LsadcStopR {
+                LsadcStopR::new(((self.bits >> 1) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Write 1 to start a scan"]
+            #[inline(always)]
+            pub fn lsadc_start(&mut self) -> LsadcStartW<'_, LsadcCtrl8Spec> {
+                LsadcStartW::new(self, 0)
+            }
+            #[doc = "Bit 1 - Write 1 to stop a scan"]
+            #[inline(always)]
+            pub fn lsadc_stop(&mut self) -> LsadcStopW<'_, LsadcCtrl8Spec> {
+                LsadcStopW::new(self, 1)
+            }
+        }
+        #[doc = "Scan start/stop (adc_scan_start_and_stop_data)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_8::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_8::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct LsadcCtrl8Spec;
+        impl crate::RegisterSpec for LsadcCtrl8Spec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`lsadc_ctrl_8::R`](R) reader structure"]
+        impl crate::Readable for LsadcCtrl8Spec {}
+        #[doc = "`write(|w| ..)` method takes [`lsadc_ctrl_8::W`](W) writer structure"]
+        impl crate::Writable for LsadcCtrl8Spec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets LSADC_CTRL_8 to value 0"]
+        impl crate::Resettable for LsadcCtrl8Spec {}
+    }
+    #[doc = "LSADC_CTRL_9 (rw) register accessor: FIFO read data (adc_fifo_read_data): 14-bit code + 3-bit channel\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_9::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_9::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_9`] module"]
+    #[doc(alias = "LSADC_CTRL_9")]
+    pub type LsadcCtrl9 = crate::Reg<lsadc_ctrl_9::LsadcCtrl9Spec>;
+    #[doc = "FIFO read data (adc_fifo_read_data): 14-bit code + 3-bit channel"]
+    pub mod lsadc_ctrl_9 {
+        #[doc = "Register `LSADC_CTRL_9` reader"]
+        pub type R = crate::R<LsadcCtrl9Spec>;
+        #[doc = "Register `LSADC_CTRL_9` writer"]
+        pub type W = crate::W<LsadcCtrl9Spec>;
+        #[doc = "Field `data` reader - 14-bit conversion code"]
         pub type DataR = crate::FieldReader<u16>;
-        #[doc = "Field `channel` reader - Channel number (3-bit)"]
+        #[doc = "Field `channel` reader - Source channel (0-5)"]
         pub type ChannelR = crate::FieldReader;
         impl R {
-            #[doc = "Bits 0:13 - ADC conversion data (14-bit)"]
+            #[doc = "Bits 0:13 - 14-bit conversion code"]
             #[inline(always)]
             pub fn data(&self) -> DataR {
                 DataR::new((self.bits & 0x3fff) as u16)
             }
-            #[doc = "Bits 14:16 - Channel number (3-bit)"]
+            #[doc = "Bits 14:16 - Source channel (0-5)"]
             #[inline(always)]
             pub fn channel(&self) -> ChannelR {
                 ChannelR::new(((self.bits >> 14) & 7) as u8)
             }
         }
         impl W {}
-        #[doc = "ADC FIFO data register\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_fifo_data::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_fifo_data::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
-        pub struct LsadcFifoDataSpec;
-        impl crate::RegisterSpec for LsadcFifoDataSpec {
+        #[doc = "FIFO read data (adc_fifo_read_data): 14-bit code + 3-bit channel\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_9::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_9::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct LsadcCtrl9Spec;
+        impl crate::RegisterSpec for LsadcCtrl9Spec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`lsadc_fifo_data::R`](R) reader structure"]
-        impl crate::Readable for LsadcFifoDataSpec {}
-        #[doc = "`write(|w| ..)` method takes [`lsadc_fifo_data::W`](W) writer structure"]
-        impl crate::Writable for LsadcFifoDataSpec {
+        #[doc = "`read()` method returns [`lsadc_ctrl_9::R`](R) reader structure"]
+        impl crate::Readable for LsadcCtrl9Spec {}
+        #[doc = "`write(|w| ..)` method takes [`lsadc_ctrl_9::W`](W) writer structure"]
+        impl crate::Writable for LsadcCtrl9Spec {
             type Safety = crate::Unsafe;
         }
-        #[doc = "`reset()` method sets LSADC_FIFO_DATA to value 0"]
-        impl crate::Resettable for LsadcFifoDataSpec {}
+        #[doc = "`reset()` method sets LSADC_CTRL_9 to value 0"]
+        impl crate::Resettable for LsadcCtrl9Spec {}
     }
-    #[doc = "CFG_CIC_FILTER_EN (rw) register accessor: CIC filter enable register\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_cic_filter_en::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_cic_filter_en::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cfg_cic_filter_en`] module"]
-    #[doc(alias = "CFG_CIC_FILTER_EN")]
-    pub type CfgCicFilterEn = crate::Reg<cfg_cic_filter_en::CfgCicFilterEnSpec>;
-    #[doc = "CIC filter enable register"]
-    pub mod cfg_cic_filter_en {
-        #[doc = "Register `CFG_CIC_FILTER_EN` reader"]
-        pub type R = crate::R<CfgCicFilterEnSpec>;
-        #[doc = "Register `CFG_CIC_FILTER_EN` writer"]
-        pub type W = crate::W<CfgCicFilterEnSpec>;
-        #[doc = "Field `cic_filter_en` reader - CIC filter enable"]
-        pub type CicFilterEnR = crate::BitReader;
-        #[doc = "Field `cic_filter_en` writer - CIC filter enable"]
-        pub type CicFilterEnW<'a, REG> = crate::BitWriter<'a, REG>;
+    #[doc = "LSADC_CTRL_11 (rw) register accessor: Analog enable/reset (adc_enable_data)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_11::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_11::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_11`] module"]
+    #[doc(alias = "LSADC_CTRL_11")]
+    pub type LsadcCtrl11 = crate::Reg<lsadc_ctrl_11::LsadcCtrl11Spec>;
+    #[doc = "Analog enable/reset (adc_enable_data)"]
+    pub mod lsadc_ctrl_11 {
+        #[doc = "Register `LSADC_CTRL_11` reader"]
+        pub type R = crate::R<LsadcCtrl11Spec>;
+        #[doc = "Register `LSADC_CTRL_11` writer"]
+        pub type W = crate::W<LsadcCtrl11Spec>;
+        #[doc = "Field `da_lsadc_en` reader - Analog block enable bits (16-bit; SDK ORs 0x7000/0xE7F/0x100/0x80 during power-up)"]
+        pub type DaLsadcEnR = crate::FieldReader<u16>;
+        #[doc = "Field `da_lsadc_en` writer - Analog block enable bits (16-bit; SDK ORs 0x7000/0xE7F/0x100/0x80 during power-up)"]
+        pub type DaLsadcEnW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        #[doc = "Field `da_lsadc_rstn` reader - Analog reset, active low: 1=release reset"]
+        pub type DaLsadcRstnR = crate::BitReader;
+        #[doc = "Field `da_lsadc_rstn` writer - Analog reset, active low: 1=release reset"]
+        pub type DaLsadcRstnW<'a, REG> = crate::BitWriter<'a, REG>;
         impl R {
-            #[doc = "Bit 0 - CIC filter enable"]
+            #[doc = "Bits 0:15 - Analog block enable bits (16-bit; SDK ORs 0x7000/0xE7F/0x100/0x80 during power-up)"]
             #[inline(always)]
-            pub fn cic_filter_en(&self) -> CicFilterEnR {
-                CicFilterEnR::new((self.bits & 1) != 0)
+            pub fn da_lsadc_en(&self) -> DaLsadcEnR {
+                DaLsadcEnR::new((self.bits & 0xffff) as u16)
+            }
+            #[doc = "Bit 16 - Analog reset, active low: 1=release reset"]
+            #[inline(always)]
+            pub fn da_lsadc_rstn(&self) -> DaLsadcRstnR {
+                DaLsadcRstnR::new(((self.bits >> 16) & 1) != 0)
             }
         }
         impl W {
-            #[doc = "Bit 0 - CIC filter enable"]
+            #[doc = "Bits 0:15 - Analog block enable bits (16-bit; SDK ORs 0x7000/0xE7F/0x100/0x80 during power-up)"]
             #[inline(always)]
-            pub fn cic_filter_en(&mut self) -> CicFilterEnW<'_, CfgCicFilterEnSpec> {
-                CicFilterEnW::new(self, 0)
+            pub fn da_lsadc_en(&mut self) -> DaLsadcEnW<'_, LsadcCtrl11Spec> {
+                DaLsadcEnW::new(self, 0)
+            }
+            #[doc = "Bit 16 - Analog reset, active low: 1=release reset"]
+            #[inline(always)]
+            pub fn da_lsadc_rstn(&mut self) -> DaLsadcRstnW<'_, LsadcCtrl11Spec> {
+                DaLsadcRstnW::new(self, 16)
             }
         }
-        #[doc = "CIC filter enable register\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_cic_filter_en::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_cic_filter_en::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
-        pub struct CfgCicFilterEnSpec;
-        impl crate::RegisterSpec for CfgCicFilterEnSpec {
+        #[doc = "Analog enable/reset (adc_enable_data)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_11::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_11::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct LsadcCtrl11Spec;
+        impl crate::RegisterSpec for LsadcCtrl11Spec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`cfg_cic_filter_en::R`](R) reader structure"]
-        impl crate::Readable for CfgCicFilterEnSpec {}
-        #[doc = "`write(|w| ..)` method takes [`cfg_cic_filter_en::W`](W) writer structure"]
-        impl crate::Writable for CfgCicFilterEnSpec {
+        #[doc = "`read()` method returns [`lsadc_ctrl_11::R`](R) reader structure"]
+        impl crate::Readable for LsadcCtrl11Spec {}
+        #[doc = "`write(|w| ..)` method takes [`lsadc_ctrl_11::W`](W) writer structure"]
+        impl crate::Writable for LsadcCtrl11Spec {
             type Safety = crate::Unsafe;
         }
-        #[doc = "`reset()` method sets CFG_CIC_FILTER_EN to value 0"]
-        impl crate::Resettable for CfgCicFilterEnSpec {}
+        #[doc = "`reset()` method sets LSADC_CTRL_11 to value 0"]
+        impl crate::Resettable for LsadcCtrl11Spec {}
     }
-    #[doc = "CFG_CIC_OSR (rw) register accessor: CIC oversampling ratio register\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_cic_osr::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_cic_osr::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cfg_cic_osr`] module"]
-    #[doc(alias = "CFG_CIC_OSR")]
-    pub type CfgCicOsr = crate::Reg<cfg_cic_osr::CfgCicOsrSpec>;
-    #[doc = "CIC oversampling ratio register"]
-    pub mod cfg_cic_osr {
-        #[doc = "Register `CFG_CIC_OSR` reader"]
-        pub type R = crate::R<CfgCicOsrSpec>;
-        #[doc = "Register `CFG_CIC_OSR` writer"]
-        pub type W = crate::W<CfgCicOsrSpec>;
-        #[doc = "Field `cic_osr` reader - CIC oversampling ratio"]
-        pub type CicOsrR = crate::FieldReader;
-        #[doc = "Field `cic_osr` writer - CIC oversampling ratio"]
-        pub type CicOsrW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+    #[doc = "LSADC_CTRL_12 (rw) register accessor: ADC control register 12 (analog, reserved)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_12::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_12::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@lsadc_ctrl_12`] module"]
+    #[doc(alias = "LSADC_CTRL_12")]
+    pub type LsadcCtrl12 = crate::Reg<lsadc_ctrl_12::LsadcCtrl12Spec>;
+    #[doc = "ADC control register 12 (analog, reserved)"]
+    pub mod lsadc_ctrl_12 {
+        #[doc = "Register `LSADC_CTRL_12` reader"]
+        pub type R = crate::R<LsadcCtrl12Spec>;
+        #[doc = "Register `LSADC_CTRL_12` writer"]
+        pub type W = crate::W<LsadcCtrl12Spec>;
+        #[doc = "Field `val` reader - Raw register value"]
+        pub type ValR = crate::FieldReader<u32>;
+        #[doc = "Field `val` writer - Raw register value"]
+        pub type ValW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
         impl R {
-            #[doc = "Bits 0:7 - CIC oversampling ratio"]
+            #[doc = "Bits 0:31 - Raw register value"]
             #[inline(always)]
-            pub fn cic_osr(&self) -> CicOsrR {
-                CicOsrR::new((self.bits & 0xff) as u8)
+            pub fn val(&self) -> ValR {
+                ValR::new(self.bits)
             }
         }
         impl W {
-            #[doc = "Bits 0:7 - CIC oversampling ratio"]
+            #[doc = "Bits 0:31 - Raw register value"]
             #[inline(always)]
-            pub fn cic_osr(&mut self) -> CicOsrW<'_, CfgCicOsrSpec> {
-                CicOsrW::new(self, 0)
+            pub fn val(&mut self) -> ValW<'_, LsadcCtrl12Spec> {
+                ValW::new(self, 0)
             }
         }
-        #[doc = "CIC oversampling ratio register\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_cic_osr::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_cic_osr::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
-        pub struct CfgCicOsrSpec;
-        impl crate::RegisterSpec for CfgCicOsrSpec {
+        #[doc = "ADC control register 12 (analog, reserved)\n\nYou can [`read`](crate::Reg::read) this register and get [`lsadc_ctrl_12::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`lsadc_ctrl_12::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct LsadcCtrl12Spec;
+        impl crate::RegisterSpec for LsadcCtrl12Spec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`cfg_cic_osr::R`](R) reader structure"]
-        impl crate::Readable for CfgCicOsrSpec {}
-        #[doc = "`write(|w| ..)` method takes [`cfg_cic_osr::W`](W) writer structure"]
-        impl crate::Writable for CfgCicOsrSpec {
+        #[doc = "`read()` method returns [`lsadc_ctrl_12::R`](R) reader structure"]
+        impl crate::Readable for LsadcCtrl12Spec {}
+        #[doc = "`write(|w| ..)` method takes [`lsadc_ctrl_12::W`](W) writer structure"]
+        impl crate::Writable for LsadcCtrl12Spec {
             type Safety = crate::Unsafe;
         }
-        #[doc = "`reset()` method sets CFG_CIC_OSR to value 0"]
-        impl crate::Resettable for CfgCicOsrSpec {}
+        #[doc = "`reset()` method sets LSADC_CTRL_12 to value 0"]
+        impl crate::Resettable for LsadcCtrl12Spec {}
     }
-    #[doc = "CFG_DATA_SEL (rw) register accessor: Data select register\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_data_sel::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_data_sel::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cfg_data_sel`] module"]
+    #[doc = "CFG_DATA_SEL (rw) register accessor: Data output select (base+0xDC)\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_data_sel::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_data_sel::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cfg_data_sel`] module"]
     #[doc(alias = "CFG_DATA_SEL")]
     pub type CfgDataSel = crate::Reg<cfg_data_sel::CfgDataSelSpec>;
-    #[doc = "Data select register"]
+    #[doc = "Data output select (base+0xDC)"]
     pub mod cfg_data_sel {
         #[doc = "Register `CFG_DATA_SEL` reader"]
         pub type R = crate::R<CfgDataSelSpec>;
         #[doc = "Register `CFG_DATA_SEL` writer"]
         pub type W = crate::W<CfgDataSelSpec>;
-        #[doc = "Field `data_sel` reader - Data output select"]
+        #[doc = "Field `data_sel` reader - 0=raw ADC data, 1=post-processed"]
         pub type DataSelR = crate::BitReader;
-        #[doc = "Field `data_sel` writer - Data output select"]
+        #[doc = "Field `data_sel` writer - 0=raw ADC data, 1=post-processed"]
         pub type DataSelW<'a, REG> = crate::BitWriter<'a, REG>;
         impl R {
-            #[doc = "Bit 0 - Data output select"]
+            #[doc = "Bit 0 - 0=raw ADC data, 1=post-processed"]
             #[inline(always)]
             pub fn data_sel(&self) -> DataSelR {
                 DataSelR::new((self.bits & 1) != 0)
             }
         }
         impl W {
-            #[doc = "Bit 0 - Data output select"]
+            #[doc = "Bit 0 - 0=raw ADC data, 1=post-processed"]
             #[inline(always)]
             pub fn data_sel(&mut self) -> DataSelW<'_, CfgDataSelSpec> {
                 DataSelW::new(self, 0)
             }
         }
-        #[doc = "Data select register\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_data_sel::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_data_sel::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Data output select (base+0xDC)\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_data_sel::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_data_sel::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct CfgDataSelSpec;
         impl crate::RegisterSpec for CfgDataSelSpec {
             type Ux = u32;
@@ -21748,10 +21899,10 @@ pub mod lsadc {
         #[doc = "`reset()` method sets CFG_DATA_SEL to value 0"]
         impl crate::Resettable for CfgDataSelSpec {}
     }
-    #[doc = "CFG_OFFSET (rw) register accessor: Offset register\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_offset::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_offset::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cfg_offset`] module"]
+    #[doc = "CFG_OFFSET (rw) register accessor: Offset correction (base+0xE0)\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_offset::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_offset::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cfg_offset`] module"]
     #[doc(alias = "CFG_OFFSET")]
     pub type CfgOffset = crate::Reg<cfg_offset::CfgOffsetSpec>;
-    #[doc = "Offset register"]
+    #[doc = "Offset correction (base+0xE0)"]
     pub mod cfg_offset {
         #[doc = "Register `CFG_OFFSET` reader"]
         pub type R = crate::R<CfgOffsetSpec>;
@@ -21775,7 +21926,7 @@ pub mod lsadc {
                 OffsetW::new(self, 0)
             }
         }
-        #[doc = "Offset register\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_offset::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_offset::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Offset correction (base+0xE0)\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_offset::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_offset::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct CfgOffsetSpec;
         impl crate::RegisterSpec for CfgOffsetSpec {
             type Ux = u32;
@@ -21789,10 +21940,10 @@ pub mod lsadc {
         #[doc = "`reset()` method sets CFG_OFFSET to value 0"]
         impl crate::Resettable for CfgOffsetSpec {}
     }
-    #[doc = "CFG_GAIN (rw) register accessor: Gain register\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_gain::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_gain::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cfg_gain`] module"]
+    #[doc = "CFG_GAIN (rw) register accessor: Gain correction (base+0xE4)\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_gain::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_gain::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cfg_gain`] module"]
     #[doc(alias = "CFG_GAIN")]
     pub type CfgGain = crate::Reg<cfg_gain::CfgGainSpec>;
-    #[doc = "Gain register"]
+    #[doc = "Gain correction (base+0xE4)"]
     pub mod cfg_gain {
         #[doc = "Register `CFG_GAIN` reader"]
         pub type R = crate::R<CfgGainSpec>;
@@ -21816,7 +21967,7 @@ pub mod lsadc {
                 GainW::new(self, 0)
             }
         }
-        #[doc = "Gain register\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_gain::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_gain::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Gain correction (base+0xE4)\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_gain::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_gain::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct CfgGainSpec;
         impl crate::RegisterSpec for CfgGainSpec {
             type Ux = u32;
@@ -21829,6 +21980,88 @@ pub mod lsadc {
         }
         #[doc = "`reset()` method sets CFG_GAIN to value 0"]
         impl crate::Resettable for CfgGainSpec {}
+    }
+    #[doc = "CFG_CIC_FILTER_EN (rw) register accessor: CIC filter enable (base+0xE8)\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_cic_filter_en::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_cic_filter_en::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cfg_cic_filter_en`] module"]
+    #[doc(alias = "CFG_CIC_FILTER_EN")]
+    pub type CfgCicFilterEn = crate::Reg<cfg_cic_filter_en::CfgCicFilterEnSpec>;
+    #[doc = "CIC filter enable (base+0xE8)"]
+    pub mod cfg_cic_filter_en {
+        #[doc = "Register `CFG_CIC_FILTER_EN` reader"]
+        pub type R = crate::R<CfgCicFilterEnSpec>;
+        #[doc = "Register `CFG_CIC_FILTER_EN` writer"]
+        pub type W = crate::W<CfgCicFilterEnSpec>;
+        #[doc = "Field `cic_filter_en` reader - CIC filter enable"]
+        pub type CicFilterEnR = crate::BitReader;
+        #[doc = "Field `cic_filter_en` writer - CIC filter enable"]
+        pub type CicFilterEnW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - CIC filter enable"]
+            #[inline(always)]
+            pub fn cic_filter_en(&self) -> CicFilterEnR {
+                CicFilterEnR::new((self.bits & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - CIC filter enable"]
+            #[inline(always)]
+            pub fn cic_filter_en(&mut self) -> CicFilterEnW<'_, CfgCicFilterEnSpec> {
+                CicFilterEnW::new(self, 0)
+            }
+        }
+        #[doc = "CIC filter enable (base+0xE8)\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_cic_filter_en::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_cic_filter_en::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct CfgCicFilterEnSpec;
+        impl crate::RegisterSpec for CfgCicFilterEnSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`cfg_cic_filter_en::R`](R) reader structure"]
+        impl crate::Readable for CfgCicFilterEnSpec {}
+        #[doc = "`write(|w| ..)` method takes [`cfg_cic_filter_en::W`](W) writer structure"]
+        impl crate::Writable for CfgCicFilterEnSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets CFG_CIC_FILTER_EN to value 0"]
+        impl crate::Resettable for CfgCicFilterEnSpec {}
+    }
+    #[doc = "CFG_CIC_OSR (rw) register accessor: CIC oversampling ratio (base+0xEC)\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_cic_osr::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_cic_osr::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cfg_cic_osr`] module"]
+    #[doc(alias = "CFG_CIC_OSR")]
+    pub type CfgCicOsr = crate::Reg<cfg_cic_osr::CfgCicOsrSpec>;
+    #[doc = "CIC oversampling ratio (base+0xEC)"]
+    pub mod cfg_cic_osr {
+        #[doc = "Register `CFG_CIC_OSR` reader"]
+        pub type R = crate::R<CfgCicOsrSpec>;
+        #[doc = "Register `CFG_CIC_OSR` writer"]
+        pub type W = crate::W<CfgCicOsrSpec>;
+        #[doc = "Field `cic_osr` reader - CIC oversampling ratio"]
+        pub type CicOsrR = crate::FieldReader;
+        #[doc = "Field `cic_osr` writer - CIC oversampling ratio"]
+        pub type CicOsrW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+        impl R {
+            #[doc = "Bits 0:7 - CIC oversampling ratio"]
+            #[inline(always)]
+            pub fn cic_osr(&self) -> CicOsrR {
+                CicOsrR::new((self.bits & 0xff) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:7 - CIC oversampling ratio"]
+            #[inline(always)]
+            pub fn cic_osr(&mut self) -> CicOsrW<'_, CfgCicOsrSpec> {
+                CicOsrW::new(self, 0)
+            }
+        }
+        #[doc = "CIC oversampling ratio (base+0xEC)\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_cic_osr::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_cic_osr::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct CfgCicOsrSpec;
+        impl crate::RegisterSpec for CfgCicOsrSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`cfg_cic_osr::R`](R) reader structure"]
+        impl crate::Readable for CfgCicOsrSpec {}
+        #[doc = "`write(|w| ..)` method takes [`cfg_cic_osr::W`](W) writer structure"]
+        impl crate::Writable for CfgCicOsrSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets CFG_CIC_OSR to value 0"]
+        impl crate::Resettable for CfgCicOsrSpec {}
     }
 }
 #[doc = "Temperature sensor controller (v151)"]
@@ -24315,176 +24548,52 @@ pub mod efuse {
     #[repr(C)]
     #[doc = "Register block"]
     pub struct RegisterBlock {
+        _reserved0: [u8; 0x2c],
+        efuse_sts: EfuseSts,
         efuse_ctl_data: EfuseCtlData,
         efuse_clk_period: EfuseClkPeriod,
-        _reserved2: [u8; 0x04],
+        _reserved3: [u8; 0x04],
         efuse_avdd_ctl: EfuseAvddCtl,
-        _reserved3: [u8; 0x1c],
-        efuse_sts: EfuseSts,
+        _reserved4: [u8; 0x07c0],
+        efuse_data: [EfuseData; 128],
     }
     impl RegisterBlock {
-        #[doc = "0x00 - eFuse control data register"]
-        #[inline(always)]
-        pub const fn efuse_ctl_data(&self) -> &EfuseCtlData {
-            &self.efuse_ctl_data
-        }
-        #[doc = "0x04 - eFuse clock period register"]
-        #[inline(always)]
-        pub const fn efuse_clk_period(&self) -> &EfuseClkPeriod {
-            &self.efuse_clk_period
-        }
-        #[doc = "0x0c - eFuse AVDD switch register"]
-        #[inline(always)]
-        pub const fn efuse_avdd_ctl(&self) -> &EfuseAvddCtl {
-            &self.efuse_avdd_ctl
-        }
-        #[doc = "0x2c - eFuse status register (at offset 0x2C)"]
+        #[doc = "0x2c - eFuse boot-done status register (base+0x2C). Read-only."]
         #[inline(always)]
         pub const fn efuse_sts(&self) -> &EfuseSts {
             &self.efuse_sts
         }
+        #[doc = "0x30 - eFuse mode-select register (base+0x30). Write the 16-bit magic to arm an access: 0xA5A5 = program (write) mode, 0x5A5A = read mode."]
+        #[inline(always)]
+        pub const fn efuse_ctl_data(&self) -> &EfuseCtlData {
+            &self.efuse_ctl_data
+        }
+        #[doc = "0x34 - eFuse clock period register (base+0x34)"]
+        #[inline(always)]
+        pub const fn efuse_clk_period(&self) -> &EfuseClkPeriod {
+            &self.efuse_clk_period
+        }
+        #[doc = "0x3c - eFuse AVDD program-voltage switch (base+0x3C)"]
+        #[inline(always)]
+        pub const fn efuse_avdd_ctl(&self) -> &EfuseAvddCtl {
+            &self.efuse_avdd_ctl
+        }
+        #[doc = "0x800..0xa00 - eFuse read/write data window (base+0x800), 128 words covering 256 bytes. Each 32-bit word packs two eFuse bytes: even byte address in \\[7:0\\], odd in \\[15:8\\]. Word index = byte_addr/2."]
+        #[inline(always)]
+        pub const fn efuse_data(&self, n: usize) -> &EfuseData {
+            &self.efuse_data[n]
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x800..0xa00 - eFuse read/write data window (base+0x800), 128 words covering 256 bytes. Each 32-bit word packs two eFuse bytes: even byte address in \\[7:0\\], odd in \\[15:8\\]. Word index = byte_addr/2."]
+        #[inline(always)]
+        pub fn efuse_data_iter(&self) -> impl Iterator<Item = &EfuseData> {
+            self.efuse_data.iter()
+        }
     }
-    #[doc = "EFUSE_CTL_DATA (rw) register accessor: eFuse control data register\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_ctl_data::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_ctl_data::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@efuse_ctl_data`] module"]
-    #[doc(alias = "EFUSE_CTL_DATA")]
-    pub type EfuseCtlData = crate::Reg<efuse_ctl_data::EfuseCtlDataSpec>;
-    #[doc = "eFuse control data register"]
-    pub mod efuse_ctl_data {
-        #[doc = "Register `EFUSE_CTL_DATA` reader"]
-        pub type R = crate::R<EfuseCtlDataSpec>;
-        #[doc = "Register `EFUSE_CTL_DATA` writer"]
-        pub type W = crate::W<EfuseCtlDataSpec>;
-        #[doc = "Field `efuse_ctl` reader - eFuse control data"]
-        pub type EfuseCtlR = crate::FieldReader<u16>;
-        #[doc = "Field `efuse_ctl` writer - eFuse control data"]
-        pub type EfuseCtlW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
-        #[doc = "Field `wr_rd` reader - Write/Read control: 0=read; 1=write"]
-        pub type WrRdR = crate::BitReader;
-        #[doc = "Field `wr_rd` writer - Write/Read control: 0=read; 1=write"]
-        pub type WrRdW<'a, REG> = crate::BitWriter<'a, REG>;
-        impl R {
-            #[doc = "Bits 0:15 - eFuse control data"]
-            #[inline(always)]
-            pub fn efuse_ctl(&self) -> EfuseCtlR {
-                EfuseCtlR::new((self.bits & 0xffff) as u16)
-            }
-            #[doc = "Bit 16 - Write/Read control: 0=read; 1=write"]
-            #[inline(always)]
-            pub fn wr_rd(&self) -> WrRdR {
-                WrRdR::new(((self.bits >> 16) & 1) != 0)
-            }
-        }
-        impl W {
-            #[doc = "Bits 0:15 - eFuse control data"]
-            #[inline(always)]
-            pub fn efuse_ctl(&mut self) -> EfuseCtlW<'_, EfuseCtlDataSpec> {
-                EfuseCtlW::new(self, 0)
-            }
-            #[doc = "Bit 16 - Write/Read control: 0=read; 1=write"]
-            #[inline(always)]
-            pub fn wr_rd(&mut self) -> WrRdW<'_, EfuseCtlDataSpec> {
-                WrRdW::new(self, 16)
-            }
-        }
-        #[doc = "eFuse control data register\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_ctl_data::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_ctl_data::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
-        pub struct EfuseCtlDataSpec;
-        impl crate::RegisterSpec for EfuseCtlDataSpec {
-            type Ux = u32;
-        }
-        #[doc = "`read()` method returns [`efuse_ctl_data::R`](R) reader structure"]
-        impl crate::Readable for EfuseCtlDataSpec {}
-        #[doc = "`write(|w| ..)` method takes [`efuse_ctl_data::W`](W) writer structure"]
-        impl crate::Writable for EfuseCtlDataSpec {
-            type Safety = crate::Unsafe;
-        }
-        #[doc = "`reset()` method sets EFUSE_CTL_DATA to value 0"]
-        impl crate::Resettable for EfuseCtlDataSpec {}
-    }
-    #[doc = "EFUSE_CLK_PERIOD (rw) register accessor: eFuse clock period register\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_clk_period::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_clk_period::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@efuse_clk_period`] module"]
-    #[doc(alias = "EFUSE_CLK_PERIOD")]
-    pub type EfuseClkPeriod = crate::Reg<efuse_clk_period::EfuseClkPeriodSpec>;
-    #[doc = "eFuse clock period register"]
-    pub mod efuse_clk_period {
-        #[doc = "Register `EFUSE_CLK_PERIOD` reader"]
-        pub type R = crate::R<EfuseClkPeriodSpec>;
-        #[doc = "Register `EFUSE_CLK_PERIOD` writer"]
-        pub type W = crate::W<EfuseClkPeriodSpec>;
-        #[doc = "Field `clk_period` reader - Clock period value"]
-        pub type ClkPeriodR = crate::FieldReader;
-        #[doc = "Field `clk_period` writer - Clock period value"]
-        pub type ClkPeriodW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
-        impl R {
-            #[doc = "Bits 0:7 - Clock period value"]
-            #[inline(always)]
-            pub fn clk_period(&self) -> ClkPeriodR {
-                ClkPeriodR::new((self.bits & 0xff) as u8)
-            }
-        }
-        impl W {
-            #[doc = "Bits 0:7 - Clock period value"]
-            #[inline(always)]
-            pub fn clk_period(&mut self) -> ClkPeriodW<'_, EfuseClkPeriodSpec> {
-                ClkPeriodW::new(self, 0)
-            }
-        }
-        #[doc = "eFuse clock period register\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_clk_period::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_clk_period::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
-        pub struct EfuseClkPeriodSpec;
-        impl crate::RegisterSpec for EfuseClkPeriodSpec {
-            type Ux = u32;
-        }
-        #[doc = "`read()` method returns [`efuse_clk_period::R`](R) reader structure"]
-        impl crate::Readable for EfuseClkPeriodSpec {}
-        #[doc = "`write(|w| ..)` method takes [`efuse_clk_period::W`](W) writer structure"]
-        impl crate::Writable for EfuseClkPeriodSpec {
-            type Safety = crate::Unsafe;
-        }
-        #[doc = "`reset()` method sets EFUSE_CLK_PERIOD to value 0"]
-        impl crate::Resettable for EfuseClkPeriodSpec {}
-    }
-    #[doc = "EFUSE_AVDD_CTL (rw) register accessor: eFuse AVDD switch register\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_avdd_ctl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_avdd_ctl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@efuse_avdd_ctl`] module"]
-    #[doc(alias = "EFUSE_AVDD_CTL")]
-    pub type EfuseAvddCtl = crate::Reg<efuse_avdd_ctl::EfuseAvddCtlSpec>;
-    #[doc = "eFuse AVDD switch register"]
-    pub mod efuse_avdd_ctl {
-        #[doc = "Register `EFUSE_AVDD_CTL` reader"]
-        pub type R = crate::R<EfuseAvddCtlSpec>;
-        #[doc = "Register `EFUSE_AVDD_CTL` writer"]
-        pub type W = crate::W<EfuseAvddCtlSpec>;
-        #[doc = "Field `avdd_ctl` reader - AVDD switch control"]
-        pub type AvddCtlR = crate::BitReader;
-        #[doc = "Field `avdd_ctl` writer - AVDD switch control"]
-        pub type AvddCtlW<'a, REG> = crate::BitWriter<'a, REG>;
-        impl R {
-            #[doc = "Bit 0 - AVDD switch control"]
-            #[inline(always)]
-            pub fn avdd_ctl(&self) -> AvddCtlR {
-                AvddCtlR::new((self.bits & 1) != 0)
-            }
-        }
-        impl W {
-            #[doc = "Bit 0 - AVDD switch control"]
-            #[inline(always)]
-            pub fn avdd_ctl(&mut self) -> AvddCtlW<'_, EfuseAvddCtlSpec> {
-                AvddCtlW::new(self, 0)
-            }
-        }
-        #[doc = "eFuse AVDD switch register\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_avdd_ctl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_avdd_ctl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
-        pub struct EfuseAvddCtlSpec;
-        impl crate::RegisterSpec for EfuseAvddCtlSpec {
-            type Ux = u32;
-        }
-        #[doc = "`read()` method returns [`efuse_avdd_ctl::R`](R) reader structure"]
-        impl crate::Readable for EfuseAvddCtlSpec {}
-        #[doc = "`write(|w| ..)` method takes [`efuse_avdd_ctl::W`](W) writer structure"]
-        impl crate::Writable for EfuseAvddCtlSpec {
-            type Safety = crate::Unsafe;
-        }
-        #[doc = "`reset()` method sets EFUSE_AVDD_CTL to value 0"]
-        impl crate::Resettable for EfuseAvddCtlSpec {}
-    }
-    #[doc = "EFUSE_STS (rw) register accessor: eFuse status register (at offset 0x2C)\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_sts::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_sts::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@efuse_sts`] module"]
+    #[doc = "EFUSE_STS (rw) register accessor: eFuse boot-done status register (base+0x2C). Read-only.\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_sts::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_sts::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@efuse_sts`] module"]
     #[doc(alias = "EFUSE_STS")]
     pub type EfuseSts = crate::Reg<efuse_sts::EfuseStsSpec>;
-    #[doc = "eFuse status register (at offset 0x2C)"]
+    #[doc = "eFuse boot-done status register (base+0x2C). Read-only."]
     pub mod efuse_sts {
         #[doc = "Register `EFUSE_STS` reader"]
         pub type R = crate::R<EfuseStsSpec>;
@@ -24521,7 +24630,7 @@ pub mod efuse {
             }
         }
         impl W {}
-        #[doc = "eFuse status register (at offset 0x2C)\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_sts::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_sts::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "eFuse boot-done status register (base+0x2C). Read-only.\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_sts::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_sts::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct EfuseStsSpec;
         impl crate::RegisterSpec for EfuseStsSpec {
             type Ux = u32;
@@ -24534,6 +24643,170 @@ pub mod efuse {
         }
         #[doc = "`reset()` method sets EFUSE_STS to value 0"]
         impl crate::Resettable for EfuseStsSpec {}
+    }
+    #[doc = "EFUSE_CTL_DATA (rw) register accessor: eFuse mode-select register (base+0x30). Write the 16-bit magic to arm an access: 0xA5A5 = program (write) mode, 0x5A5A = read mode.\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_ctl_data::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_ctl_data::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@efuse_ctl_data`] module"]
+    #[doc(alias = "EFUSE_CTL_DATA")]
+    pub type EfuseCtlData = crate::Reg<efuse_ctl_data::EfuseCtlDataSpec>;
+    #[doc = "eFuse mode-select register (base+0x30). Write the 16-bit magic to arm an access: 0xA5A5 = program (write) mode, 0x5A5A = read mode."]
+    pub mod efuse_ctl_data {
+        #[doc = "Register `EFUSE_CTL_DATA` reader"]
+        pub type R = crate::R<EfuseCtlDataSpec>;
+        #[doc = "Register `EFUSE_CTL_DATA` writer"]
+        pub type W = crate::W<EfuseCtlDataSpec>;
+        #[doc = "Field `efuse_wr_rd` reader - Mode-select magic word (0xA5A5=write, 0x5A5A=read)"]
+        pub type EfuseWrRdR = crate::FieldReader<u16>;
+        #[doc = "Field `efuse_wr_rd` writer - Mode-select magic word (0xA5A5=write, 0x5A5A=read)"]
+        pub type EfuseWrRdW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Mode-select magic word (0xA5A5=write, 0x5A5A=read)"]
+            #[inline(always)]
+            pub fn efuse_wr_rd(&self) -> EfuseWrRdR {
+                EfuseWrRdR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Mode-select magic word (0xA5A5=write, 0x5A5A=read)"]
+            #[inline(always)]
+            pub fn efuse_wr_rd(&mut self) -> EfuseWrRdW<'_, EfuseCtlDataSpec> {
+                EfuseWrRdW::new(self, 0)
+            }
+        }
+        #[doc = "eFuse mode-select register (base+0x30). Write the 16-bit magic to arm an access: 0xA5A5 = program (write) mode, 0x5A5A = read mode.\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_ctl_data::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_ctl_data::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct EfuseCtlDataSpec;
+        impl crate::RegisterSpec for EfuseCtlDataSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`efuse_ctl_data::R`](R) reader structure"]
+        impl crate::Readable for EfuseCtlDataSpec {}
+        #[doc = "`write(|w| ..)` method takes [`efuse_ctl_data::W`](W) writer structure"]
+        impl crate::Writable for EfuseCtlDataSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets EFUSE_CTL_DATA to value 0"]
+        impl crate::Resettable for EfuseCtlDataSpec {}
+    }
+    #[doc = "EFUSE_CLK_PERIOD (rw) register accessor: eFuse clock period register (base+0x34)\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_clk_period::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_clk_period::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@efuse_clk_period`] module"]
+    #[doc(alias = "EFUSE_CLK_PERIOD")]
+    pub type EfuseClkPeriod = crate::Reg<efuse_clk_period::EfuseClkPeriodSpec>;
+    #[doc = "eFuse clock period register (base+0x34)"]
+    pub mod efuse_clk_period {
+        #[doc = "Register `EFUSE_CLK_PERIOD` reader"]
+        pub type R = crate::R<EfuseClkPeriodSpec>;
+        #[doc = "Register `EFUSE_CLK_PERIOD` writer"]
+        pub type W = crate::W<EfuseClkPeriodSpec>;
+        #[doc = "Field `clk_period` reader - Clock period in cycles (e.g. 0x29 @ 24MHz, 0x19 @ 40MHz)"]
+        pub type ClkPeriodR = crate::FieldReader;
+        #[doc = "Field `clk_period` writer - Clock period in cycles (e.g. 0x29 @ 24MHz, 0x19 @ 40MHz)"]
+        pub type ClkPeriodW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+        impl R {
+            #[doc = "Bits 0:7 - Clock period in cycles (e.g. 0x29 @ 24MHz, 0x19 @ 40MHz)"]
+            #[inline(always)]
+            pub fn clk_period(&self) -> ClkPeriodR {
+                ClkPeriodR::new((self.bits & 0xff) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:7 - Clock period in cycles (e.g. 0x29 @ 24MHz, 0x19 @ 40MHz)"]
+            #[inline(always)]
+            pub fn clk_period(&mut self) -> ClkPeriodW<'_, EfuseClkPeriodSpec> {
+                ClkPeriodW::new(self, 0)
+            }
+        }
+        #[doc = "eFuse clock period register (base+0x34)\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_clk_period::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_clk_period::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct EfuseClkPeriodSpec;
+        impl crate::RegisterSpec for EfuseClkPeriodSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`efuse_clk_period::R`](R) reader structure"]
+        impl crate::Readable for EfuseClkPeriodSpec {}
+        #[doc = "`write(|w| ..)` method takes [`efuse_clk_period::W`](W) writer structure"]
+        impl crate::Writable for EfuseClkPeriodSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets EFUSE_CLK_PERIOD to value 0"]
+        impl crate::Resettable for EfuseClkPeriodSpec {}
+    }
+    #[doc = "EFUSE_AVDD_CTL (rw) register accessor: eFuse AVDD program-voltage switch (base+0x3C)\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_avdd_ctl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_avdd_ctl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@efuse_avdd_ctl`] module"]
+    #[doc(alias = "EFUSE_AVDD_CTL")]
+    pub type EfuseAvddCtl = crate::Reg<efuse_avdd_ctl::EfuseAvddCtlSpec>;
+    #[doc = "eFuse AVDD program-voltage switch (base+0x3C)"]
+    pub mod efuse_avdd_ctl {
+        #[doc = "Register `EFUSE_AVDD_CTL` reader"]
+        pub type R = crate::R<EfuseAvddCtlSpec>;
+        #[doc = "Register `EFUSE_AVDD_CTL` writer"]
+        pub type W = crate::W<EfuseAvddCtlSpec>;
+        #[doc = "Field `avdd_sw` reader - AVDD switch: 1=enable program voltage, 0=disable"]
+        pub type AvddSwR = crate::BitReader;
+        #[doc = "Field `avdd_sw` writer - AVDD switch: 1=enable program voltage, 0=disable"]
+        pub type AvddSwW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - AVDD switch: 1=enable program voltage, 0=disable"]
+            #[inline(always)]
+            pub fn avdd_sw(&self) -> AvddSwR {
+                AvddSwR::new((self.bits & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - AVDD switch: 1=enable program voltage, 0=disable"]
+            #[inline(always)]
+            pub fn avdd_sw(&mut self) -> AvddSwW<'_, EfuseAvddCtlSpec> {
+                AvddSwW::new(self, 0)
+            }
+        }
+        #[doc = "eFuse AVDD program-voltage switch (base+0x3C)\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_avdd_ctl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_avdd_ctl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct EfuseAvddCtlSpec;
+        impl crate::RegisterSpec for EfuseAvddCtlSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`efuse_avdd_ctl::R`](R) reader structure"]
+        impl crate::Readable for EfuseAvddCtlSpec {}
+        #[doc = "`write(|w| ..)` method takes [`efuse_avdd_ctl::W`](W) writer structure"]
+        impl crate::Writable for EfuseAvddCtlSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets EFUSE_AVDD_CTL to value 0"]
+        impl crate::Resettable for EfuseAvddCtlSpec {}
+    }
+    #[doc = "EFUSE_DATA (rw) register accessor: eFuse read/write data window (base+0x800), 128 words covering 256 bytes. Each 32-bit word packs two eFuse bytes: even byte address in \\[7:0\\], odd in \\[15:8\\]. Word index = byte_addr/2.\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_data::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_data::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@efuse_data`] module"]
+    #[doc(alias = "EFUSE_DATA")]
+    pub type EfuseData = crate::Reg<efuse_data::EfuseDataSpec>;
+    #[doc = "eFuse read/write data window (base+0x800), 128 words covering 256 bytes. Each 32-bit word packs two eFuse bytes: even byte address in \\[7:0\\], odd in \\[15:8\\]. Word index = byte_addr/2."]
+    pub mod efuse_data {
+        #[doc = "Register `EFUSE_DATA[%s]` reader"]
+        pub type R = crate::R<EfuseDataSpec>;
+        #[doc = "Register `EFUSE_DATA[%s]` writer"]
+        pub type W = crate::W<EfuseDataSpec>;
+        #[doc = "Field `data` reader - Two packed eFuse bytes (low byte=\\[7:0\\], high byte=\\[15:8\\])"]
+        pub type DataR = crate::FieldReader<u16>;
+        #[doc = "Field `data` writer - Two packed eFuse bytes (low byte=\\[7:0\\], high byte=\\[15:8\\])"]
+        pub type DataW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Two packed eFuse bytes (low byte=\\[7:0\\], high byte=\\[15:8\\])"]
+            #[inline(always)]
+            pub fn data(&self) -> DataR {
+                DataR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Two packed eFuse bytes (low byte=\\[7:0\\], high byte=\\[15:8\\])"]
+            #[inline(always)]
+            pub fn data(&mut self) -> DataW<'_, EfuseDataSpec> {
+                DataW::new(self, 0)
+            }
+        }
+        #[doc = "eFuse read/write data window (base+0x800), 128 words covering 256 bytes. Each 32-bit word packs two eFuse bytes: even byte address in \\[7:0\\], odd in \\[15:8\\]. Word index = byte_addr/2.\n\nYou can [`read`](crate::Reg::read) this register and get [`efuse_data::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`efuse_data::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct EfuseDataSpec;
+        impl crate::RegisterSpec for EfuseDataSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`efuse_data::R`](R) reader structure"]
+        impl crate::Readable for EfuseDataSpec {}
+        #[doc = "`write(|w| ..)` method takes [`efuse_data::W`](W) writer structure"]
+        impl crate::Writable for EfuseDataSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets EFUSE_DATA[%s] to value 0"]
+        impl crate::Resettable for EfuseDataSpec {}
     }
 }
 #[doc = "System Control 0 - reset status, clock control, PLL config"]
@@ -27482,7 +27755,7 @@ pub mod km {
         kc_reecpu_lock_cmd: KcReecpuLockCmd,
         kc_pcpu_lock_cmd: KcPcpuLockCmd,
         kc_aidsp_lock_cmd: KcAidspLockCmd,
-        _reserved16: [u8; 0x20],
+        _reserved19: [u8; 0x20],
         kc_rd_slot_num: KcRdSlotNum,
         kc_rd_lock_status: KcRdLockStatus,
     }
@@ -28497,34 +28770,71 @@ pub mod km {
         pub type R = crate::R<KcPcpuLockCmdSpec>;
         #[doc = "Register `KC_PCPU_LOCK_CMD` writer"]
         pub type W = crate::W<KcPcpuLockCmdSpec>;
+        #[doc = "Field `key_slot_num` reader - Key slot number"]
         pub type KeySlotNumR = crate::FieldReader<u16>;
+        #[doc = "Field `key_slot_num` writer - Key slot number"]
         pub type KeySlotNumW<'a, REG> = crate::FieldWriter<'a, REG, 10, u16>;
+        #[doc = "Field `flush_hmac_kslot_ind` reader - Keyslot type: 0=mcipher; 1=HMAC"]
+        pub type FlushHmacKslotIndR = crate::BitReader;
+        #[doc = "Field `flush_hmac_kslot_ind` writer - Keyslot type: 0=mcipher; 1=HMAC"]
+        pub type FlushHmacKslotIndW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `tscipher_ind` reader - TSCipher indicator"]
+        pub type TscipherIndR = crate::BitReader;
+        #[doc = "Field `tscipher_ind` writer - TSCipher indicator"]
+        pub type TscipherIndW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `lock_cmd` writer - Lock command: 1=lock; 0=unlock"]
         pub type LockCmdW<'a, REG> = crate::BitWriter<'a, REG>;
         impl R {
+            #[doc = "Bits 0:9 - Key slot number"]
             #[inline(always)]
             pub fn key_slot_num(&self) -> KeySlotNumR {
                 KeySlotNumR::new((self.bits & 0x03ff) as u16)
             }
+            #[doc = "Bit 15 - Keyslot type: 0=mcipher; 1=HMAC"]
+            #[inline(always)]
+            pub fn flush_hmac_kslot_ind(&self) -> FlushHmacKslotIndR {
+                FlushHmacKslotIndR::new(((self.bits >> 15) & 1) != 0)
+            }
+            #[doc = "Bit 16 - TSCipher indicator"]
+            #[inline(always)]
+            pub fn tscipher_ind(&self) -> TscipherIndR {
+                TscipherIndR::new(((self.bits >> 16) & 1) != 0)
+            }
         }
         impl W {
+            #[doc = "Bits 0:9 - Key slot number"]
             #[inline(always)]
             pub fn key_slot_num(&mut self) -> KeySlotNumW<'_, KcPcpuLockCmdSpec> {
                 KeySlotNumW::new(self, 0)
             }
+            #[doc = "Bit 15 - Keyslot type: 0=mcipher; 1=HMAC"]
+            #[inline(always)]
+            pub fn flush_hmac_kslot_ind(&mut self) -> FlushHmacKslotIndW<'_, KcPcpuLockCmdSpec> {
+                FlushHmacKslotIndW::new(self, 15)
+            }
+            #[doc = "Bit 16 - TSCipher indicator"]
+            #[inline(always)]
+            pub fn tscipher_ind(&mut self) -> TscipherIndW<'_, KcPcpuLockCmdSpec> {
+                TscipherIndW::new(self, 16)
+            }
+            #[doc = "Bit 20 - Lock command: 1=lock; 0=unlock"]
             #[inline(always)]
             pub fn lock_cmd(&mut self) -> LockCmdW<'_, KcPcpuLockCmdSpec> {
                 LockCmdW::new(self, 20)
             }
         }
-        #[doc = "PCPU keyslot lock command"]
+        #[doc = "PCPU keyslot lock command\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_pcpu_lock_cmd::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_pcpu_lock_cmd::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct KcPcpuLockCmdSpec;
         impl crate::RegisterSpec for KcPcpuLockCmdSpec {
             type Ux = u32;
         }
+        #[doc = "`read()` method returns [`kc_pcpu_lock_cmd::R`](R) reader structure"]
         impl crate::Readable for KcPcpuLockCmdSpec {}
+        #[doc = "`write(|w| ..)` method takes [`kc_pcpu_lock_cmd::W`](W) writer structure"]
         impl crate::Writable for KcPcpuLockCmdSpec {
             type Safety = crate::Unsafe;
         }
+        #[doc = "`reset()` method sets KC_PCPU_LOCK_CMD to value 0"]
         impl crate::Resettable for KcPcpuLockCmdSpec {}
     }
     #[doc = "KC_AIDSP_LOCK_CMD (rw) register accessor: AIDSP keyslot lock command\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_aidsp_lock_cmd::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_aidsp_lock_cmd::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_aidsp_lock_cmd`] module"]
@@ -28536,34 +28846,71 @@ pub mod km {
         pub type R = crate::R<KcAidspLockCmdSpec>;
         #[doc = "Register `KC_AIDSP_LOCK_CMD` writer"]
         pub type W = crate::W<KcAidspLockCmdSpec>;
+        #[doc = "Field `key_slot_num` reader - Key slot number"]
         pub type KeySlotNumR = crate::FieldReader<u16>;
+        #[doc = "Field `key_slot_num` writer - Key slot number"]
         pub type KeySlotNumW<'a, REG> = crate::FieldWriter<'a, REG, 10, u16>;
+        #[doc = "Field `flush_hmac_kslot_ind` reader - Keyslot type: 0=mcipher; 1=HMAC"]
+        pub type FlushHmacKslotIndR = crate::BitReader;
+        #[doc = "Field `flush_hmac_kslot_ind` writer - Keyslot type: 0=mcipher; 1=HMAC"]
+        pub type FlushHmacKslotIndW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `tscipher_ind` reader - TSCipher indicator"]
+        pub type TscipherIndR = crate::BitReader;
+        #[doc = "Field `tscipher_ind` writer - TSCipher indicator"]
+        pub type TscipherIndW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `lock_cmd` writer - Lock command: 1=lock; 0=unlock"]
         pub type LockCmdW<'a, REG> = crate::BitWriter<'a, REG>;
         impl R {
+            #[doc = "Bits 0:9 - Key slot number"]
             #[inline(always)]
             pub fn key_slot_num(&self) -> KeySlotNumR {
                 KeySlotNumR::new((self.bits & 0x03ff) as u16)
             }
+            #[doc = "Bit 15 - Keyslot type: 0=mcipher; 1=HMAC"]
+            #[inline(always)]
+            pub fn flush_hmac_kslot_ind(&self) -> FlushHmacKslotIndR {
+                FlushHmacKslotIndR::new(((self.bits >> 15) & 1) != 0)
+            }
+            #[doc = "Bit 16 - TSCipher indicator"]
+            #[inline(always)]
+            pub fn tscipher_ind(&self) -> TscipherIndR {
+                TscipherIndR::new(((self.bits >> 16) & 1) != 0)
+            }
         }
         impl W {
+            #[doc = "Bits 0:9 - Key slot number"]
             #[inline(always)]
             pub fn key_slot_num(&mut self) -> KeySlotNumW<'_, KcAidspLockCmdSpec> {
                 KeySlotNumW::new(self, 0)
             }
+            #[doc = "Bit 15 - Keyslot type: 0=mcipher; 1=HMAC"]
+            #[inline(always)]
+            pub fn flush_hmac_kslot_ind(&mut self) -> FlushHmacKslotIndW<'_, KcAidspLockCmdSpec> {
+                FlushHmacKslotIndW::new(self, 15)
+            }
+            #[doc = "Bit 16 - TSCipher indicator"]
+            #[inline(always)]
+            pub fn tscipher_ind(&mut self) -> TscipherIndW<'_, KcAidspLockCmdSpec> {
+                TscipherIndW::new(self, 16)
+            }
+            #[doc = "Bit 20 - Lock command: 1=lock; 0=unlock"]
             #[inline(always)]
             pub fn lock_cmd(&mut self) -> LockCmdW<'_, KcAidspLockCmdSpec> {
                 LockCmdW::new(self, 20)
             }
         }
-        #[doc = "AIDSP keyslot lock command"]
+        #[doc = "AIDSP keyslot lock command\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_aidsp_lock_cmd::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_aidsp_lock_cmd::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct KcAidspLockCmdSpec;
         impl crate::RegisterSpec for KcAidspLockCmdSpec {
             type Ux = u32;
         }
+        #[doc = "`read()` method returns [`kc_aidsp_lock_cmd::R`](R) reader structure"]
         impl crate::Readable for KcAidspLockCmdSpec {}
+        #[doc = "`write(|w| ..)` method takes [`kc_aidsp_lock_cmd::W`](W) writer structure"]
         impl crate::Writable for KcAidspLockCmdSpec {
             type Safety = crate::Unsafe;
         }
+        #[doc = "`reset()` method sets KC_AIDSP_LOCK_CMD to value 0"]
         impl crate::Resettable for KcAidspLockCmdSpec {}
     }
     #[doc = "KC_RD_SLOT_NUM (rw) register accessor: Keyslot query slot number selection\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_rd_slot_num::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_rd_slot_num::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_rd_slot_num`] module"]
@@ -28575,16 +28922,20 @@ pub mod km {
         pub type R = crate::R<KcRdSlotNumSpec>;
         #[doc = "Register `KC_RD_SLOT_NUM` writer"]
         pub type W = crate::W<KcRdSlotNumSpec>;
-        #[doc = "Field `slot_num_cfg` reader - Slot number to query"]
+        #[doc = "Field `slot_num_cfg` reader - Slot number to query (0-255)"]
         pub type SlotNumCfgR = crate::FieldReader<u16>;
-        #[doc = "Field `slot_num_cfg` writer - Slot number to query"]
+        #[doc = "Field `slot_num_cfg` writer - Slot number to query (0-255)"]
         pub type SlotNumCfgW<'a, REG> = crate::FieldWriter<'a, REG, 10, u16>;
         #[doc = "Field `slot_cfg_type` reader - Keyslot type: 0=mcipher; 1=HMAC"]
         pub type SlotCfgTypeR = crate::BitReader;
         #[doc = "Field `slot_cfg_type` writer - Keyslot type: 0=mcipher; 1=HMAC"]
         pub type SlotCfgTypeW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `tscipher_slot_ind` reader - TSCipher slot indicator"]
+        pub type TscipherSlotIndR = crate::BitReader;
+        #[doc = "Field `tscipher_slot_ind` writer - TSCipher slot indicator"]
+        pub type TscipherSlotIndW<'a, REG> = crate::BitWriter<'a, REG>;
         impl R {
-            #[doc = "Bits 0:9 - Slot number to query"]
+            #[doc = "Bits 0:9 - Slot number to query (0-255)"]
             #[inline(always)]
             pub fn slot_num_cfg(&self) -> SlotNumCfgR {
                 SlotNumCfgR::new((self.bits & 0x03ff) as u16)
@@ -28594,9 +28945,14 @@ pub mod km {
             pub fn slot_cfg_type(&self) -> SlotCfgTypeR {
                 SlotCfgTypeR::new(((self.bits >> 15) & 1) != 0)
             }
+            #[doc = "Bit 16 - TSCipher slot indicator"]
+            #[inline(always)]
+            pub fn tscipher_slot_ind(&self) -> TscipherSlotIndR {
+                TscipherSlotIndR::new(((self.bits >> 16) & 1) != 0)
+            }
         }
         impl W {
-            #[doc = "Bits 0:9 - Slot number to query"]
+            #[doc = "Bits 0:9 - Slot number to query (0-255)"]
             #[inline(always)]
             pub fn slot_num_cfg(&mut self) -> SlotNumCfgW<'_, KcRdSlotNumSpec> {
                 SlotNumCfgW::new(self, 0)
@@ -28606,16 +28962,24 @@ pub mod km {
             pub fn slot_cfg_type(&mut self) -> SlotCfgTypeW<'_, KcRdSlotNumSpec> {
                 SlotCfgTypeW::new(self, 15)
             }
+            #[doc = "Bit 16 - TSCipher slot indicator"]
+            #[inline(always)]
+            pub fn tscipher_slot_ind(&mut self) -> TscipherSlotIndW<'_, KcRdSlotNumSpec> {
+                TscipherSlotIndW::new(self, 16)
+            }
         }
         #[doc = "Keyslot query slot number selection\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_rd_slot_num::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_rd_slot_num::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct KcRdSlotNumSpec;
         impl crate::RegisterSpec for KcRdSlotNumSpec {
             type Ux = u32;
         }
+        #[doc = "`read()` method returns [`kc_rd_slot_num::R`](R) reader structure"]
         impl crate::Readable for KcRdSlotNumSpec {}
+        #[doc = "`write(|w| ..)` method takes [`kc_rd_slot_num::W`](W) writer structure"]
         impl crate::Writable for KcRdSlotNumSpec {
             type Safety = crate::Unsafe;
         }
+        #[doc = "`reset()` method sets KC_RD_SLOT_NUM to value 0"]
         impl crate::Resettable for KcRdSlotNumSpec {}
     }
     #[doc = "KC_RD_LOCK_STATUS (rw) register accessor: Keyslot lock status readback\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_rd_lock_status::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_rd_lock_status::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_rd_lock_status`] module"]
@@ -31772,43 +32136,45 @@ impl Peripherals {
     #[doc = r" Each of the returned peripherals must be used at most once."]
     #[inline]
     pub unsafe fn steal() -> Self {
-        unsafe { DEVICE_PERIPHERALS = true }
-        Peripherals {
-            sys_ctl1: unsafe { SysCtl1::steal() },
-            io_config: unsafe { IoConfig::steal() },
-            gpio0: unsafe { Gpio0::steal() },
-            gpio1: unsafe { Gpio1::steal() },
-            gpio2: unsafe { Gpio2::steal() },
-            uart0: unsafe { Uart0::steal() },
-            uart1: unsafe { Uart1::steal() },
-            uart2: unsafe { Uart2::steal() },
-            i2c0: unsafe { I2c0::steal() },
-            i2c1: unsafe { I2c1::steal() },
-            pwm: unsafe { Pwm::steal() },
-            dma: unsafe { Dma::steal() },
-            sfc_cfg: unsafe { SfcCfg::steal() },
-            spi0: unsafe { Spi0::steal() },
-            spi1: unsafe { Spi1::steal() },
-            i2s: unsafe { I2s::steal() },
-            lsadc: unsafe { Lsadc::steal() },
-            tsensor: unsafe { Tsensor::steal() },
-            timer: unsafe { Timer::steal() },
-            wdt: unsafe { Wdt::steal() },
-            rtc: unsafe { Rtc::steal() },
-            efuse: unsafe { Efuse::steal() },
-            sys_ctl0: unsafe { SysCtl0::steal() },
-            glb_ctl_m: unsafe { GlbCtlM::steal() },
-            spacc: unsafe { Spacc::steal() },
-            pke: unsafe { Pke::steal() },
-            km: unsafe { Km::steal() },
-            trng: unsafe { Trng::steal() },
-            tcxo: unsafe { Tcxo::steal() },
-            cldo_crg: unsafe { CldoCrg::steal() },
-            sdma: unsafe { Sdma::steal() },
-            ulp_gpio: unsafe { UlpGpio::steal() },
-            rf_wb_ctl: unsafe { RfWbCtl::steal() },
-            share_mem_ctl: unsafe { ShareMemCtl::steal() },
-            fama_remap: unsafe { FamaRemap::steal() },
+        unsafe {
+            DEVICE_PERIPHERALS = true;
+            Peripherals {
+                sys_ctl1: SysCtl1::steal(),
+                io_config: IoConfig::steal(),
+                gpio0: Gpio0::steal(),
+                gpio1: Gpio1::steal(),
+                gpio2: Gpio2::steal(),
+                uart0: Uart0::steal(),
+                uart1: Uart1::steal(),
+                uart2: Uart2::steal(),
+                i2c0: I2c0::steal(),
+                i2c1: I2c1::steal(),
+                pwm: Pwm::steal(),
+                dma: Dma::steal(),
+                sfc_cfg: SfcCfg::steal(),
+                spi0: Spi0::steal(),
+                spi1: Spi1::steal(),
+                i2s: I2s::steal(),
+                lsadc: Lsadc::steal(),
+                tsensor: Tsensor::steal(),
+                timer: Timer::steal(),
+                wdt: Wdt::steal(),
+                rtc: Rtc::steal(),
+                efuse: Efuse::steal(),
+                sys_ctl0: SysCtl0::steal(),
+                glb_ctl_m: GlbCtlM::steal(),
+                spacc: Spacc::steal(),
+                pke: Pke::steal(),
+                km: Km::steal(),
+                trng: Trng::steal(),
+                tcxo: Tcxo::steal(),
+                cldo_crg: CldoCrg::steal(),
+                sdma: Sdma::steal(),
+                ulp_gpio: UlpGpio::steal(),
+                rf_wb_ctl: RfWbCtl::steal(),
+                share_mem_ctl: ShareMemCtl::steal(),
+                fama_remap: FamaRemap::steal(),
+            }
         }
     }
 }
