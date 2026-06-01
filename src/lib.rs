@@ -877,17 +877,22 @@ pub mod generic {
 }
 #[doc = r" Interrupt numbers, priority levels, and HART IDs."]
 pub mod interrupt {
+    #[cfg(target_arch = "riscv32")]
     pub use riscv::interrupt::Exception;
+    #[cfg(target_arch = "riscv32")]
     pub use riscv::interrupt::Interrupt as CoreInterrupt;
+    #[cfg(target_arch = "riscv32")]
     pub use riscv::{
         ExceptionNumber, HartIdNumber, InterruptNumber, PriorityNumber,
         interrupt::{disable, enable, free, nested},
     };
+    #[cfg(target_arch = "riscv32")]
     pub type Trap = riscv::interrupt::Trap<CoreInterrupt, Exception>;
     #[doc = r" Retrieves the cause of a trap in the current hart."]
     #[doc = r""]
     #[doc = r" If the raw cause is not a valid interrupt or exception for the target, it returns an error."]
     #[inline]
+    #[cfg(target_arch = "riscv32")]
     pub fn try_cause() -> riscv::result::Result<Trap> {
         riscv::interrupt::try_cause()
     }
@@ -895,11 +900,12 @@ pub mod interrupt {
     #[doc = r""]
     #[doc = r" If the raw cause is not a valid interrupt or exception for the target, it panics."]
     #[inline]
+    #[cfg(target_arch = "riscv32")]
     pub fn cause() -> Trap {
         try_cause().unwrap()
     }
     #[doc = r" External interrupts. These interrupts are handled by the external peripherals."]
-    #[riscv :: pac_enum (unsafe ExternalInterruptNumber)]
+    #[cfg_attr(target_arch = "riscv32", riscv :: pac_enum (unsafe ExternalInterruptNumber))]
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     pub enum ExternalInterrupt {
         #[doc = "26 - TIMER_INT0"]

@@ -11,6 +11,12 @@ categories = ["embedded", "no-std", "hardware-support"]
 [dependencies]
 critical-section = { version = "1", optional = true }
 vcell = "0.1"
+
+# The `riscv` crate (and its riscv-pac dep) only builds for riscv targets. The
+# generated `interrupt` module's riscv-lib re-exports + the `#[riscv::pac_enum]`
+# impl on `ExternalInterrupt` are cfg-gated to riscv32 (see ws63-svd/postprocess.py),
+# so on host the crate compiles without `riscv` — letting ws63-hal run host unit tests.
+[target.'cfg(target_arch = "riscv32")'.dependencies]
 riscv = "0.13"
 
 [features]
