@@ -18754,7 +18754,7 @@ pub mod spi0 {
         pub const fn spi_rlr(&self) -> &SpiRlr {
             &self.spi_rlr
         }
-        #[doc = "0xe4 - Status register"]
+        #[doc = "0xe4 - Status register. Bit layout matches the HiSilicon SSI v151 silicon (vendor hal_spi_v151_regs_def.h spi_wsr_data), NOT the textbook DesignWare SR: the FIFO/busy flags are spread out, not packed in bits 0..6. Verified on WS63 silicon 2026-06-14 (idle reads 0x1800 = TXFNF | TXFE)."]
         #[inline(always)]
         pub const fn spi_wsr(&self) -> &SpiWsr {
             &self.spi_wsr
@@ -19849,68 +19849,61 @@ pub mod spi0 {
         #[doc = "`reset()` method sets SPI_RLR to value 0"]
         impl crate::Resettable for SpiRlrSpec {}
     }
-    #[doc = "SPI_WSR (rw) register accessor: Status register\n\nYou can [`read`](crate::Reg::read) this register and get [`spi_wsr::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spi_wsr::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spi_wsr`] module"]
+    #[doc = "SPI_WSR (rw) register accessor: Status register. Bit layout matches the HiSilicon SSI v151 silicon (vendor hal_spi_v151_regs_def.h spi_wsr_data), NOT the textbook DesignWare SR: the FIFO/busy flags are spread out, not packed in bits 0..6. Verified on WS63 silicon 2026-06-14 (idle reads 0x1800 = TXFNF | TXFE).\n\nYou can [`read`](crate::Reg::read) this register and get [`spi_wsr::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spi_wsr::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spi_wsr`] module"]
     #[doc(alias = "SPI_WSR")]
     pub type SpiWsr = crate::Reg<spi_wsr::SpiWsrSpec>;
-    #[doc = "Status register"]
+    #[doc = "Status register. Bit layout matches the HiSilicon SSI v151 silicon (vendor hal_spi_v151_regs_def.h spi_wsr_data), NOT the textbook DesignWare SR: the FIFO/busy flags are spread out, not packed in bits 0..6. Verified on WS63 silicon 2026-06-14 (idle reads 0x1800 = TXFNF | TXFE)."]
     pub mod spi_wsr {
         #[doc = "Register `SPI_WSR` reader"]
         pub type R = crate::R<SpiWsrSpec>;
         #[doc = "Register `SPI_WSR` writer"]
         pub type W = crate::W<SpiWsrSpec>;
-        #[doc = "Field `busy` reader - SPI busy flag"]
-        pub type BusyR = crate::BitReader;
+        #[doc = "Field `dcol` reader - Data collision error (master): the last transfer was halted because another master asserted ss_in_n. Cleared on read."]
+        pub type DcolR = crate::BitReader;
+        #[doc = "Field `rxfne` reader - RX FIFO not empty"]
+        pub type RxfneR = crate::BitReader;
+        #[doc = "Field `rxff` reader - RX FIFO full"]
+        pub type RxffR = crate::BitReader;
         #[doc = "Field `txfnf` reader - TX FIFO not full"]
         pub type TxfnfR = crate::BitReader;
         #[doc = "Field `txfe` reader - TX FIFO empty"]
         pub type TxfeR = crate::BitReader;
-        #[doc = "Field `rxfne` reader - RX FIFO not empty"]
-        pub type RxfneR = crate::BitReader;
-        #[doc = "Field `rxfo` reader - RX FIFO overflow"]
-        pub type RxfoR = crate::BitReader;
-        #[doc = "Field `txfo` reader - TX FIFO overflow"]
-        pub type TxfoR = crate::BitReader;
-        #[doc = "Field `dcm` reader - Data conflict mask"]
-        pub type DcmR = crate::BitReader;
+        #[doc = "Field `busy` reader - SPI busy flag (serial transfer in progress)"]
+        pub type BusyR = crate::BitReader;
         impl R {
-            #[doc = "Bit 0 - SPI busy flag"]
+            #[doc = "Bit 0 - Data collision error (master): the last transfer was halted because another master asserted ss_in_n. Cleared on read."]
             #[inline(always)]
-            pub fn busy(&self) -> BusyR {
-                BusyR::new((self.bits & 1) != 0)
+            pub fn dcol(&self) -> DcolR {
+                DcolR::new((self.bits & 1) != 0)
             }
-            #[doc = "Bit 1 - TX FIFO not full"]
-            #[inline(always)]
-            pub fn txfnf(&self) -> TxfnfR {
-                TxfnfR::new(((self.bits >> 1) & 1) != 0)
-            }
-            #[doc = "Bit 2 - TX FIFO empty"]
-            #[inline(always)]
-            pub fn txfe(&self) -> TxfeR {
-                TxfeR::new(((self.bits >> 2) & 1) != 0)
-            }
-            #[doc = "Bit 3 - RX FIFO not empty"]
+            #[doc = "Bit 4 - RX FIFO not empty"]
             #[inline(always)]
             pub fn rxfne(&self) -> RxfneR {
-                RxfneR::new(((self.bits >> 3) & 1) != 0)
+                RxfneR::new(((self.bits >> 4) & 1) != 0)
             }
-            #[doc = "Bit 4 - RX FIFO overflow"]
+            #[doc = "Bit 5 - RX FIFO full"]
             #[inline(always)]
-            pub fn rxfo(&self) -> RxfoR {
-                RxfoR::new(((self.bits >> 4) & 1) != 0)
+            pub fn rxff(&self) -> RxffR {
+                RxffR::new(((self.bits >> 5) & 1) != 0)
             }
-            #[doc = "Bit 5 - TX FIFO overflow"]
+            #[doc = "Bit 11 - TX FIFO not full"]
             #[inline(always)]
-            pub fn txfo(&self) -> TxfoR {
-                TxfoR::new(((self.bits >> 5) & 1) != 0)
+            pub fn txfnf(&self) -> TxfnfR {
+                TxfnfR::new(((self.bits >> 11) & 1) != 0)
             }
-            #[doc = "Bit 6 - Data conflict mask"]
+            #[doc = "Bit 12 - TX FIFO empty"]
             #[inline(always)]
-            pub fn dcm(&self) -> DcmR {
-                DcmR::new(((self.bits >> 6) & 1) != 0)
+            pub fn txfe(&self) -> TxfeR {
+                TxfeR::new(((self.bits >> 12) & 1) != 0)
+            }
+            #[doc = "Bit 15 - SPI busy flag (serial transfer in progress)"]
+            #[inline(always)]
+            pub fn busy(&self) -> BusyR {
+                BusyR::new(((self.bits >> 15) & 1) != 0)
             }
         }
         impl W {}
-        #[doc = "Status register\n\nYou can [`read`](crate::Reg::read) this register and get [`spi_wsr::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spi_wsr::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Status register. Bit layout matches the HiSilicon SSI v151 silicon (vendor hal_spi_v151_regs_def.h spi_wsr_data), NOT the textbook DesignWare SR: the FIFO/busy flags are spread out, not packed in bits 0..6. Verified on WS63 silicon 2026-06-14 (idle reads 0x1800 = TXFNF | TXFE).\n\nYou can [`read`](crate::Reg::read) this register and get [`spi_wsr::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spi_wsr::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SpiWsrSpec;
         impl crate::RegisterSpec for SpiWsrSpec {
             type Ux = u32;
@@ -19921,9 +19914,9 @@ pub mod spi0 {
         impl crate::Writable for SpiWsrSpec {
             type Safety = crate::Unsafe;
         }
-        #[doc = "`reset()` method sets SPI_WSR to value 0x06"]
+        #[doc = "`reset()` method sets SPI_WSR to value 0x1800"]
         impl crate::Resettable for SpiWsrSpec {
-            const RESET_VALUE: u32 = 0x06;
+            const RESET_VALUE: u32 = 0x1800;
         }
     }
     #[doc = "SPI_ICR (rw) register accessor: Interrupt clear register\n\nYou can [`read`](crate::Reg::read) this register and get [`spi_icr::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spi_icr::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spi_icr`] module"]

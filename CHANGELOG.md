@@ -8,6 +8,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Fixed
 
+- **SPI_WSR (status register) bit layout** corrected to match the HiSilicon SSI
+  v151 silicon (vendor `hal_spi_v151_regs_def.h` `spi_wsr_data`), which spreads the
+  flags out instead of packing them like the textbook DesignWare SR:
+  `rxfne` = bit 4, `rxff` = bit 5, `txfnf` = bit 11, `txfe` = bit 12,
+  `busy` = bit 15, `dcol` = bit 0 (was the wrong `busy` = 0 / `txfnf` = 1 /
+  `txfe` = 2 / `rxfne` = 3, plus bogus `rxfo`/`txfo`/`dcm`). With the old layout
+  `txfnf` read a reserved bit that is always 0, so the HAL's SPI transfer spun until
+  it returned `Timeout` on every call. Reset value updated to 0x1800 (TXFNF|TXFE,
+  the idle state). Verified on WS63 silicon 2026-06-14: SPI0 MOSI→MISO HIL loopback
+  now round-trips a 4-byte buffer (previously `Err(Timeout)`).
 - **TIMER `%s_CONTROL`**: added the `cnt_req` (bit 5, rw) and `cnt_lock` (bit 6, ro)
   fields — the current-count latch handshake. They were missing; reading
   `CURRENT_VALUE` on real silicon needs them (it is a latch, not a live counter),
