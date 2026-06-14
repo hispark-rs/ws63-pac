@@ -23516,16 +23516,16 @@ pub mod timer {
         pub type EnableR = crate::BitReader;
         #[doc = "Field `enable` writer - Timer enable: 0=disabled; 1=enabled"]
         pub type EnableW<'a, REG> = crate::BitWriter<'a, REG>;
-        #[doc = "Timer mode: 00=free running; 01=one-shot; 10=periodic\n\nValue on reset: 0"]
+        #[doc = "Timer mode (TIMER_V150, per vendor control_reg_mode_v150_t): 0=one-shot; 1=periodic; 3=free-run (2 is a one-shot alias)\n\nValue on reset: 0"]
         #[derive(Clone, Copy, Debug, PartialEq, Eq)]
         #[repr(u8)]
         pub enum Mode {
-            #[doc = "0: Free-running mode"]
-            FreeRunning = 0,
-            #[doc = "1: One-shot mode"]
-            OneShot = 1,
-            #[doc = "2: Periodic mode"]
-            Periodic = 2,
+            #[doc = "0: One-shot mode"]
+            OneShot = 0,
+            #[doc = "1: Periodic mode"]
+            Periodic = 1,
+            #[doc = "3: Free-running mode"]
+            FreeRun = 3,
         }
         impl From<Mode> for u8 {
             #[inline(always)]
@@ -23537,23 +23537,18 @@ pub mod timer {
             type Ux = u8;
         }
         impl crate::IsEnum for Mode {}
-        #[doc = "Field `mode` reader - Timer mode: 00=free running; 01=one-shot; 10=periodic"]
+        #[doc = "Field `mode` reader - Timer mode (TIMER_V150, per vendor control_reg_mode_v150_t): 0=one-shot; 1=periodic; 3=free-run (2 is a one-shot alias)"]
         pub type ModeR = crate::FieldReader<Mode>;
         impl ModeR {
             #[doc = "Get enumerated values variant"]
             #[inline(always)]
             pub const fn variant(&self) -> Option<Mode> {
                 match self.bits {
-                    0 => Some(Mode::FreeRunning),
-                    1 => Some(Mode::OneShot),
-                    2 => Some(Mode::Periodic),
+                    0 => Some(Mode::OneShot),
+                    1 => Some(Mode::Periodic),
+                    3 => Some(Mode::FreeRun),
                     _ => None,
                 }
-            }
-            #[doc = "Free-running mode"]
-            #[inline(always)]
-            pub fn is_free_running(&self) -> bool {
-                *self == Mode::FreeRunning
             }
             #[doc = "One-shot mode"]
             #[inline(always)]
@@ -23565,19 +23560,19 @@ pub mod timer {
             pub fn is_periodic(&self) -> bool {
                 *self == Mode::Periodic
             }
+            #[doc = "Free-running mode"]
+            #[inline(always)]
+            pub fn is_free_run(&self) -> bool {
+                *self == Mode::FreeRun
+            }
         }
-        #[doc = "Field `mode` writer - Timer mode: 00=free running; 01=one-shot; 10=periodic"]
+        #[doc = "Field `mode` writer - Timer mode (TIMER_V150, per vendor control_reg_mode_v150_t): 0=one-shot; 1=periodic; 3=free-run (2 is a one-shot alias)"]
         pub type ModeW<'a, REG> = crate::FieldWriter<'a, REG, 2, Mode>;
         impl<'a, REG> ModeW<'a, REG>
         where
             REG: crate::Writable + crate::RegisterSpec,
             REG::Ux: From<u8>,
         {
-            #[doc = "Free-running mode"]
-            #[inline(always)]
-            pub fn free_running(self) -> &'a mut crate::W<REG> {
-                self.variant(Mode::FreeRunning)
-            }
             #[doc = "One-shot mode"]
             #[inline(always)]
             pub fn one_shot(self) -> &'a mut crate::W<REG> {
@@ -23588,6 +23583,11 @@ pub mod timer {
             pub fn periodic(self) -> &'a mut crate::W<REG> {
                 self.variant(Mode::Periodic)
             }
+            #[doc = "Free-running mode"]
+            #[inline(always)]
+            pub fn free_run(self) -> &'a mut crate::W<REG> {
+                self.variant(Mode::FreeRun)
+            }
         }
         #[doc = "Field `int_mask` reader - Interrupt mask: 0=unmasked; 1=masked"]
         pub type IntMaskR = crate::BitReader;
@@ -23595,13 +23595,19 @@ pub mod timer {
         pub type IntMaskW<'a, REG> = crate::BitWriter<'a, REG>;
         #[doc = "Field `rstfsm` writer - Reset FSM: 1=reset timer FSM"]
         pub type RstfsmW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `cnt_req` reader - Current-count latch request (TIMER_V150): write 1 to snapshot the live down-counter into the current-value register; the HW asserts cnt_lock when the snapshot is ready. Required to read a fresh count on silicon (the current-value register is a latch, not a live counter)."]
+        pub type CntReqR = crate::BitReader;
+        #[doc = "Field `cnt_req` writer - Current-count latch request (TIMER_V150): write 1 to snapshot the live down-counter into the current-value register; the HW asserts cnt_lock when the snapshot is ready. Required to read a fresh count on silicon (the current-value register is a latch, not a live counter)."]
+        pub type CntReqW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `cnt_lock` reader - Current-count latch valid (TIMER_V150): set by HW after a cnt_req snapshot completes; poll until 1 before reading the current-value register."]
+        pub type CntLockR = crate::BitReader;
         impl R {
             #[doc = "Bit 0 - Timer enable: 0=disabled; 1=enabled"]
             #[inline(always)]
             pub fn enable(&self) -> EnableR {
                 EnableR::new((self.bits & 1) != 0)
             }
-            #[doc = "Bits 1:2 - Timer mode: 00=free running; 01=one-shot; 10=periodic"]
+            #[doc = "Bits 1:2 - Timer mode (TIMER_V150, per vendor control_reg_mode_v150_t): 0=one-shot; 1=periodic; 3=free-run (2 is a one-shot alias)"]
             #[inline(always)]
             pub fn mode(&self) -> ModeR {
                 ModeR::new(((self.bits >> 1) & 3) as u8)
@@ -23611,6 +23617,16 @@ pub mod timer {
             pub fn int_mask(&self) -> IntMaskR {
                 IntMaskR::new(((self.bits >> 3) & 1) != 0)
             }
+            #[doc = "Bit 5 - Current-count latch request (TIMER_V150): write 1 to snapshot the live down-counter into the current-value register; the HW asserts cnt_lock when the snapshot is ready. Required to read a fresh count on silicon (the current-value register is a latch, not a live counter)."]
+            #[inline(always)]
+            pub fn cnt_req(&self) -> CntReqR {
+                CntReqR::new(((self.bits >> 5) & 1) != 0)
+            }
+            #[doc = "Bit 6 - Current-count latch valid (TIMER_V150): set by HW after a cnt_req snapshot completes; poll until 1 before reading the current-value register."]
+            #[inline(always)]
+            pub fn cnt_lock(&self) -> CntLockR {
+                CntLockR::new(((self.bits >> 6) & 1) != 0)
+            }
         }
         impl W {
             #[doc = "Bit 0 - Timer enable: 0=disabled; 1=enabled"]
@@ -23618,7 +23634,7 @@ pub mod timer {
             pub fn enable(&mut self) -> EnableW<'_, TimerControlSpec> {
                 EnableW::new(self, 0)
             }
-            #[doc = "Bits 1:2 - Timer mode: 00=free running; 01=one-shot; 10=periodic"]
+            #[doc = "Bits 1:2 - Timer mode (TIMER_V150, per vendor control_reg_mode_v150_t): 0=one-shot; 1=periodic; 3=free-run (2 is a one-shot alias)"]
             #[inline(always)]
             pub fn mode(&mut self) -> ModeW<'_, TimerControlSpec> {
                 ModeW::new(self, 1)
@@ -23632,6 +23648,11 @@ pub mod timer {
             #[inline(always)]
             pub fn rstfsm(&mut self) -> RstfsmW<'_, TimerControlSpec> {
                 RstfsmW::new(self, 4)
+            }
+            #[doc = "Bit 5 - Current-count latch request (TIMER_V150): write 1 to snapshot the live down-counter into the current-value register; the HW asserts cnt_lock when the snapshot is ready. Required to read a fresh count on silicon (the current-value register is a latch, not a live counter)."]
+            #[inline(always)]
+            pub fn cnt_req(&mut self) -> CntReqW<'_, TimerControlSpec> {
+                CntReqW::new(self, 5)
             }
         }
         #[doc = "Timer %s \\[dim=3\\] control register\n\nYou can [`read`](crate::Reg::read) this register and get [`timer_control::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`timer_control::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]

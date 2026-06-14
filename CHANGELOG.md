@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- **TIMER `%s_CONTROL`**: added the `cnt_req` (bit 5, rw) and `cnt_lock` (bit 6, ro)
+  fields — the current-count latch handshake. They were missing; reading
+  `CURRENT_VALUE` on real silicon needs them (it is a latch, not a live counter),
+  so drivers previously had to poke raw bits. Verified against the vendor
+  `hal_timer_v150` + on WS63 silicon.
+- **TIMER `%s_CONTROL.mode`** enum corrected to the silicon/vendor
+  `control_reg_mode_v150_t` values: `OneShot = 0`, `Periodic = 1`, `FreeRun = 3`
+  (was the wrong `FreeRunning = 0 / OneShot = 1 / Periodic = 2`).
+
+Regenerated from `ws63-svd/WS63.svd` via `regen.sh` (svd2rust 0.37.1); DMA and the
+other blocks are unchanged (the DMA register layout was already silicon-correct —
+the earlier DMA bring-up gap was a HAL/QEMU issue, not a PAC one).
+
 ## [0.1.3] - 2026-06-02
 
 ### Changed
