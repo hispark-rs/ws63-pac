@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-06-15
+
+Breaking: the SPI_WSR and TIMER fixes below change the generated public API
+(removed/renamed accessors + changed `Mode` enum discriminants), so this is a
+minor (0.x-breaking) bump, not a patch.
+
 ### Fixed
 
 - **SPI_WSR (status register) bit layout** corrected to match the HiSilicon SSI
