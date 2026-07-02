@@ -22,7 +22,3 @@ riscv = "0.13"
 [features]
 default = ["critical-section"]
 rt = []
-
-[profile.release]
-opt-level = "s"
-lto = true
