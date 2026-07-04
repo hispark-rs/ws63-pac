@@ -21,8 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo check --all-features
-      - run: cargo check --all-features --release
+      - run: cargo check --locked --all-features
+      - run: cargo check --locked --all-features --release
 
   clippy:
     name: Clippy
@@ -32,7 +32,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
-      - run: cargo clippy --all-features
+      - run: cargo clippy --locked --all-features
 
   doc:
     name: Docs
@@ -40,4 +40,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo doc --no-deps --document-private-items
+      - run: cargo doc --locked --no-deps --document-private-items
