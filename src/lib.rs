@@ -1009,6 +1009,8 @@ pub mod sys_ctl1 {
         soft_int_set: SoftIntSet,
         soft_int_clr: SoftIntClr,
         soft_int_sts: SoftIntSts,
+        _reserved5: [u8; 0xe4],
+        ip_auto_cg_bypass: IpAutoCgBypass,
     }
     impl RegisterBlock {
         #[doc = "0x40 - WDT interrupt query and NMI interrupt configuration register"]
@@ -1035,6 +1037,11 @@ pub mod sys_ctl1 {
         #[inline(always)]
         pub const fn soft_int_sts(&self) -> &SoftIntSts {
             &self.soft_int_sts
+        }
+        #[doc = "0x244 - IP auto clock-gate bypass control register. The vendor DMA porting path writes bit 19 so the primary DMA clock stays on during transfers."]
+        #[inline(always)]
+        pub const fn ip_auto_cg_bypass(&self) -> &IpAutoCgBypass {
+            &self.ip_auto_cg_bypass
         }
     }
     #[doc = "NMI_INT (rw) register accessor: WDT interrupt query and NMI interrupt configuration register\n\nYou can [`read`](crate::Reg::read) this register and get [`nmi_int::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`nmi_int::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@nmi_int`] module"]
@@ -1327,6 +1334,47 @@ pub mod sys_ctl1 {
         }
         #[doc = "`reset()` method sets SOFT_INT_STS to value 0"]
         impl crate::Resettable for SoftIntStsSpec {}
+    }
+    #[doc = "IP_AUTO_CG_BYPASS (rw) register accessor: IP auto clock-gate bypass control register. The vendor DMA porting path writes bit 19 so the primary DMA clock stays on during transfers.\n\nYou can [`read`](crate::Reg::read) this register and get [`ip_auto_cg_bypass::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`ip_auto_cg_bypass::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@ip_auto_cg_bypass`] module"]
+    #[doc(alias = "IP_AUTO_CG_BYPASS")]
+    pub type IpAutoCgBypass = crate::Reg<ip_auto_cg_bypass::IpAutoCgBypassSpec>;
+    #[doc = "IP auto clock-gate bypass control register. The vendor DMA porting path writes bit 19 so the primary DMA clock stays on during transfers."]
+    pub mod ip_auto_cg_bypass {
+        #[doc = "Register `IP_AUTO_CG_BYPASS` reader"]
+        pub type R = crate::R<IpAutoCgBypassSpec>;
+        #[doc = "Register `IP_AUTO_CG_BYPASS` writer"]
+        pub type W = crate::W<IpAutoCgBypassSpec>;
+        #[doc = "Field `dma_clk_on` reader - DMA clock-on bypass bit used by DMA_CLK_AUTO_CTRL_REG/DMA_CLK_ON_MASK in the vendor SDK."]
+        pub type DmaClkOnR = crate::BitReader;
+        #[doc = "Field `dma_clk_on` writer - DMA clock-on bypass bit used by DMA_CLK_AUTO_CTRL_REG/DMA_CLK_ON_MASK in the vendor SDK."]
+        pub type DmaClkOnW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 19 - DMA clock-on bypass bit used by DMA_CLK_AUTO_CTRL_REG/DMA_CLK_ON_MASK in the vendor SDK."]
+            #[inline(always)]
+            pub fn dma_clk_on(&self) -> DmaClkOnR {
+                DmaClkOnR::new(((self.bits >> 19) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 19 - DMA clock-on bypass bit used by DMA_CLK_AUTO_CTRL_REG/DMA_CLK_ON_MASK in the vendor SDK."]
+            #[inline(always)]
+            pub fn dma_clk_on(&mut self) -> DmaClkOnW<'_, IpAutoCgBypassSpec> {
+                DmaClkOnW::new(self, 19)
+            }
+        }
+        #[doc = "IP auto clock-gate bypass control register. The vendor DMA porting path writes bit 19 so the primary DMA clock stays on during transfers.\n\nYou can [`read`](crate::Reg::read) this register and get [`ip_auto_cg_bypass::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`ip_auto_cg_bypass::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct IpAutoCgBypassSpec;
+        impl crate::RegisterSpec for IpAutoCgBypassSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`ip_auto_cg_bypass::R`](R) reader structure"]
+        impl crate::Readable for IpAutoCgBypassSpec {}
+        #[doc = "`write(|w| ..)` method takes [`ip_auto_cg_bypass::W`](W) writer structure"]
+        impl crate::Writable for IpAutoCgBypassSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IP_AUTO_CG_BYPASS to value 0"]
+        impl crate::Resettable for IpAutoCgBypassSpec {}
     }
 }
 #[doc = "IO multiplexing and pad control"]
@@ -7021,13 +7069,11 @@ pub mod uart0 {
         #[doc = "`reset()` method sets INTR_STATUS to value 0"]
         impl crate::Resettable for IntrStatusSpec {}
     }
-    #[doc = "FIFO_CTL (rw) register accessor: FIFO control register\n\nYou can [`read`](crate::Reg::read) this register and get [`fifo_ctl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`fifo_ctl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@fifo_ctl`] module"]
+    #[doc = "FIFO_CTL (w) register accessor: FIFO control register\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`fifo_ctl::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@fifo_ctl`] module"]
     #[doc(alias = "FIFO_CTL")]
     pub type FifoCtl = crate::Reg<fifo_ctl::FifoCtlSpec>;
     #[doc = "FIFO control register"]
     pub mod fifo_ctl {
-        #[doc = "Register `FIFO_CTL` reader"]
-        pub type R = crate::R<FifoCtlSpec>;
         #[doc = "Register `FIFO_CTL` writer"]
         pub type W = crate::W<FifoCtlSpec>;
         #[doc = "TX empty trigger: 00=empty; 01=2chars; 10=1/4; 11=1/2\n\nValue on reset: 0"]
@@ -7165,13 +7211,11 @@ pub mod uart0 {
                 RxFifoRstW::new(self, 6)
             }
         }
-        #[doc = "FIFO control register\n\nYou can [`read`](crate::Reg::read) this register and get [`fifo_ctl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`fifo_ctl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "FIFO control register\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`fifo_ctl::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct FifoCtlSpec;
         impl crate::RegisterSpec for FifoCtlSpec {
             type Ux = u16;
         }
-        #[doc = "`read()` method returns [`fifo_ctl::R`](R) reader structure"]
-        impl crate::Readable for FifoCtlSpec {}
         #[doc = "`write(|w| ..)` method takes [`fifo_ctl::W`](W) writer structure"]
         impl crate::Writable for FifoCtlSpec {
             type Safety = crate::Unsafe;
@@ -24878,15 +24922,13 @@ pub mod sys_ctl0 {
             &self.sys_diag_clr_1
         }
     }
-    #[doc = "RESET_COUNT (rw) register accessor: Reset count register\n\nYou can [`read`](crate::Reg::read) this register and get [`reset_count::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`reset_count::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@reset_count`] module"]
+    #[doc = "RESET_COUNT (r) register accessor: Reset count register\n\nYou can [`read`](crate::Reg::read) this register and get [`reset_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@reset_count`] module"]
     #[doc(alias = "RESET_COUNT")]
     pub type ResetCount = crate::Reg<reset_count::ResetCountSpec>;
     #[doc = "Reset count register"]
     pub mod reset_count {
         #[doc = "Register `RESET_COUNT` reader"]
         pub type R = crate::R<ResetCountSpec>;
-        #[doc = "Register `RESET_COUNT` writer"]
-        pub type W = crate::W<ResetCountSpec>;
         #[doc = "Field `reset_count` reader - Reset count value"]
         pub type ResetCountR = crate::FieldReader<u32>;
         impl R {
@@ -24896,30 +24938,23 @@ pub mod sys_ctl0 {
                 ResetCountR::new(self.bits)
             }
         }
-        impl W {}
-        #[doc = "Reset count register\n\nYou can [`read`](crate::Reg::read) this register and get [`reset_count::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`reset_count::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Reset count register\n\nYou can [`read`](crate::Reg::read) this register and get [`reset_count::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct ResetCountSpec;
         impl crate::RegisterSpec for ResetCountSpec {
             type Ux = u32;
         }
         #[doc = "`read()` method returns [`reset_count::R`](R) reader structure"]
         impl crate::Readable for ResetCountSpec {}
-        #[doc = "`write(|w| ..)` method takes [`reset_count::W`](W) writer structure"]
-        impl crate::Writable for ResetCountSpec {
-            type Safety = crate::Unsafe;
-        }
         #[doc = "`reset()` method sets RESET_COUNT to value 0"]
         impl crate::Resettable for ResetCountSpec {}
     }
-    #[doc = "HW_CTL (rw) register accessor: Hardware control register\n\nYou can [`read`](crate::Reg::read) this register and get [`hw_ctl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`hw_ctl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@hw_ctl`] module"]
+    #[doc = "HW_CTL (r) register accessor: Hardware control register\n\nYou can [`read`](crate::Reg::read) this register and get [`hw_ctl::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@hw_ctl`] module"]
     #[doc(alias = "HW_CTL")]
     pub type HwCtl = crate::Reg<hw_ctl::HwCtlSpec>;
     #[doc = "Hardware control register"]
     pub mod hw_ctl {
         #[doc = "Register `HW_CTL` reader"]
         pub type R = crate::R<HwCtlSpec>;
-        #[doc = "Register `HW_CTL` writer"]
-        pub type W = crate::W<HwCtlSpec>;
         #[doc = "Field `refclk_freq_status` reader - REFCLK frequency status: 0=40MHz; 1=24MHz"]
         pub type RefclkFreqStatusR = crate::BitReader;
         impl R {
@@ -24929,18 +24964,13 @@ pub mod sys_ctl0 {
                 RefclkFreqStatusR::new((self.bits & 1) != 0)
             }
         }
-        impl W {}
-        #[doc = "Hardware control register\n\nYou can [`read`](crate::Reg::read) this register and get [`hw_ctl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`hw_ctl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Hardware control register\n\nYou can [`read`](crate::Reg::read) this register and get [`hw_ctl::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct HwCtlSpec;
         impl crate::RegisterSpec for HwCtlSpec {
             type Ux = u32;
         }
         #[doc = "`read()` method returns [`hw_ctl::R`](R) reader structure"]
         impl crate::Readable for HwCtlSpec {}
-        #[doc = "`write(|w| ..)` method takes [`hw_ctl::W`](W) writer structure"]
-        impl crate::Writable for HwCtlSpec {
-            type Safety = crate::Unsafe;
-        }
         #[doc = "`reset()` method sets HW_CTL to value 0"]
         impl crate::Resettable for HwCtlSpec {}
     }
@@ -25013,15 +25043,13 @@ pub mod sys_ctl0 {
         #[doc = "`reset()` method sets REG_SYS_RST_RECORD to value 0"]
         impl crate::Resettable for RegSysRstRecordSpec {}
     }
-    #[doc = "SYS_RST_RECORD_0 (rw) register accessor: System reset history record 0\n\nYou can [`read`](crate::Reg::read) this register and get [`sys_rst_record_0::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sys_rst_record_0::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@sys_rst_record_0`] module"]
+    #[doc = "SYS_RST_RECORD_0 (r) register accessor: System reset history record 0\n\nYou can [`read`](crate::Reg::read) this register and get [`sys_rst_record_0::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@sys_rst_record_0`] module"]
     #[doc(alias = "SYS_RST_RECORD_0")]
     pub type SysRstRecord0 = crate::Reg<sys_rst_record_0::SysRstRecord0Spec>;
     #[doc = "System reset history record 0"]
     pub mod sys_rst_record_0 {
         #[doc = "Register `SYS_RST_RECORD_0` reader"]
         pub type R = crate::R<SysRstRecord0Spec>;
-        #[doc = "Register `SYS_RST_RECORD_0` writer"]
-        pub type W = crate::W<SysRstRecord0Spec>;
         #[doc = "Field `sys_wdt_rst_his` reader - WDT reset history"]
         pub type SysWdtRstHisR = crate::BitReader;
         #[doc = "Field `sys_soft_rst_his` reader - Software reset history"]
@@ -25045,28 +25073,21 @@ pub mod sys_ctl0 {
                 PorRstFilterHisR::new(((self.bits >> 3) & 1) != 0)
             }
         }
-        impl W {}
-        #[doc = "System reset history record 0\n\nYou can [`read`](crate::Reg::read) this register and get [`sys_rst_record_0::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sys_rst_record_0::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "System reset history record 0\n\nYou can [`read`](crate::Reg::read) this register and get [`sys_rst_record_0::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SysRstRecord0Spec;
         impl crate::RegisterSpec for SysRstRecord0Spec {
             type Ux = u32;
         }
         #[doc = "`read()` method returns [`sys_rst_record_0::R`](R) reader structure"]
         impl crate::Readable for SysRstRecord0Spec {}
-        #[doc = "`write(|w| ..)` method takes [`sys_rst_record_0::W`](W) writer structure"]
-        impl crate::Writable for SysRstRecord0Spec {
-            type Safety = crate::Unsafe;
-        }
         #[doc = "`reset()` method sets SYS_RST_RECORD_0 to value 0"]
         impl crate::Resettable for SysRstRecord0Spec {}
     }
-    #[doc = "SYS_DIAG_CLR_1 (rw) register accessor: System diagnostic clear 1\n\nYou can [`read`](crate::Reg::read) this register and get [`sys_diag_clr_1::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sys_diag_clr_1::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@sys_diag_clr_1`] module"]
+    #[doc = "SYS_DIAG_CLR_1 (w) register accessor: System diagnostic clear 1\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sys_diag_clr_1::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@sys_diag_clr_1`] module"]
     #[doc(alias = "SYS_DIAG_CLR_1")]
     pub type SysDiagClr1 = crate::Reg<sys_diag_clr_1::SysDiagClr1Spec>;
     #[doc = "System diagnostic clear 1"]
     pub mod sys_diag_clr_1 {
-        #[doc = "Register `SYS_DIAG_CLR_1` reader"]
-        pub type R = crate::R<SysDiagClr1Spec>;
         #[doc = "Register `SYS_DIAG_CLR_1` writer"]
         pub type W = crate::W<SysDiagClr1Spec>;
         #[doc = "Field `sys_diag_clr` writer - Write to clear reset history bits"]
@@ -25078,19 +25099,251 @@ pub mod sys_ctl0 {
                 SysDiagClrW::new(self, 0)
             }
         }
-        #[doc = "System diagnostic clear 1\n\nYou can [`read`](crate::Reg::read) this register and get [`sys_diag_clr_1::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sys_diag_clr_1::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "System diagnostic clear 1\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sys_diag_clr_1::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SysDiagClr1Spec;
         impl crate::RegisterSpec for SysDiagClr1Spec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`sys_diag_clr_1::R`](R) reader structure"]
-        impl crate::Readable for SysDiagClr1Spec {}
         #[doc = "`write(|w| ..)` method takes [`sys_diag_clr_1::W`](W) writer structure"]
         impl crate::Writable for SysDiagClr1Spec {
             type Safety = crate::Unsafe;
         }
         #[doc = "`reset()` method sets SYS_DIAG_CLR_1 to value 0"]
         impl crate::Resettable for SysDiagClr1Spec {}
+    }
+}
+#[doc = "Clock management unit registers used by WS63 clock and PLL setup"]
+pub type Cmu = crate::Periph<cmu::RegisterBlock, 0x4000_3000>;
+impl core::fmt::Debug for Cmu {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        f.debug_struct("Cmu").finish()
+    }
+}
+#[doc = "Clock management unit registers used by WS63 clock and PLL setup"]
+pub mod cmu {
+    #[repr(C)]
+    #[doc = "Register block"]
+    pub struct RegisterBlock {
+        _reserved0: [u8; 0x019c],
+        excep_ro_rg: ExcepRoRg,
+        _reserved1: [u8; 0x028c],
+        cmu_fnpll_sig: CmuFnpllSig,
+        _reserved2: [u8; 0x70],
+        cmu_new_cfg0: CmuNewCfg0,
+        cmu_new_cfg1: CmuNewCfg1,
+    }
+    impl RegisterBlock {
+        #[doc = "0x19c - Exception read-only status register"]
+        #[inline(always)]
+        pub const fn excep_ro_rg(&self) -> &ExcepRoRg {
+            &self.excep_ro_rg
+        }
+        #[doc = "0x42c - FNPLL signal and control register"]
+        #[inline(always)]
+        pub const fn cmu_fnpll_sig(&self) -> &CmuFnpllSig {
+            &self.cmu_fnpll_sig
+        }
+        #[doc = "0x4a0 - CMU divider reset-sync control 0"]
+        #[inline(always)]
+        pub const fn cmu_new_cfg0(&self) -> &CmuNewCfg0 {
+            &self.cmu_new_cfg0
+        }
+        #[doc = "0x4a4 - CMU flash/CPU divider reset control"]
+        #[inline(always)]
+        pub const fn cmu_new_cfg1(&self) -> &CmuNewCfg1 {
+            &self.cmu_new_cfg1
+        }
+    }
+    #[doc = "EXCEP_RO_RG (r) register accessor: Exception read-only status register\n\nYou can [`read`](crate::Reg::read) this register and get [`excep_ro_rg::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@excep_ro_rg`] module"]
+    #[doc(alias = "EXCEP_RO_RG")]
+    pub type ExcepRoRg = crate::Reg<excep_ro_rg::ExcepRoRgSpec>;
+    #[doc = "Exception read-only status register"]
+    pub mod excep_ro_rg {
+        #[doc = "Register `EXCEP_RO_RG` reader"]
+        pub type R = crate::R<ExcepRoRgSpec>;
+        #[doc = "Field `fnpll_lock_grm` reader - FNPLL lock status queried by the vendor cmu_is_fnpll_locked path"]
+        pub type FnpllLockGrmR = crate::BitReader;
+        impl R {
+            #[doc = "Bit 12 - FNPLL lock status queried by the vendor cmu_is_fnpll_locked path"]
+            #[inline(always)]
+            pub fn fnpll_lock_grm(&self) -> FnpllLockGrmR {
+                FnpllLockGrmR::new(((self.bits >> 12) & 1) != 0)
+            }
+        }
+        #[doc = "Exception read-only status register\n\nYou can [`read`](crate::Reg::read) this register and get [`excep_ro_rg::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct ExcepRoRgSpec;
+        impl crate::RegisterSpec for ExcepRoRgSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`excep_ro_rg::R`](R) reader structure"]
+        impl crate::Readable for ExcepRoRgSpec {}
+        #[doc = "`reset()` method sets EXCEP_RO_RG to value 0"]
+        impl crate::Resettable for ExcepRoRgSpec {}
+    }
+    #[doc = "CMU_FNPLL_SIG (rw) register accessor: FNPLL signal and control register\n\nYou can [`read`](crate::Reg::read) this register and get [`cmu_fnpll_sig::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cmu_fnpll_sig::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cmu_fnpll_sig`] module"]
+    #[doc(alias = "CMU_FNPLL_SIG")]
+    pub type CmuFnpllSig = crate::Reg<cmu_fnpll_sig::CmuFnpllSigSpec>;
+    #[doc = "FNPLL signal and control register"]
+    pub mod cmu_fnpll_sig {
+        #[doc = "Register `CMU_FNPLL_SIG` reader"]
+        pub type R = crate::R<CmuFnpllSigSpec>;
+        #[doc = "Register `CMU_FNPLL_SIG` writer"]
+        pub type W = crate::W<CmuFnpllSigSpec>;
+        #[doc = "Field `fnpll_pwr_down` reader - FNPLL power-down control used by the vendor PM path"]
+        pub type FnpllPwrDownR = crate::BitReader;
+        #[doc = "Field `fnpll_pwr_down` writer - FNPLL power-down control used by the vendor PM path"]
+        pub type FnpllPwrDownW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `fnpll_reset` reader - FNPLL reset/control bit used by the vendor PM path"]
+        pub type FnpllResetR = crate::BitReader;
+        #[doc = "Field `fnpll_reset` writer - FNPLL reset/control bit used by the vendor PM path"]
+        pub type FnpllResetW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `fnpll_en` reader - FNPLL enable bit used by the vendor PM path"]
+        pub type FnpllEnR = crate::BitReader;
+        #[doc = "Field `fnpll_en` writer - FNPLL enable bit used by the vendor PM path"]
+        pub type FnpllEnW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 14 - FNPLL power-down control used by the vendor PM path"]
+            #[inline(always)]
+            pub fn fnpll_pwr_down(&self) -> FnpllPwrDownR {
+                FnpllPwrDownR::new(((self.bits >> 14) & 1) != 0)
+            }
+            #[doc = "Bit 15 - FNPLL reset/control bit used by the vendor PM path"]
+            #[inline(always)]
+            pub fn fnpll_reset(&self) -> FnpllResetR {
+                FnpllResetR::new(((self.bits >> 15) & 1) != 0)
+            }
+            #[doc = "Bit 17 - FNPLL enable bit used by the vendor PM path"]
+            #[inline(always)]
+            pub fn fnpll_en(&self) -> FnpllEnR {
+                FnpllEnR::new(((self.bits >> 17) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 14 - FNPLL power-down control used by the vendor PM path"]
+            #[inline(always)]
+            pub fn fnpll_pwr_down(&mut self) -> FnpllPwrDownW<'_, CmuFnpllSigSpec> {
+                FnpllPwrDownW::new(self, 14)
+            }
+            #[doc = "Bit 15 - FNPLL reset/control bit used by the vendor PM path"]
+            #[inline(always)]
+            pub fn fnpll_reset(&mut self) -> FnpllResetW<'_, CmuFnpllSigSpec> {
+                FnpllResetW::new(self, 15)
+            }
+            #[doc = "Bit 17 - FNPLL enable bit used by the vendor PM path"]
+            #[inline(always)]
+            pub fn fnpll_en(&mut self) -> FnpllEnW<'_, CmuFnpllSigSpec> {
+                FnpllEnW::new(self, 17)
+            }
+        }
+        #[doc = "FNPLL signal and control register\n\nYou can [`read`](crate::Reg::read) this register and get [`cmu_fnpll_sig::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cmu_fnpll_sig::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct CmuFnpllSigSpec;
+        impl crate::RegisterSpec for CmuFnpllSigSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`cmu_fnpll_sig::R`](R) reader structure"]
+        impl crate::Readable for CmuFnpllSigSpec {}
+        #[doc = "`write(|w| ..)` method takes [`cmu_fnpll_sig::W`](W) writer structure"]
+        impl crate::Writable for CmuFnpllSigSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets CMU_FNPLL_SIG to value 0"]
+        impl crate::Resettable for CmuFnpllSigSpec {}
+    }
+    #[doc = "CMU_NEW_CFG0 (rw) register accessor: CMU divider reset-sync control 0\n\nYou can [`read`](crate::Reg::read) this register and get [`cmu_new_cfg0::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cmu_new_cfg0::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cmu_new_cfg0`] module"]
+    #[doc(alias = "CMU_NEW_CFG0")]
+    pub type CmuNewCfg0 = crate::Reg<cmu_new_cfg0::CmuNewCfg0Spec>;
+    #[doc = "CMU divider reset-sync control 0"]
+    pub mod cmu_new_cfg0 {
+        #[doc = "Register `CMU_NEW_CFG0` reader"]
+        pub type R = crate::R<CmuNewCfg0Spec>;
+        #[doc = "Register `CMU_NEW_CFG0` writer"]
+        pub type W = crate::W<CmuNewCfg0Spec>;
+        #[doc = "Field `cmu_div_ad_rstn_sync` reader - I2S/SIO divider reset-sync release bit used by sio_porting_clock_enable"]
+        pub type CmuDivAdRstnSyncR = crate::BitReader;
+        #[doc = "Field `cmu_div_ad_rstn_sync` writer - I2S/SIO divider reset-sync release bit used by sio_porting_clock_enable"]
+        pub type CmuDivAdRstnSyncW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - I2S/SIO divider reset-sync release bit used by sio_porting_clock_enable"]
+            #[inline(always)]
+            pub fn cmu_div_ad_rstn_sync(&self) -> CmuDivAdRstnSyncR {
+                CmuDivAdRstnSyncR::new((self.bits & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - I2S/SIO divider reset-sync release bit used by sio_porting_clock_enable"]
+            #[inline(always)]
+            pub fn cmu_div_ad_rstn_sync(&mut self) -> CmuDivAdRstnSyncW<'_, CmuNewCfg0Spec> {
+                CmuDivAdRstnSyncW::new(self, 0)
+            }
+        }
+        #[doc = "CMU divider reset-sync control 0\n\nYou can [`read`](crate::Reg::read) this register and get [`cmu_new_cfg0::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cmu_new_cfg0::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct CmuNewCfg0Spec;
+        impl crate::RegisterSpec for CmuNewCfg0Spec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`cmu_new_cfg0::R`](R) reader structure"]
+        impl crate::Readable for CmuNewCfg0Spec {}
+        #[doc = "`write(|w| ..)` method takes [`cmu_new_cfg0::W`](W) writer structure"]
+        impl crate::Writable for CmuNewCfg0Spec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets CMU_NEW_CFG0 to value 0"]
+        impl crate::Resettable for CmuNewCfg0Spec {}
+    }
+    #[doc = "CMU_NEW_CFG1 (rw) register accessor: CMU flash/CPU divider reset control\n\nYou can [`read`](crate::Reg::read) this register and get [`cmu_new_cfg1::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cmu_new_cfg1::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cmu_new_cfg1`] module"]
+    #[doc(alias = "CMU_NEW_CFG1")]
+    pub type CmuNewCfg1 = crate::Reg<cmu_new_cfg1::CmuNewCfg1Spec>;
+    #[doc = "CMU flash/CPU divider reset control"]
+    pub mod cmu_new_cfg1 {
+        #[doc = "Register `CMU_NEW_CFG1` reader"]
+        pub type R = crate::R<CmuNewCfg1Spec>;
+        #[doc = "Register `CMU_NEW_CFG1` writer"]
+        pub type W = crate::W<CmuNewCfg1Spec>;
+        #[doc = "Field `cpu_div_flash_rstn_sync` reader - Flash divider reset-sync bit written before switching flash clock to PLL"]
+        pub type CpuDivFlashRstnSyncR = crate::BitReader;
+        #[doc = "Field `cpu_div_flash_rstn_sync` writer - Flash divider reset-sync bit written before switching flash clock to PLL"]
+        pub type CpuDivFlashRstnSyncW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `cpu_div_flash_rstn` reader - Flash divider reset release bit written before switching flash clock to PLL"]
+        pub type CpuDivFlashRstnR = crate::BitReader;
+        #[doc = "Field `cpu_div_flash_rstn` writer - Flash divider reset release bit written before switching flash clock to PLL"]
+        pub type CpuDivFlashRstnW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - Flash divider reset-sync bit written before switching flash clock to PLL"]
+            #[inline(always)]
+            pub fn cpu_div_flash_rstn_sync(&self) -> CpuDivFlashRstnSyncR {
+                CpuDivFlashRstnSyncR::new((self.bits & 1) != 0)
+            }
+            #[doc = "Bit 1 - Flash divider reset release bit written before switching flash clock to PLL"]
+            #[inline(always)]
+            pub fn cpu_div_flash_rstn(&self) -> CpuDivFlashRstnR {
+                CpuDivFlashRstnR::new(((self.bits >> 1) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Flash divider reset-sync bit written before switching flash clock to PLL"]
+            #[inline(always)]
+            pub fn cpu_div_flash_rstn_sync(&mut self) -> CpuDivFlashRstnSyncW<'_, CmuNewCfg1Spec> {
+                CpuDivFlashRstnSyncW::new(self, 0)
+            }
+            #[doc = "Bit 1 - Flash divider reset release bit written before switching flash clock to PLL"]
+            #[inline(always)]
+            pub fn cpu_div_flash_rstn(&mut self) -> CpuDivFlashRstnW<'_, CmuNewCfg1Spec> {
+                CpuDivFlashRstnW::new(self, 1)
+            }
+        }
+        #[doc = "CMU flash/CPU divider reset control\n\nYou can [`read`](crate::Reg::read) this register and get [`cmu_new_cfg1::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cmu_new_cfg1::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct CmuNewCfg1Spec;
+        impl crate::RegisterSpec for CmuNewCfg1Spec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`cmu_new_cfg1::R`](R) reader structure"]
+        impl crate::Readable for CmuNewCfg1Spec {}
+        #[doc = "`write(|w| ..)` method takes [`cmu_new_cfg1::W`](W) writer structure"]
+        impl crate::Writable for CmuNewCfg1Spec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets CMU_NEW_CFG1 to value 0"]
+        impl crate::Resettable for CmuNewCfg1Spec {}
     }
 }
 #[doc = "Main core global control - BCPU/MCPU reset status, chip reset, AON CRG"]
@@ -25213,13 +25466,11 @@ pub mod glb_ctl_m {
         #[doc = "`reset()` method sets MCPU_RESET_STS to value 0"]
         impl crate::Resettable for McpuResetStsSpec {}
     }
-    #[doc = "RESET_STS_CLEAR (rw) register accessor: Reset status clear register\n\nYou can [`read`](crate::Reg::read) this register and get [`reset_sts_clear::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`reset_sts_clear::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@reset_sts_clear`] module"]
+    #[doc = "RESET_STS_CLEAR (w) register accessor: Reset status clear register\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`reset_sts_clear::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@reset_sts_clear`] module"]
     #[doc(alias = "RESET_STS_CLEAR")]
     pub type ResetStsClear = crate::Reg<reset_sts_clear::ResetStsClearSpec>;
     #[doc = "Reset status clear register"]
     pub mod reset_sts_clear {
-        #[doc = "Register `RESET_STS_CLEAR` reader"]
-        pub type R = crate::R<ResetStsClearSpec>;
         #[doc = "Register `RESET_STS_CLEAR` writer"]
         pub type W = crate::W<ResetStsClearSpec>;
         #[doc = "Field `rst_sts_clear` writer - Write 0xFF to clear all reset status bits"]
@@ -25231,13 +25482,11 @@ pub mod glb_ctl_m {
                 RstStsClearW::new(self, 0)
             }
         }
-        #[doc = "Reset status clear register\n\nYou can [`read`](crate::Reg::read) this register and get [`reset_sts_clear::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`reset_sts_clear::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Reset status clear register\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`reset_sts_clear::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct ResetStsClearSpec;
         impl crate::RegisterSpec for ResetStsClearSpec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`reset_sts_clear::R`](R) reader structure"]
-        impl crate::Readable for ResetStsClearSpec {}
         #[doc = "`write(|w| ..)` method takes [`reset_sts_clear::W`](W) writer structure"]
         impl crate::Writable for ResetStsClearSpec {
             type Safety = crate::Unsafe;
@@ -29553,6 +29802,8 @@ pub mod cldo_crg {
         clk_sel: ClkSel,
         rst_soft_cfg0: RstSoftCfg0,
         rst_soft_cfg1: RstSoftCfg1,
+        _reserved12: [u8; 0x04],
+        i2s_div_cfg: I2sDivCfg,
     }
     impl RegisterBlock {
         #[doc = "0x00 - Clock enable control register 0"]
@@ -29615,6 +29866,11 @@ pub mod cldo_crg {
         pub const fn rst_soft_cfg1(&self) -> &RstSoftCfg1 {
             &self.rst_soft_cfg1
         }
+        #[doc = "0x44 - I2S/SIO MCLK divider configuration"]
+        #[inline(always)]
+        pub const fn i2s_div_cfg(&self) -> &I2sDivCfg {
+            &self.i2s_div_cfg
+        }
     }
     #[doc = "CKEN_CTL0 (rw) register accessor: Clock enable control register 0\n\nYou can [`read`](crate::Reg::read) this register and get [`cken_ctl0::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cken_ctl0::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cken_ctl0`] module"]
     #[doc(alias = "CKEN_CTL0")]
@@ -29629,6 +29885,14 @@ pub mod cldo_crg {
         pub type PwmCkenR = crate::FieldReader<u16>;
         #[doc = "Field `pwm_cken` writer - PWM clock gates: bits \\[10:2\\], 9 channels"]
         pub type PwmCkenW<'a, REG> = crate::FieldWriter<'a, REG, 9, u16>;
+        #[doc = "Field `i2s_bus_cken` reader - I2S/SIO bus clock gate"]
+        pub type I2sBusCkenR = crate::BitReader;
+        #[doc = "Field `i2s_bus_cken` writer - I2S/SIO bus clock gate"]
+        pub type I2sBusCkenW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `i2s_cken` reader - I2S/SIO functional clock gate"]
+        pub type I2sCkenR = crate::BitReader;
+        #[doc = "Field `i2s_cken` writer - I2S/SIO functional clock gate"]
+        pub type I2sCkenW<'a, REG> = crate::BitWriter<'a, REG>;
         #[doc = "Field `gen_cken` reader - General clock gates: bits \\[27:18\\], 10 channels"]
         pub type GenCkenR = crate::FieldReader<u16>;
         #[doc = "Field `gen_cken` writer - General clock gates: bits \\[27:18\\], 10 channels"]
@@ -29638,6 +29902,16 @@ pub mod cldo_crg {
             #[inline(always)]
             pub fn pwm_cken(&self) -> PwmCkenR {
                 PwmCkenR::new(((self.bits >> 2) & 0x01ff) as u16)
+            }
+            #[doc = "Bit 11 - I2S/SIO bus clock gate"]
+            #[inline(always)]
+            pub fn i2s_bus_cken(&self) -> I2sBusCkenR {
+                I2sBusCkenR::new(((self.bits >> 11) & 1) != 0)
+            }
+            #[doc = "Bit 12 - I2S/SIO functional clock gate"]
+            #[inline(always)]
+            pub fn i2s_cken(&self) -> I2sCkenR {
+                I2sCkenR::new(((self.bits >> 12) & 1) != 0)
             }
             #[doc = "Bits 18:27 - General clock gates: bits \\[27:18\\], 10 channels"]
             #[inline(always)]
@@ -29650,6 +29924,16 @@ pub mod cldo_crg {
             #[inline(always)]
             pub fn pwm_cken(&mut self) -> PwmCkenW<'_, CkenCtl0Spec> {
                 PwmCkenW::new(self, 2)
+            }
+            #[doc = "Bit 11 - I2S/SIO bus clock gate"]
+            #[inline(always)]
+            pub fn i2s_bus_cken(&mut self) -> I2sBusCkenW<'_, CkenCtl0Spec> {
+                I2sBusCkenW::new(self, 11)
+            }
+            #[doc = "Bit 12 - I2S/SIO functional clock gate"]
+            #[inline(always)]
+            pub fn i2s_cken(&mut self) -> I2sCkenW<'_, CkenCtl0Spec> {
+                I2sCkenW::new(self, 12)
             }
             #[doc = "Bits 18:27 - General clock gates: bits \\[27:18\\], 10 channels"]
             #[inline(always)]
@@ -29804,22 +30088,106 @@ pub mod cldo_crg {
         pub type R = crate::R<DivCtl3Spec>;
         #[doc = "Register `DIV_CTL3` writer"]
         pub type W = crate::W<DivCtl3Spec>;
-        #[doc = "Field `div_pwm01` reader - PWM0/PWM1 clock divider"]
-        pub type DivPwm01R = crate::FieldReader<u32>;
-        #[doc = "Field `div_pwm01` writer - PWM0/PWM1 clock divider"]
-        pub type DivPwm01W<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        #[doc = "Field `spi_div1_cfg` reader - SPI divider stage 1 value written by spi_porting_clock_init"]
+        pub type SpiDiv1CfgR = crate::FieldReader;
+        #[doc = "Field `spi_div1_cfg` writer - SPI divider stage 1 value written by spi_porting_clock_init"]
+        pub type SpiDiv1CfgW<'a, REG> = crate::FieldWriter<'a, REG, 5>;
+        #[doc = "Field `spi_div2_cfg` reader - SPI divider stage 2 value written by spi_porting_clock_init"]
+        pub type SpiDiv2CfgR = crate::FieldReader;
+        #[doc = "Field `spi_div2_cfg` writer - SPI divider stage 2 value written by spi_porting_clock_init"]
+        pub type SpiDiv2CfgW<'a, REG> = crate::FieldWriter<'a, REG, 5>;
+        #[doc = "Field `spi_load_div_en` reader - SPI divider load enable latch bit"]
+        pub type SpiLoadDivEnR = crate::BitReader;
+        #[doc = "Field `spi_load_div_en` writer - SPI divider load enable latch bit"]
+        pub type SpiLoadDivEnW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `pwm0_div1_cfg` reader - PWM0 divider value"]
+        pub type Pwm0Div1CfgR = crate::FieldReader;
+        #[doc = "Field `pwm0_div1_cfg` writer - PWM0 divider value"]
+        pub type Pwm0Div1CfgW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `pwm0_load_div_en` reader - PWM0 divider load enable latch bit"]
+        pub type Pwm0LoadDivEnR = crate::BitReader;
+        #[doc = "Field `pwm0_load_div_en` writer - PWM0 divider load enable latch bit"]
+        pub type Pwm0LoadDivEnW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `pwm1_div1_cfg` reader - PWM1 divider value"]
+        pub type Pwm1Div1CfgR = crate::FieldReader;
+        #[doc = "Field `pwm1_div1_cfg` writer - PWM1 divider value"]
+        pub type Pwm1Div1CfgW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `pwm1_load_div_en` reader - PWM1 divider load enable latch bit"]
+        pub type Pwm1LoadDivEnR = crate::BitReader;
+        #[doc = "Field `pwm1_load_div_en` writer - PWM1 divider load enable latch bit"]
+        pub type Pwm1LoadDivEnW<'a, REG> = crate::BitWriter<'a, REG>;
         impl R {
-            #[doc = "Bits 0:31 - PWM0/PWM1 clock divider"]
+            #[doc = "Bits 0:4 - SPI divider stage 1 value written by spi_porting_clock_init"]
             #[inline(always)]
-            pub fn div_pwm01(&self) -> DivPwm01R {
-                DivPwm01R::new(self.bits)
+            pub fn spi_div1_cfg(&self) -> SpiDiv1CfgR {
+                SpiDiv1CfgR::new((self.bits & 0x1f) as u8)
+            }
+            #[doc = "Bits 5:9 - SPI divider stage 2 value written by spi_porting_clock_init"]
+            #[inline(always)]
+            pub fn spi_div2_cfg(&self) -> SpiDiv2CfgR {
+                SpiDiv2CfgR::new(((self.bits >> 5) & 0x1f) as u8)
+            }
+            #[doc = "Bit 10 - SPI divider load enable latch bit"]
+            #[inline(always)]
+            pub fn spi_load_div_en(&self) -> SpiLoadDivEnR {
+                SpiLoadDivEnR::new(((self.bits >> 10) & 1) != 0)
+            }
+            #[doc = "Bits 16:19 - PWM0 divider value"]
+            #[inline(always)]
+            pub fn pwm0_div1_cfg(&self) -> Pwm0Div1CfgR {
+                Pwm0Div1CfgR::new(((self.bits >> 16) & 0x0f) as u8)
+            }
+            #[doc = "Bit 20 - PWM0 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm0_load_div_en(&self) -> Pwm0LoadDivEnR {
+                Pwm0LoadDivEnR::new(((self.bits >> 20) & 1) != 0)
+            }
+            #[doc = "Bits 26:29 - PWM1 divider value"]
+            #[inline(always)]
+            pub fn pwm1_div1_cfg(&self) -> Pwm1Div1CfgR {
+                Pwm1Div1CfgR::new(((self.bits >> 26) & 0x0f) as u8)
+            }
+            #[doc = "Bit 30 - PWM1 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm1_load_div_en(&self) -> Pwm1LoadDivEnR {
+                Pwm1LoadDivEnR::new(((self.bits >> 30) & 1) != 0)
             }
         }
         impl W {
-            #[doc = "Bits 0:31 - PWM0/PWM1 clock divider"]
+            #[doc = "Bits 0:4 - SPI divider stage 1 value written by spi_porting_clock_init"]
             #[inline(always)]
-            pub fn div_pwm01(&mut self) -> DivPwm01W<'_, DivCtl3Spec> {
-                DivPwm01W::new(self, 0)
+            pub fn spi_div1_cfg(&mut self) -> SpiDiv1CfgW<'_, DivCtl3Spec> {
+                SpiDiv1CfgW::new(self, 0)
+            }
+            #[doc = "Bits 5:9 - SPI divider stage 2 value written by spi_porting_clock_init"]
+            #[inline(always)]
+            pub fn spi_div2_cfg(&mut self) -> SpiDiv2CfgW<'_, DivCtl3Spec> {
+                SpiDiv2CfgW::new(self, 5)
+            }
+            #[doc = "Bit 10 - SPI divider load enable latch bit"]
+            #[inline(always)]
+            pub fn spi_load_div_en(&mut self) -> SpiLoadDivEnW<'_, DivCtl3Spec> {
+                SpiLoadDivEnW::new(self, 10)
+            }
+            #[doc = "Bits 16:19 - PWM0 divider value"]
+            #[inline(always)]
+            pub fn pwm0_div1_cfg(&mut self) -> Pwm0Div1CfgW<'_, DivCtl3Spec> {
+                Pwm0Div1CfgW::new(self, 16)
+            }
+            #[doc = "Bit 20 - PWM0 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm0_load_div_en(&mut self) -> Pwm0LoadDivEnW<'_, DivCtl3Spec> {
+                Pwm0LoadDivEnW::new(self, 20)
+            }
+            #[doc = "Bits 26:29 - PWM1 divider value"]
+            #[inline(always)]
+            pub fn pwm1_div1_cfg(&mut self) -> Pwm1Div1CfgW<'_, DivCtl3Spec> {
+                Pwm1Div1CfgW::new(self, 26)
+            }
+            #[doc = "Bit 30 - PWM1 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm1_load_div_en(&mut self) -> Pwm1LoadDivEnW<'_, DivCtl3Spec> {
+                Pwm1LoadDivEnW::new(self, 30)
             }
         }
         #[doc = "Divider control 3 - PWM0, PWM1\n\nYou can [`read`](crate::Reg::read) this register and get [`div_ctl3::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`div_ctl3::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
@@ -29845,22 +30213,92 @@ pub mod cldo_crg {
         pub type R = crate::R<DivCtl4Spec>;
         #[doc = "Register `DIV_CTL4` writer"]
         pub type W = crate::W<DivCtl4Spec>;
-        #[doc = "Field `div_pwm234` reader - PWM2/PWM3/PWM4 clock divider"]
-        pub type DivPwm234R = crate::FieldReader<u32>;
-        #[doc = "Field `div_pwm234` writer - PWM2/PWM3/PWM4 clock divider"]
-        pub type DivPwm234W<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        #[doc = "Field `pwm2_div1_cfg` reader - PWM2 divider value"]
+        pub type Pwm2Div1CfgR = crate::FieldReader;
+        #[doc = "Field `pwm2_div1_cfg` writer - PWM2 divider value"]
+        pub type Pwm2Div1CfgW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `pwm2_load_div_en` reader - PWM2 divider load enable latch bit"]
+        pub type Pwm2LoadDivEnR = crate::BitReader;
+        #[doc = "Field `pwm2_load_div_en` writer - PWM2 divider load enable latch bit"]
+        pub type Pwm2LoadDivEnW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `pwm3_div1_cfg` reader - PWM3 divider value"]
+        pub type Pwm3Div1CfgR = crate::FieldReader;
+        #[doc = "Field `pwm3_div1_cfg` writer - PWM3 divider value"]
+        pub type Pwm3Div1CfgW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `pwm3_load_div_en` reader - PWM3 divider load enable latch bit"]
+        pub type Pwm3LoadDivEnR = crate::BitReader;
+        #[doc = "Field `pwm3_load_div_en` writer - PWM3 divider load enable latch bit"]
+        pub type Pwm3LoadDivEnW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `pwm4_div1_cfg` reader - PWM4 divider value"]
+        pub type Pwm4Div1CfgR = crate::FieldReader;
+        #[doc = "Field `pwm4_div1_cfg` writer - PWM4 divider value"]
+        pub type Pwm4Div1CfgW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `pwm4_load_div_en` reader - PWM4 divider load enable latch bit"]
+        pub type Pwm4LoadDivEnR = crate::BitReader;
+        #[doc = "Field `pwm4_load_div_en` writer - PWM4 divider load enable latch bit"]
+        pub type Pwm4LoadDivEnW<'a, REG> = crate::BitWriter<'a, REG>;
         impl R {
-            #[doc = "Bits 0:31 - PWM2/PWM3/PWM4 clock divider"]
+            #[doc = "Bits 4:7 - PWM2 divider value"]
             #[inline(always)]
-            pub fn div_pwm234(&self) -> DivPwm234R {
-                DivPwm234R::new(self.bits)
+            pub fn pwm2_div1_cfg(&self) -> Pwm2Div1CfgR {
+                Pwm2Div1CfgR::new(((self.bits >> 4) & 0x0f) as u8)
+            }
+            #[doc = "Bit 8 - PWM2 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm2_load_div_en(&self) -> Pwm2LoadDivEnR {
+                Pwm2LoadDivEnR::new(((self.bits >> 8) & 1) != 0)
+            }
+            #[doc = "Bits 14:17 - PWM3 divider value"]
+            #[inline(always)]
+            pub fn pwm3_div1_cfg(&self) -> Pwm3Div1CfgR {
+                Pwm3Div1CfgR::new(((self.bits >> 14) & 0x0f) as u8)
+            }
+            #[doc = "Bit 18 - PWM3 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm3_load_div_en(&self) -> Pwm3LoadDivEnR {
+                Pwm3LoadDivEnR::new(((self.bits >> 18) & 1) != 0)
+            }
+            #[doc = "Bits 24:27 - PWM4 divider value"]
+            #[inline(always)]
+            pub fn pwm4_div1_cfg(&self) -> Pwm4Div1CfgR {
+                Pwm4Div1CfgR::new(((self.bits >> 24) & 0x0f) as u8)
+            }
+            #[doc = "Bit 28 - PWM4 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm4_load_div_en(&self) -> Pwm4LoadDivEnR {
+                Pwm4LoadDivEnR::new(((self.bits >> 28) & 1) != 0)
             }
         }
         impl W {
-            #[doc = "Bits 0:31 - PWM2/PWM3/PWM4 clock divider"]
+            #[doc = "Bits 4:7 - PWM2 divider value"]
             #[inline(always)]
-            pub fn div_pwm234(&mut self) -> DivPwm234W<'_, DivCtl4Spec> {
-                DivPwm234W::new(self, 0)
+            pub fn pwm2_div1_cfg(&mut self) -> Pwm2Div1CfgW<'_, DivCtl4Spec> {
+                Pwm2Div1CfgW::new(self, 4)
+            }
+            #[doc = "Bit 8 - PWM2 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm2_load_div_en(&mut self) -> Pwm2LoadDivEnW<'_, DivCtl4Spec> {
+                Pwm2LoadDivEnW::new(self, 8)
+            }
+            #[doc = "Bits 14:17 - PWM3 divider value"]
+            #[inline(always)]
+            pub fn pwm3_div1_cfg(&mut self) -> Pwm3Div1CfgW<'_, DivCtl4Spec> {
+                Pwm3Div1CfgW::new(self, 14)
+            }
+            #[doc = "Bit 18 - PWM3 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm3_load_div_en(&mut self) -> Pwm3LoadDivEnW<'_, DivCtl4Spec> {
+                Pwm3LoadDivEnW::new(self, 18)
+            }
+            #[doc = "Bits 24:27 - PWM4 divider value"]
+            #[inline(always)]
+            pub fn pwm4_div1_cfg(&mut self) -> Pwm4Div1CfgW<'_, DivCtl4Spec> {
+                Pwm4Div1CfgW::new(self, 24)
+            }
+            #[doc = "Bit 28 - PWM4 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm4_load_div_en(&mut self) -> Pwm4LoadDivEnW<'_, DivCtl4Spec> {
+                Pwm4LoadDivEnW::new(self, 28)
             }
         }
         #[doc = "Divider control 4 - PWM2, PWM3, PWM4\n\nYou can [`read`](crate::Reg::read) this register and get [`div_ctl4::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`div_ctl4::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
@@ -29886,22 +30324,92 @@ pub mod cldo_crg {
         pub type R = crate::R<DivCtl5Spec>;
         #[doc = "Register `DIV_CTL5` writer"]
         pub type W = crate::W<DivCtl5Spec>;
-        #[doc = "Field `div_pwm567` reader - PWM5/PWM6/PWM7 clock divider"]
-        pub type DivPwm567R = crate::FieldReader<u32>;
-        #[doc = "Field `div_pwm567` writer - PWM5/PWM6/PWM7 clock divider"]
-        pub type DivPwm567W<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        #[doc = "Field `pwm5_div1_cfg` reader - PWM5 divider value"]
+        pub type Pwm5Div1CfgR = crate::FieldReader;
+        #[doc = "Field `pwm5_div1_cfg` writer - PWM5 divider value"]
+        pub type Pwm5Div1CfgW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `pwm5_load_div_en` reader - PWM5 divider load enable latch bit"]
+        pub type Pwm5LoadDivEnR = crate::BitReader;
+        #[doc = "Field `pwm5_load_div_en` writer - PWM5 divider load enable latch bit"]
+        pub type Pwm5LoadDivEnW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `pwm6_div1_cfg` reader - PWM6 divider value"]
+        pub type Pwm6Div1CfgR = crate::FieldReader;
+        #[doc = "Field `pwm6_div1_cfg` writer - PWM6 divider value"]
+        pub type Pwm6Div1CfgW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `pwm6_load_div_en` reader - PWM6 divider load enable latch bit"]
+        pub type Pwm6LoadDivEnR = crate::BitReader;
+        #[doc = "Field `pwm6_load_div_en` writer - PWM6 divider load enable latch bit"]
+        pub type Pwm6LoadDivEnW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `pwm7_div1_cfg` reader - PWM7 divider value"]
+        pub type Pwm7Div1CfgR = crate::FieldReader;
+        #[doc = "Field `pwm7_div1_cfg` writer - PWM7 divider value"]
+        pub type Pwm7Div1CfgW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `pwm7_load_div_en` reader - PWM7 divider load enable latch bit"]
+        pub type Pwm7LoadDivEnR = crate::BitReader;
+        #[doc = "Field `pwm7_load_div_en` writer - PWM7 divider load enable latch bit"]
+        pub type Pwm7LoadDivEnW<'a, REG> = crate::BitWriter<'a, REG>;
         impl R {
-            #[doc = "Bits 0:31 - PWM5/PWM6/PWM7 clock divider"]
+            #[doc = "Bits 4:7 - PWM5 divider value"]
             #[inline(always)]
-            pub fn div_pwm567(&self) -> DivPwm567R {
-                DivPwm567R::new(self.bits)
+            pub fn pwm5_div1_cfg(&self) -> Pwm5Div1CfgR {
+                Pwm5Div1CfgR::new(((self.bits >> 4) & 0x0f) as u8)
+            }
+            #[doc = "Bit 8 - PWM5 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm5_load_div_en(&self) -> Pwm5LoadDivEnR {
+                Pwm5LoadDivEnR::new(((self.bits >> 8) & 1) != 0)
+            }
+            #[doc = "Bits 14:17 - PWM6 divider value"]
+            #[inline(always)]
+            pub fn pwm6_div1_cfg(&self) -> Pwm6Div1CfgR {
+                Pwm6Div1CfgR::new(((self.bits >> 14) & 0x0f) as u8)
+            }
+            #[doc = "Bit 18 - PWM6 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm6_load_div_en(&self) -> Pwm6LoadDivEnR {
+                Pwm6LoadDivEnR::new(((self.bits >> 18) & 1) != 0)
+            }
+            #[doc = "Bits 24:27 - PWM7 divider value"]
+            #[inline(always)]
+            pub fn pwm7_div1_cfg(&self) -> Pwm7Div1CfgR {
+                Pwm7Div1CfgR::new(((self.bits >> 24) & 0x0f) as u8)
+            }
+            #[doc = "Bit 28 - PWM7 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm7_load_div_en(&self) -> Pwm7LoadDivEnR {
+                Pwm7LoadDivEnR::new(((self.bits >> 28) & 1) != 0)
             }
         }
         impl W {
-            #[doc = "Bits 0:31 - PWM5/PWM6/PWM7 clock divider"]
+            #[doc = "Bits 4:7 - PWM5 divider value"]
             #[inline(always)]
-            pub fn div_pwm567(&mut self) -> DivPwm567W<'_, DivCtl5Spec> {
-                DivPwm567W::new(self, 0)
+            pub fn pwm5_div1_cfg(&mut self) -> Pwm5Div1CfgW<'_, DivCtl5Spec> {
+                Pwm5Div1CfgW::new(self, 4)
+            }
+            #[doc = "Bit 8 - PWM5 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm5_load_div_en(&mut self) -> Pwm5LoadDivEnW<'_, DivCtl5Spec> {
+                Pwm5LoadDivEnW::new(self, 8)
+            }
+            #[doc = "Bits 14:17 - PWM6 divider value"]
+            #[inline(always)]
+            pub fn pwm6_div1_cfg(&mut self) -> Pwm6Div1CfgW<'_, DivCtl5Spec> {
+                Pwm6Div1CfgW::new(self, 14)
+            }
+            #[doc = "Bit 18 - PWM6 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm6_load_div_en(&mut self) -> Pwm6LoadDivEnW<'_, DivCtl5Spec> {
+                Pwm6LoadDivEnW::new(self, 18)
+            }
+            #[doc = "Bits 24:27 - PWM7 divider value"]
+            #[inline(always)]
+            pub fn pwm7_div1_cfg(&mut self) -> Pwm7Div1CfgW<'_, DivCtl5Spec> {
+                Pwm7Div1CfgW::new(self, 24)
+            }
+            #[doc = "Bit 28 - PWM7 divider load enable latch bit"]
+            #[inline(always)]
+            pub fn pwm7_load_div_en(&mut self) -> Pwm7LoadDivEnW<'_, DivCtl5Spec> {
+                Pwm7LoadDivEnW::new(self, 28)
             }
         }
         #[doc = "Divider control 5 - PWM5, PWM6, PWM7\n\nYou can [`read`](crate::Reg::read) this register and get [`div_ctl5::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`div_ctl5::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
@@ -30515,6 +31023,47 @@ pub mod cldo_crg {
         impl crate::Resettable for RstSoftCfg1Spec {
             const RESET_VALUE: u32 = 0xffff_ffff;
         }
+    }
+    #[doc = "I2S_DIV_CFG (rw) register accessor: I2S/SIO MCLK divider configuration\n\nYou can [`read`](crate::Reg::read) this register and get [`i2s_div_cfg::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`i2s_div_cfg::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@i2s_div_cfg`] module"]
+    #[doc(alias = "I2S_DIV_CFG")]
+    pub type I2sDivCfg = crate::Reg<i2s_div_cfg::I2sDivCfgSpec>;
+    #[doc = "I2S/SIO MCLK divider configuration"]
+    pub mod i2s_div_cfg {
+        #[doc = "Register `I2S_DIV_CFG` reader"]
+        pub type R = crate::R<I2sDivCfgSpec>;
+        #[doc = "Register `I2S_DIV_CFG` writer"]
+        pub type W = crate::W<I2sDivCfgSpec>;
+        #[doc = "Field `i2s_mclk_div_num` reader - I2S MCLK divider number written by sio_porting_set_sample_rate"]
+        pub type I2sMclkDivNumR = crate::FieldReader<u32>;
+        #[doc = "Field `i2s_mclk_div_num` writer - I2S MCLK divider number written by sio_porting_set_sample_rate"]
+        pub type I2sMclkDivNumW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        impl R {
+            #[doc = "Bits 0:31 - I2S MCLK divider number written by sio_porting_set_sample_rate"]
+            #[inline(always)]
+            pub fn i2s_mclk_div_num(&self) -> I2sMclkDivNumR {
+                I2sMclkDivNumR::new(self.bits)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:31 - I2S MCLK divider number written by sio_porting_set_sample_rate"]
+            #[inline(always)]
+            pub fn i2s_mclk_div_num(&mut self) -> I2sMclkDivNumW<'_, I2sDivCfgSpec> {
+                I2sMclkDivNumW::new(self, 0)
+            }
+        }
+        #[doc = "I2S/SIO MCLK divider configuration\n\nYou can [`read`](crate::Reg::read) this register and get [`i2s_div_cfg::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`i2s_div_cfg::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct I2sDivCfgSpec;
+        impl crate::RegisterSpec for I2sDivCfgSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`i2s_div_cfg::R`](R) reader structure"]
+        impl crate::Readable for I2sDivCfgSpec {}
+        #[doc = "`write(|w| ..)` method takes [`i2s_div_cfg::W`](W) writer structure"]
+        impl crate::Writable for I2sDivCfgSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets I2S_DIV_CFG to value 0"]
+        impl crate::Resettable for I2sDivCfgSpec {}
     }
 }
 #[doc = "Secure DMA controller (4 channels, same layout as MDMA v151). Channels logically mapped as 8-11."]
@@ -32112,6 +32661,8 @@ pub struct Peripherals {
     pub efuse: Efuse,
     #[doc = "SYS_CTL0"]
     pub sys_ctl0: SysCtl0,
+    #[doc = "CMU"]
+    pub cmu: Cmu,
     #[doc = "GLB_CTL_M"]
     pub glb_ctl_m: GlbCtlM,
     #[doc = "SPACC"]
@@ -32182,6 +32733,7 @@ impl Peripherals {
                 rtc: Rtc::steal(),
                 efuse: Efuse::steal(),
                 sys_ctl0: SysCtl0::steal(),
+                cmu: Cmu::steal(),
                 glb_ctl_m: GlbCtlM::steal(),
                 spacc: Spacc::steal(),
                 pke: Pke::steal(),
