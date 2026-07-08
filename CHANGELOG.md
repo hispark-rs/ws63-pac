@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-07-09
+
+### Fixed
+
+- Regenerated from the WS63 SVD register-access audit: adds the missing CMU
+  block and CLDO_CRG/SYS_CTL1 clock-control fields used by the HAL clock, SPI,
+  PWM, I2S, and DMA code paths.
+- Tightened generated register access semantics for audited write-only /
+  read-write fields so HAL code can avoid raw MMIO or stale read-modify-write
+  patterns.
+- Updates the nested `ws63-svd` pointer to the versioned mainline SVD release
+  used for this PAC generation.
+
 ## [0.2.0] - 2026-06-15
 
 Breaking: the SPI_WSR and TIMER fixes below change the generated public API
