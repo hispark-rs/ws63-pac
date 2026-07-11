@@ -33294,6 +33294,271 @@ pub mod bt_em_ctl {
         impl crate::Resettable for EmGtModeSpec {}
     }
 }
+#[doc = "RISC-V instruction patch controller used to redirect mask-ROM entry points to application-provided fixes"]
+pub type RiscvPatch = crate::Periph<riscv_patch::RegisterBlock, 0xe000_0000>;
+impl core::fmt::Debug for RiscvPatch {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        f.debug_struct("RiscvPatch").finish()
+    }
+}
+#[doc = "RISC-V instruction patch controller used to redirect mask-ROM entry points to application-provided fixes"]
+pub mod riscv_patch {
+    #[repr(C)]
+    #[doc = "Register block"]
+    pub struct RegisterBlock {
+        flpctrl: Flpctrl,
+        flprmp: Flprmp,
+        flplacmp0: Flplacmp0,
+        flplacmp1: Flplacmp1,
+        flpiacmp: [Flpiacmp; 192],
+    }
+    impl RegisterBlock {
+        #[doc = "0x00 - Instruction patch controller configuration"]
+        #[inline(always)]
+        pub const fn flpctrl(&self) -> &Flpctrl {
+            &self.flpctrl
+        }
+        #[doc = "0x04 - Base address of the instruction remap table"]
+        #[inline(always)]
+        pub const fn flprmp(&self) -> &Flprmp {
+            &self.flprmp
+        }
+        #[doc = "0x08 - Optional load-address comparison register 0"]
+        #[inline(always)]
+        pub const fn flplacmp0(&self) -> &Flplacmp0 {
+            &self.flplacmp0
+        }
+        #[doc = "0x0c - Optional load-address comparison register 1"]
+        #[inline(always)]
+        pub const fn flplacmp1(&self) -> &Flplacmp1 {
+            &self.flplacmp1
+        }
+        #[doc = "0x10..0x310 - Instruction-address comparison register %s; bit 0 enables the entry and bits 31:1 hold the halfword-aligned mask-ROM address"]
+        #[inline(always)]
+        pub const fn flpiacmp(&self, n: usize) -> &Flpiacmp {
+            &self.flpiacmp[n]
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x10..0x310 - Instruction-address comparison register %s; bit 0 enables the entry and bits 31:1 hold the halfword-aligned mask-ROM address"]
+        #[inline(always)]
+        pub fn flpiacmp_iter(&self) -> impl Iterator<Item = &Flpiacmp> {
+            self.flpiacmp.iter()
+        }
+    }
+    #[doc = "FLPCTRL (rw) register accessor: Instruction patch controller configuration\n\nYou can [`read`](crate::Reg::read) this register and get [`flpctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`flpctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@flpctrl`] module"]
+    #[doc(alias = "FLPCTRL")]
+    pub type Flpctrl = crate::Reg<flpctrl::FlpctrlSpec>;
+    #[doc = "Instruction patch controller configuration"]
+    pub mod flpctrl {
+        #[doc = "Register `FLPCTRL` reader"]
+        pub type R = crate::R<FlpctrlSpec>;
+        #[doc = "Register `FLPCTRL` writer"]
+        pub type W = crate::W<FlpctrlSpec>;
+        #[doc = "Field `enable` reader - Enable instruction patch matching"]
+        pub type EnableR = crate::BitReader;
+        #[doc = "Field `enable` writer - Enable instruction patch matching"]
+        pub type EnableW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `write_protect` reader - Protect the comparison registers from writes"]
+        pub type WriteProtectR = crate::BitReader;
+        #[doc = "Field `write_protect` writer - Protect the comparison registers from writes"]
+        pub type WriteProtectW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `outside_1m` reader - Select long-jump remap entries whose destinations may be outside the source 1 MiB region"]
+        pub type Outside1mR = crate::BitReader;
+        #[doc = "Field `outside_1m` writer - Select long-jump remap entries whose destinations may be outside the source 1 MiB region"]
+        pub type Outside1mW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `load_compare0_enable` reader - Enable load-address comparison register 0"]
+        pub type LoadCompare0EnableR = crate::BitReader;
+        #[doc = "Field `load_compare0_enable` writer - Enable load-address comparison register 0"]
+        pub type LoadCompare0EnableW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `load_compare1_enable` reader - Enable load-address comparison register 1"]
+        pub type LoadCompare1EnableR = crate::BitReader;
+        #[doc = "Field `load_compare1_enable` writer - Enable load-address comparison register 1"]
+        pub type LoadCompare1EnableW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - Enable instruction patch matching"]
+            #[inline(always)]
+            pub fn enable(&self) -> EnableR {
+                EnableR::new((self.bits & 1) != 0)
+            }
+            #[doc = "Bit 1 - Protect the comparison registers from writes"]
+            #[inline(always)]
+            pub fn write_protect(&self) -> WriteProtectR {
+                WriteProtectR::new(((self.bits >> 1) & 1) != 0)
+            }
+            #[doc = "Bit 2 - Select long-jump remap entries whose destinations may be outside the source 1 MiB region"]
+            #[inline(always)]
+            pub fn outside_1m(&self) -> Outside1mR {
+                Outside1mR::new(((self.bits >> 2) & 1) != 0)
+            }
+            #[doc = "Bit 3 - Enable load-address comparison register 0"]
+            #[inline(always)]
+            pub fn load_compare0_enable(&self) -> LoadCompare0EnableR {
+                LoadCompare0EnableR::new(((self.bits >> 3) & 1) != 0)
+            }
+            #[doc = "Bit 4 - Enable load-address comparison register 1"]
+            #[inline(always)]
+            pub fn load_compare1_enable(&self) -> LoadCompare1EnableR {
+                LoadCompare1EnableR::new(((self.bits >> 4) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Enable instruction patch matching"]
+            #[inline(always)]
+            pub fn enable(&mut self) -> EnableW<'_, FlpctrlSpec> {
+                EnableW::new(self, 0)
+            }
+            #[doc = "Bit 1 - Protect the comparison registers from writes"]
+            #[inline(always)]
+            pub fn write_protect(&mut self) -> WriteProtectW<'_, FlpctrlSpec> {
+                WriteProtectW::new(self, 1)
+            }
+            #[doc = "Bit 2 - Select long-jump remap entries whose destinations may be outside the source 1 MiB region"]
+            #[inline(always)]
+            pub fn outside_1m(&mut self) -> Outside1mW<'_, FlpctrlSpec> {
+                Outside1mW::new(self, 2)
+            }
+            #[doc = "Bit 3 - Enable load-address comparison register 0"]
+            #[inline(always)]
+            pub fn load_compare0_enable(&mut self) -> LoadCompare0EnableW<'_, FlpctrlSpec> {
+                LoadCompare0EnableW::new(self, 3)
+            }
+            #[doc = "Bit 4 - Enable load-address comparison register 1"]
+            #[inline(always)]
+            pub fn load_compare1_enable(&mut self) -> LoadCompare1EnableW<'_, FlpctrlSpec> {
+                LoadCompare1EnableW::new(self, 4)
+            }
+        }
+        #[doc = "Instruction patch controller configuration\n\nYou can [`read`](crate::Reg::read) this register and get [`flpctrl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`flpctrl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct FlpctrlSpec;
+        impl crate::RegisterSpec for FlpctrlSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`flpctrl::R`](R) reader structure"]
+        impl crate::Readable for FlpctrlSpec {}
+        #[doc = "`write(|w| ..)` method takes [`flpctrl::W`](W) writer structure"]
+        impl crate::Writable for FlpctrlSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets FLPCTRL to value 0"]
+        impl crate::Resettable for FlpctrlSpec {}
+    }
+    #[doc = "FLPRMP (rw) register accessor: Base address of the instruction remap table\n\nYou can [`read`](crate::Reg::read) this register and get [`flprmp::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`flprmp::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@flprmp`] module"]
+    #[doc(alias = "FLPRMP")]
+    pub type Flprmp = crate::Reg<flprmp::FlprmpSpec>;
+    #[doc = "Base address of the instruction remap table"]
+    pub mod flprmp {
+        #[doc = "Register `FLPRMP` reader"]
+        pub type R = crate::R<FlprmpSpec>;
+        #[doc = "Register `FLPRMP` writer"]
+        pub type W = crate::W<FlprmpSpec>;
+        impl core::fmt::Debug for R {
+            fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+                write!(f, "{}", self.bits())
+            }
+        }
+        impl W {}
+        #[doc = "Base address of the instruction remap table\n\nYou can [`read`](crate::Reg::read) this register and get [`flprmp::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`flprmp::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct FlprmpSpec;
+        impl crate::RegisterSpec for FlprmpSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`flprmp::R`](R) reader structure"]
+        impl crate::Readable for FlprmpSpec {}
+        #[doc = "`write(|w| ..)` method takes [`flprmp::W`](W) writer structure"]
+        impl crate::Writable for FlprmpSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets FLPRMP to value 0"]
+        impl crate::Resettable for FlprmpSpec {}
+    }
+    #[doc = "FLPLACMP0 (rw) register accessor: Optional load-address comparison register 0\n\nYou can [`read`](crate::Reg::read) this register and get [`flplacmp0::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`flplacmp0::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@flplacmp0`] module"]
+    #[doc(alias = "FLPLACMP0")]
+    pub type Flplacmp0 = crate::Reg<flplacmp0::Flplacmp0Spec>;
+    #[doc = "Optional load-address comparison register 0"]
+    pub mod flplacmp0 {
+        #[doc = "Register `FLPLACMP0` reader"]
+        pub type R = crate::R<Flplacmp0Spec>;
+        #[doc = "Register `FLPLACMP0` writer"]
+        pub type W = crate::W<Flplacmp0Spec>;
+        impl core::fmt::Debug for R {
+            fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+                write!(f, "{}", self.bits())
+            }
+        }
+        impl W {}
+        #[doc = "Optional load-address comparison register 0\n\nYou can [`read`](crate::Reg::read) this register and get [`flplacmp0::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`flplacmp0::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct Flplacmp0Spec;
+        impl crate::RegisterSpec for Flplacmp0Spec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`flplacmp0::R`](R) reader structure"]
+        impl crate::Readable for Flplacmp0Spec {}
+        #[doc = "`write(|w| ..)` method takes [`flplacmp0::W`](W) writer structure"]
+        impl crate::Writable for Flplacmp0Spec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets FLPLACMP0 to value 0"]
+        impl crate::Resettable for Flplacmp0Spec {}
+    }
+    #[doc = "FLPLACMP1 (rw) register accessor: Optional load-address comparison register 1\n\nYou can [`read`](crate::Reg::read) this register and get [`flplacmp1::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`flplacmp1::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@flplacmp1`] module"]
+    #[doc(alias = "FLPLACMP1")]
+    pub type Flplacmp1 = crate::Reg<flplacmp1::Flplacmp1Spec>;
+    #[doc = "Optional load-address comparison register 1"]
+    pub mod flplacmp1 {
+        #[doc = "Register `FLPLACMP1` reader"]
+        pub type R = crate::R<Flplacmp1Spec>;
+        #[doc = "Register `FLPLACMP1` writer"]
+        pub type W = crate::W<Flplacmp1Spec>;
+        impl core::fmt::Debug for R {
+            fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+                write!(f, "{}", self.bits())
+            }
+        }
+        impl W {}
+        #[doc = "Optional load-address comparison register 1\n\nYou can [`read`](crate::Reg::read) this register and get [`flplacmp1::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`flplacmp1::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct Flplacmp1Spec;
+        impl crate::RegisterSpec for Flplacmp1Spec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`flplacmp1::R`](R) reader structure"]
+        impl crate::Readable for Flplacmp1Spec {}
+        #[doc = "`write(|w| ..)` method takes [`flplacmp1::W`](W) writer structure"]
+        impl crate::Writable for Flplacmp1Spec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets FLPLACMP1 to value 0"]
+        impl crate::Resettable for Flplacmp1Spec {}
+    }
+    #[doc = "FLPIACMP (rw) register accessor: Instruction-address comparison register %s; bit 0 enables the entry and bits 31:1 hold the halfword-aligned mask-ROM address\n\nYou can [`read`](crate::Reg::read) this register and get [`flpiacmp::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`flpiacmp::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@flpiacmp`] module"]
+    #[doc(alias = "FLPIACMP")]
+    pub type Flpiacmp = crate::Reg<flpiacmp::FlpiacmpSpec>;
+    #[doc = "Instruction-address comparison register %s; bit 0 enables the entry and bits 31:1 hold the halfword-aligned mask-ROM address"]
+    pub mod flpiacmp {
+        #[doc = "Register `FLPIACMP[%s]` reader"]
+        pub type R = crate::R<FlpiacmpSpec>;
+        #[doc = "Register `FLPIACMP[%s]` writer"]
+        pub type W = crate::W<FlpiacmpSpec>;
+        impl core::fmt::Debug for R {
+            fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+                write!(f, "{}", self.bits())
+            }
+        }
+        impl W {}
+        #[doc = "Instruction-address comparison register %s; bit 0 enables the entry and bits 31:1 hold the halfword-aligned mask-ROM address\n\nYou can [`read`](crate::Reg::read) this register and get [`flpiacmp::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`flpiacmp::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct FlpiacmpSpec;
+        impl crate::RegisterSpec for FlpiacmpSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`flpiacmp::R`](R) reader structure"]
+        impl crate::Readable for FlpiacmpSpec {}
+        #[doc = "`write(|w| ..)` method takes [`flpiacmp::W`](W) writer structure"]
+        impl crate::Writable for FlpiacmpSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets FLPIACMP[%s] to value 0"]
+        impl crate::Resettable for FlpiacmpSpec {}
+    }
+}
 #[unsafe(no_mangle)]
 static mut DEVICE_PERIPHERALS: bool = false;
 #[doc = r" All the peripherals."]
@@ -33373,6 +33638,8 @@ pub struct Peripherals {
     pub fama_remap: FamaRemap,
     #[doc = "BT_EM_CTL"]
     pub bt_em_ctl: BtEmCtl,
+    #[doc = "RISCV_PATCH"]
+    pub riscv_patch: RiscvPatch,
 }
 impl Peripherals {
     #[doc = r" Returns all the peripherals *once*."]
@@ -33433,6 +33700,7 @@ impl Peripherals {
                 share_mem_ctl: ShareMemCtl::steal(),
                 fama_remap: FamaRemap::steal(),
                 bt_em_ctl: BtEmCtl::steal(),
+                riscv_patch: RiscvPatch::steal(),
             }
         }
     }

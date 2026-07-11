@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+- Add the generated `RiscvPatch` peripheral for the mask-ROM instruction
+  patch controller and its 192 comparison registers.
+
 ### Added
 
 - Generated shared-RAM bank/clock fields and the `BT_EM_CTL` peripheral used by
