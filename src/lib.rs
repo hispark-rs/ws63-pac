@@ -25124,19 +25124,78 @@ pub mod cmu {
     #[repr(C)]
     #[doc = "Register block"]
     pub struct RegisterBlock {
-        _reserved0: [u8; 0x019c],
+        _reserved0: [u8; 0x0134],
+        rf_rx_ldo: RfRxLdo,
+        rf_lna_ldo: RfLnaLdo,
+        _reserved2: [u8; 0x04],
+        rf_vco_ldo: RfVcoLdo,
+        rf_abb_ldo: RfAbbLdo,
+        rf_pll_ldo: RfPllLdo,
+        _reserved5: [u8; 0x1c],
+        rf_tx_ldo: RfTxLdo,
+        _reserved6: [u8; 0x30],
         excep_ro_rg: ExcepRoRg,
-        _reserved1: [u8; 0x028c],
+        _reserved7: [u8; 0x90],
+        rf_adda_iso: RfAddaIso,
+        _reserved8: [u8; 0x01cc],
+        rf_pll_reference: RfPllReference,
+        xo_signal: XoSignal,
+        _reserved10: [u8; 0x24],
         cmu_fnpll_sig: CmuFnpllSig,
-        _reserved2: [u8; 0x70],
+        _reserved11: [u8; 0x70],
         cmu_new_cfg0: CmuNewCfg0,
         cmu_new_cfg1: CmuNewCfg1,
     }
     impl RegisterBlock {
+        #[doc = "0x134 - RF receiver 1.0 V LDO control used by the application-owned RF power-up sequence"]
+        #[inline(always)]
+        pub const fn rf_rx_ldo(&self) -> &RfRxLdo {
+            &self.rf_rx_ldo
+        }
+        #[doc = "0x138 - RF low-noise amplifier 1.0 V LDO control"]
+        #[inline(always)]
+        pub const fn rf_lna_ldo(&self) -> &RfLnaLdo {
+            &self.rf_lna_ldo
+        }
+        #[doc = "0x140 - RF voltage-controlled oscillator 1.0 V LDO control"]
+        #[inline(always)]
+        pub const fn rf_vco_ldo(&self) -> &RfVcoLdo {
+            &self.rf_vco_ldo
+        }
+        #[doc = "0x144 - RF analog-baseband 1.0 V LDO control"]
+        #[inline(always)]
+        pub const fn rf_abb_ldo(&self) -> &RfAbbLdo {
+            &self.rf_abb_ldo
+        }
+        #[doc = "0x148 - RF phase-locked-loop 1.0 V LDO control"]
+        #[inline(always)]
+        pub const fn rf_pll_ldo(&self) -> &RfPllLdo {
+            &self.rf_pll_ldo
+        }
+        #[doc = "0x168 - RF transmitter 1.8 V LDO control"]
+        #[inline(always)]
+        pub const fn rf_tx_ldo(&self) -> &RfTxLdo {
+            &self.rf_tx_ldo
+        }
         #[doc = "0x19c - Exception read-only status register"]
         #[inline(always)]
         pub const fn excep_ro_rg(&self) -> &ExcepRoRg {
             &self.excep_ro_rg
+        }
+        #[doc = "0x230 - RF ADC/DAC isolation release control"]
+        #[inline(always)]
+        pub const fn rf_adda_iso(&self) -> &RfAddaIso {
+            &self.rf_adda_iso
+        }
+        #[doc = "0x400 - RF PLL reference-clock enable control"]
+        #[inline(always)]
+        pub const fn rf_pll_reference(&self) -> &RfPllReference {
+            &self.rf_pll_reference
+        }
+        #[doc = "0x404 - Crystal-oscillator trim and signal control"]
+        #[inline(always)]
+        pub const fn xo_signal(&self) -> &XoSignal {
+            &self.xo_signal
         }
         #[doc = "0x42c - FNPLL signal and control register"]
         #[inline(always)]
@@ -25153,6 +25212,293 @@ pub mod cmu {
         pub const fn cmu_new_cfg1(&self) -> &CmuNewCfg1 {
             &self.cmu_new_cfg1
         }
+    }
+    #[doc = "RF_RX_LDO (rw) register accessor: RF receiver 1.0 V LDO control used by the application-owned RF power-up sequence\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_rx_ldo::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_rx_ldo::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rf_rx_ldo`] module"]
+    #[doc(alias = "RF_RX_LDO")]
+    pub type RfRxLdo = crate::Reg<rf_rx_ldo::RfRxLdoSpec>;
+    #[doc = "RF receiver 1.0 V LDO control used by the application-owned RF power-up sequence"]
+    pub mod rf_rx_ldo {
+        #[doc = "Register `RF_RX_LDO` reader"]
+        pub type R = crate::R<RfRxLdoSpec>;
+        #[doc = "Register `RF_RX_LDO` writer"]
+        pub type W = crate::W<RfRxLdoSpec>;
+        #[doc = "Field `control` reader - Complete vendor-defined RF RX LDO control value"]
+        pub type ControlR = crate::FieldReader<u16>;
+        #[doc = "Field `control` writer - Complete vendor-defined RF RX LDO control value"]
+        pub type ControlW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF RX LDO control value"]
+            #[inline(always)]
+            pub fn control(&self) -> ControlR {
+                ControlR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF RX LDO control value"]
+            #[inline(always)]
+            pub fn control(&mut self) -> ControlW<'_, RfRxLdoSpec> {
+                ControlW::new(self, 0)
+            }
+        }
+        #[doc = "RF receiver 1.0 V LDO control used by the application-owned RF power-up sequence\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_rx_ldo::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_rx_ldo::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RfRxLdoSpec;
+        impl crate::RegisterSpec for RfRxLdoSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rf_rx_ldo::R`](R) reader structure"]
+        impl crate::Readable for RfRxLdoSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rf_rx_ldo::W`](W) writer structure"]
+        impl crate::Writable for RfRxLdoSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RF_RX_LDO to value 0"]
+        impl crate::Resettable for RfRxLdoSpec {}
+    }
+    #[doc = "RF_LNA_LDO (rw) register accessor: RF low-noise amplifier 1.0 V LDO control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_lna_ldo::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_lna_ldo::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rf_lna_ldo`] module"]
+    #[doc(alias = "RF_LNA_LDO")]
+    pub type RfLnaLdo = crate::Reg<rf_lna_ldo::RfLnaLdoSpec>;
+    #[doc = "RF low-noise amplifier 1.0 V LDO control"]
+    pub mod rf_lna_ldo {
+        #[doc = "Register `RF_LNA_LDO` reader"]
+        pub type R = crate::R<RfLnaLdoSpec>;
+        #[doc = "Register `RF_LNA_LDO` writer"]
+        pub type W = crate::W<RfLnaLdoSpec>;
+        #[doc = "Field `control` reader - Complete vendor-defined RF LNA LDO control value"]
+        pub type ControlR = crate::FieldReader<u16>;
+        #[doc = "Field `control` writer - Complete vendor-defined RF LNA LDO control value"]
+        pub type ControlW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF LNA LDO control value"]
+            #[inline(always)]
+            pub fn control(&self) -> ControlR {
+                ControlR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF LNA LDO control value"]
+            #[inline(always)]
+            pub fn control(&mut self) -> ControlW<'_, RfLnaLdoSpec> {
+                ControlW::new(self, 0)
+            }
+        }
+        #[doc = "RF low-noise amplifier 1.0 V LDO control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_lna_ldo::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_lna_ldo::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RfLnaLdoSpec;
+        impl crate::RegisterSpec for RfLnaLdoSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rf_lna_ldo::R`](R) reader structure"]
+        impl crate::Readable for RfLnaLdoSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rf_lna_ldo::W`](W) writer structure"]
+        impl crate::Writable for RfLnaLdoSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RF_LNA_LDO to value 0"]
+        impl crate::Resettable for RfLnaLdoSpec {}
+    }
+    #[doc = "RF_VCO_LDO (rw) register accessor: RF voltage-controlled oscillator 1.0 V LDO control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_vco_ldo::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_vco_ldo::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rf_vco_ldo`] module"]
+    #[doc(alias = "RF_VCO_LDO")]
+    pub type RfVcoLdo = crate::Reg<rf_vco_ldo::RfVcoLdoSpec>;
+    #[doc = "RF voltage-controlled oscillator 1.0 V LDO control"]
+    pub mod rf_vco_ldo {
+        #[doc = "Register `RF_VCO_LDO` reader"]
+        pub type R = crate::R<RfVcoLdoSpec>;
+        #[doc = "Register `RF_VCO_LDO` writer"]
+        pub type W = crate::W<RfVcoLdoSpec>;
+        #[doc = "Field `control` reader - Complete vendor-defined RF VCO LDO control value"]
+        pub type ControlR = crate::FieldReader<u16>;
+        #[doc = "Field `control` writer - Complete vendor-defined RF VCO LDO control value"]
+        pub type ControlW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF VCO LDO control value"]
+            #[inline(always)]
+            pub fn control(&self) -> ControlR {
+                ControlR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF VCO LDO control value"]
+            #[inline(always)]
+            pub fn control(&mut self) -> ControlW<'_, RfVcoLdoSpec> {
+                ControlW::new(self, 0)
+            }
+        }
+        #[doc = "RF voltage-controlled oscillator 1.0 V LDO control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_vco_ldo::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_vco_ldo::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RfVcoLdoSpec;
+        impl crate::RegisterSpec for RfVcoLdoSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rf_vco_ldo::R`](R) reader structure"]
+        impl crate::Readable for RfVcoLdoSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rf_vco_ldo::W`](W) writer structure"]
+        impl crate::Writable for RfVcoLdoSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RF_VCO_LDO to value 0"]
+        impl crate::Resettable for RfVcoLdoSpec {}
+    }
+    #[doc = "RF_ABB_LDO (rw) register accessor: RF analog-baseband 1.0 V LDO control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_abb_ldo::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_abb_ldo::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rf_abb_ldo`] module"]
+    #[doc(alias = "RF_ABB_LDO")]
+    pub type RfAbbLdo = crate::Reg<rf_abb_ldo::RfAbbLdoSpec>;
+    #[doc = "RF analog-baseband 1.0 V LDO control"]
+    pub mod rf_abb_ldo {
+        #[doc = "Register `RF_ABB_LDO` reader"]
+        pub type R = crate::R<RfAbbLdoSpec>;
+        #[doc = "Register `RF_ABB_LDO` writer"]
+        pub type W = crate::W<RfAbbLdoSpec>;
+        #[doc = "Field `control` reader - Complete vendor-defined RF analog-baseband LDO control value"]
+        pub type ControlR = crate::FieldReader<u16>;
+        #[doc = "Field `control` writer - Complete vendor-defined RF analog-baseband LDO control value"]
+        pub type ControlW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF analog-baseband LDO control value"]
+            #[inline(always)]
+            pub fn control(&self) -> ControlR {
+                ControlR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF analog-baseband LDO control value"]
+            #[inline(always)]
+            pub fn control(&mut self) -> ControlW<'_, RfAbbLdoSpec> {
+                ControlW::new(self, 0)
+            }
+        }
+        #[doc = "RF analog-baseband 1.0 V LDO control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_abb_ldo::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_abb_ldo::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RfAbbLdoSpec;
+        impl crate::RegisterSpec for RfAbbLdoSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rf_abb_ldo::R`](R) reader structure"]
+        impl crate::Readable for RfAbbLdoSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rf_abb_ldo::W`](W) writer structure"]
+        impl crate::Writable for RfAbbLdoSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RF_ABB_LDO to value 0"]
+        impl crate::Resettable for RfAbbLdoSpec {}
+    }
+    #[doc = "RF_PLL_LDO (rw) register accessor: RF phase-locked-loop 1.0 V LDO control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_pll_ldo::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_pll_ldo::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rf_pll_ldo`] module"]
+    #[doc(alias = "RF_PLL_LDO")]
+    pub type RfPllLdo = crate::Reg<rf_pll_ldo::RfPllLdoSpec>;
+    #[doc = "RF phase-locked-loop 1.0 V LDO control"]
+    pub mod rf_pll_ldo {
+        #[doc = "Register `RF_PLL_LDO` reader"]
+        pub type R = crate::R<RfPllLdoSpec>;
+        #[doc = "Register `RF_PLL_LDO` writer"]
+        pub type W = crate::W<RfPllLdoSpec>;
+        #[doc = "Field `control` reader - Complete vendor-defined RF PLL LDO control value"]
+        pub type ControlR = crate::FieldReader<u16>;
+        #[doc = "Field `control` writer - Complete vendor-defined RF PLL LDO control value"]
+        pub type ControlW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF PLL LDO control value"]
+            #[inline(always)]
+            pub fn control(&self) -> ControlR {
+                ControlR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF PLL LDO control value"]
+            #[inline(always)]
+            pub fn control(&mut self) -> ControlW<'_, RfPllLdoSpec> {
+                ControlW::new(self, 0)
+            }
+        }
+        #[doc = "RF phase-locked-loop 1.0 V LDO control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_pll_ldo::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_pll_ldo::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RfPllLdoSpec;
+        impl crate::RegisterSpec for RfPllLdoSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rf_pll_ldo::R`](R) reader structure"]
+        impl crate::Readable for RfPllLdoSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rf_pll_ldo::W`](W) writer structure"]
+        impl crate::Writable for RfPllLdoSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RF_PLL_LDO to value 0"]
+        impl crate::Resettable for RfPllLdoSpec {}
+    }
+    #[doc = "RF_TX_LDO (rw) register accessor: RF transmitter 1.8 V LDO control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_tx_ldo::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_tx_ldo::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rf_tx_ldo`] module"]
+    #[doc(alias = "RF_TX_LDO")]
+    pub type RfTxLdo = crate::Reg<rf_tx_ldo::RfTxLdoSpec>;
+    #[doc = "RF transmitter 1.8 V LDO control"]
+    pub mod rf_tx_ldo {
+        #[doc = "Register `RF_TX_LDO` reader"]
+        pub type R = crate::R<RfTxLdoSpec>;
+        #[doc = "Register `RF_TX_LDO` writer"]
+        pub type W = crate::W<RfTxLdoSpec>;
+        #[doc = "Field `control` reader - Complete vendor-defined RF TX LDO control value"]
+        pub type ControlR = crate::FieldReader<u16>;
+        #[doc = "Field `control` writer - Complete vendor-defined RF TX LDO control value"]
+        pub type ControlW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF TX LDO control value"]
+            #[inline(always)]
+            pub fn control(&self) -> ControlR {
+                ControlR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Complete vendor-defined RF TX LDO control value"]
+            #[inline(always)]
+            pub fn control(&mut self) -> ControlW<'_, RfTxLdoSpec> {
+                ControlW::new(self, 0)
+            }
+        }
+        #[doc = "RF transmitter 1.8 V LDO control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_tx_ldo::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_tx_ldo::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RfTxLdoSpec;
+        impl crate::RegisterSpec for RfTxLdoSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rf_tx_ldo::R`](R) reader structure"]
+        impl crate::Readable for RfTxLdoSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rf_tx_ldo::W`](W) writer structure"]
+        impl crate::Writable for RfTxLdoSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RF_TX_LDO to value 0"]
+        impl crate::Resettable for RfTxLdoSpec {}
+    }
+    #[doc = "RF_ADDA_ISO (rw) register accessor: RF ADC/DAC isolation release control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_adda_iso::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_adda_iso::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rf_adda_iso`] module"]
+    #[doc(alias = "RF_ADDA_ISO")]
+    pub type RfAddaIso = crate::Reg<rf_adda_iso::RfAddaIsoSpec>;
+    #[doc = "RF ADC/DAC isolation release control"]
+    pub mod rf_adda_iso {
+        #[doc = "Register `RF_ADDA_ISO` reader"]
+        pub type R = crate::R<RfAddaIsoSpec>;
+        #[doc = "Register `RF_ADDA_ISO` writer"]
+        pub type W = crate::W<RfAddaIsoSpec>;
+        #[doc = "Field `control` reader - RF ADC/DAC isolation control value"]
+        pub type ControlR = crate::FieldReader;
+        #[doc = "Field `control` writer - RF ADC/DAC isolation control value"]
+        pub type ControlW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        impl R {
+            #[doc = "Bits 0:1 - RF ADC/DAC isolation control value"]
+            #[inline(always)]
+            pub fn control(&self) -> ControlR {
+                ControlR::new((self.bits & 3) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:1 - RF ADC/DAC isolation control value"]
+            #[inline(always)]
+            pub fn control(&mut self) -> ControlW<'_, RfAddaIsoSpec> {
+                ControlW::new(self, 0)
+            }
+        }
+        #[doc = "RF ADC/DAC isolation release control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_adda_iso::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_adda_iso::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RfAddaIsoSpec;
+        impl crate::RegisterSpec for RfAddaIsoSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rf_adda_iso::R`](R) reader structure"]
+        impl crate::Readable for RfAddaIsoSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rf_adda_iso::W`](W) writer structure"]
+        impl crate::Writable for RfAddaIsoSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RF_ADDA_ISO to value 0"]
+        impl crate::Resettable for RfAddaIsoSpec {}
     }
     #[doc = "EXCEP_RO_RG (r) register accessor: Exception read-only status register\n\nYou can [`read`](crate::Reg::read) this register and get [`excep_ro_rg::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@excep_ro_rg`] module"]
     #[doc(alias = "EXCEP_RO_RG")]
@@ -25179,6 +25525,88 @@ pub mod cmu {
         impl crate::Readable for ExcepRoRgSpec {}
         #[doc = "`reset()` method sets EXCEP_RO_RG to value 0"]
         impl crate::Resettable for ExcepRoRgSpec {}
+    }
+    #[doc = "RF_PLL_REFERENCE (rw) register accessor: RF PLL reference-clock enable control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_pll_reference::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_pll_reference::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rf_pll_reference`] module"]
+    #[doc(alias = "RF_PLL_REFERENCE")]
+    pub type RfPllReference = crate::Reg<rf_pll_reference::RfPllReferenceSpec>;
+    #[doc = "RF PLL reference-clock enable control"]
+    pub mod rf_pll_reference {
+        #[doc = "Register `RF_PLL_REFERENCE` reader"]
+        pub type R = crate::R<RfPllReferenceSpec>;
+        #[doc = "Register `RF_PLL_REFERENCE` writer"]
+        pub type W = crate::W<RfPllReferenceSpec>;
+        #[doc = "Field `control` reader - Complete vendor-defined RF PLL reference control value"]
+        pub type ControlR = crate::FieldReader;
+        #[doc = "Field `control` writer - Complete vendor-defined RF PLL reference control value"]
+        pub type ControlW<'a, REG> = crate::FieldWriter<'a, REG, 3>;
+        impl R {
+            #[doc = "Bits 0:2 - Complete vendor-defined RF PLL reference control value"]
+            #[inline(always)]
+            pub fn control(&self) -> ControlR {
+                ControlR::new((self.bits & 7) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:2 - Complete vendor-defined RF PLL reference control value"]
+            #[inline(always)]
+            pub fn control(&mut self) -> ControlW<'_, RfPllReferenceSpec> {
+                ControlW::new(self, 0)
+            }
+        }
+        #[doc = "RF PLL reference-clock enable control\n\nYou can [`read`](crate::Reg::read) this register and get [`rf_pll_reference::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rf_pll_reference::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RfPllReferenceSpec;
+        impl crate::RegisterSpec for RfPllReferenceSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rf_pll_reference::R`](R) reader structure"]
+        impl crate::Readable for RfPllReferenceSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rf_pll_reference::W`](W) writer structure"]
+        impl crate::Writable for RfPllReferenceSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RF_PLL_REFERENCE to value 0"]
+        impl crate::Resettable for RfPllReferenceSpec {}
+    }
+    #[doc = "XO_SIGNAL (rw) register accessor: Crystal-oscillator trim and signal control\n\nYou can [`read`](crate::Reg::read) this register and get [`xo_signal::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`xo_signal::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@xo_signal`] module"]
+    #[doc(alias = "XO_SIGNAL")]
+    pub type XoSignal = crate::Reg<xo_signal::XoSignalSpec>;
+    #[doc = "Crystal-oscillator trim and signal control"]
+    pub mod xo_signal {
+        #[doc = "Register `XO_SIGNAL` reader"]
+        pub type R = crate::R<XoSignalSpec>;
+        #[doc = "Register `XO_SIGNAL` writer"]
+        pub type W = crate::W<XoSignalSpec>;
+        #[doc = "Field `control` reader - Complete vendor-defined XO trim/control value"]
+        pub type ControlR = crate::FieldReader<u32>;
+        #[doc = "Field `control` writer - Complete vendor-defined XO trim/control value"]
+        pub type ControlW<'a, REG> = crate::FieldWriter<'a, REG, 20, u32>;
+        impl R {
+            #[doc = "Bits 0:19 - Complete vendor-defined XO trim/control value"]
+            #[inline(always)]
+            pub fn control(&self) -> ControlR {
+                ControlR::new(self.bits & 0x000f_ffff)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:19 - Complete vendor-defined XO trim/control value"]
+            #[inline(always)]
+            pub fn control(&mut self) -> ControlW<'_, XoSignalSpec> {
+                ControlW::new(self, 0)
+            }
+        }
+        #[doc = "Crystal-oscillator trim and signal control\n\nYou can [`read`](crate::Reg::read) this register and get [`xo_signal::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`xo_signal::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct XoSignalSpec;
+        impl crate::RegisterSpec for XoSignalSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`xo_signal::R`](R) reader structure"]
+        impl crate::Readable for XoSignalSpec {}
+        #[doc = "`write(|w| ..)` method takes [`xo_signal::W`](W) writer structure"]
+        impl crate::Writable for XoSignalSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets XO_SIGNAL to value 0"]
+        impl crate::Resettable for XoSignalSpec {}
     }
     #[doc = "CMU_FNPLL_SIG (rw) register accessor: FNPLL signal and control register\n\nYou can [`read`](crate::Reg::read) this register and get [`cmu_fnpll_sig::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cmu_fnpll_sig::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@cmu_fnpll_sig`] module"]
     #[doc(alias = "CMU_FNPLL_SIG")]
