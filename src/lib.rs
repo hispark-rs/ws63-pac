@@ -25576,22 +25576,92 @@ pub mod cmu {
         pub type R = crate::R<XoSignalSpec>;
         #[doc = "Register `XO_SIGNAL` writer"]
         pub type W = crate::W<XoSignalSpec>;
-        #[doc = "Field `control` reader - Complete vendor-defined XO trim/control value"]
-        pub type ControlR = crate::FieldReader<u32>;
-        #[doc = "Field `control` writer - Complete vendor-defined XO trim/control value"]
-        pub type ControlW<'a, REG> = crate::FieldWriter<'a, REG, 20, u32>;
+        #[doc = "Field `trim_fine` reader - Crystal oscillator fine trim code"]
+        pub type TrimFineR = crate::FieldReader;
+        #[doc = "Field `trim_fine` writer - Crystal oscillator fine trim code"]
+        pub type TrimFineW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+        #[doc = "Field `trim_coarse` reader - Crystal oscillator coarse trim code"]
+        pub type TrimCoarseR = crate::FieldReader;
+        #[doc = "Field `trim_coarse` writer - Crystal oscillator coarse trim code"]
+        pub type TrimCoarseW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `trim_reverse` reader - Crystal oscillator reverse trim code"]
+        pub type TrimReverseR = crate::FieldReader;
+        #[doc = "Field `trim_reverse` writer - Crystal oscillator reverse trim code"]
+        pub type TrimReverseW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `trim_fine_select` reader - Use the programmed fine trim code"]
+        pub type TrimFineSelectR = crate::BitReader;
+        #[doc = "Field `trim_fine_select` writer - Use the programmed fine trim code"]
+        pub type TrimFineSelectW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `trim_coarse_select` reader - Use the programmed coarse trim code"]
+        pub type TrimCoarseSelectR = crate::BitReader;
+        #[doc = "Field `trim_coarse_select` writer - Use the programmed coarse trim code"]
+        pub type TrimCoarseSelectW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `trim_reverse_select` reader - Use the programmed reverse trim code"]
+        pub type TrimReverseSelectR = crate::BitReader;
+        #[doc = "Field `trim_reverse_select` writer - Use the programmed reverse trim code"]
+        pub type TrimReverseSelectW<'a, REG> = crate::BitWriter<'a, REG>;
         impl R {
-            #[doc = "Bits 0:19 - Complete vendor-defined XO trim/control value"]
+            #[doc = "Bits 0:7 - Crystal oscillator fine trim code"]
             #[inline(always)]
-            pub fn control(&self) -> ControlR {
-                ControlR::new(self.bits & 0x000f_ffff)
+            pub fn trim_fine(&self) -> TrimFineR {
+                TrimFineR::new((self.bits & 0xff) as u8)
+            }
+            #[doc = "Bits 8:11 - Crystal oscillator coarse trim code"]
+            #[inline(always)]
+            pub fn trim_coarse(&self) -> TrimCoarseR {
+                TrimCoarseR::new(((self.bits >> 8) & 0x0f) as u8)
+            }
+            #[doc = "Bits 12:15 - Crystal oscillator reverse trim code"]
+            #[inline(always)]
+            pub fn trim_reverse(&self) -> TrimReverseR {
+                TrimReverseR::new(((self.bits >> 12) & 0x0f) as u8)
+            }
+            #[doc = "Bit 16 - Use the programmed fine trim code"]
+            #[inline(always)]
+            pub fn trim_fine_select(&self) -> TrimFineSelectR {
+                TrimFineSelectR::new(((self.bits >> 16) & 1) != 0)
+            }
+            #[doc = "Bit 17 - Use the programmed coarse trim code"]
+            #[inline(always)]
+            pub fn trim_coarse_select(&self) -> TrimCoarseSelectR {
+                TrimCoarseSelectR::new(((self.bits >> 17) & 1) != 0)
+            }
+            #[doc = "Bit 18 - Use the programmed reverse trim code"]
+            #[inline(always)]
+            pub fn trim_reverse_select(&self) -> TrimReverseSelectR {
+                TrimReverseSelectR::new(((self.bits >> 18) & 1) != 0)
             }
         }
         impl W {
-            #[doc = "Bits 0:19 - Complete vendor-defined XO trim/control value"]
+            #[doc = "Bits 0:7 - Crystal oscillator fine trim code"]
             #[inline(always)]
-            pub fn control(&mut self) -> ControlW<'_, XoSignalSpec> {
-                ControlW::new(self, 0)
+            pub fn trim_fine(&mut self) -> TrimFineW<'_, XoSignalSpec> {
+                TrimFineW::new(self, 0)
+            }
+            #[doc = "Bits 8:11 - Crystal oscillator coarse trim code"]
+            #[inline(always)]
+            pub fn trim_coarse(&mut self) -> TrimCoarseW<'_, XoSignalSpec> {
+                TrimCoarseW::new(self, 8)
+            }
+            #[doc = "Bits 12:15 - Crystal oscillator reverse trim code"]
+            #[inline(always)]
+            pub fn trim_reverse(&mut self) -> TrimReverseW<'_, XoSignalSpec> {
+                TrimReverseW::new(self, 12)
+            }
+            #[doc = "Bit 16 - Use the programmed fine trim code"]
+            #[inline(always)]
+            pub fn trim_fine_select(&mut self) -> TrimFineSelectW<'_, XoSignalSpec> {
+                TrimFineSelectW::new(self, 16)
+            }
+            #[doc = "Bit 17 - Use the programmed coarse trim code"]
+            #[inline(always)]
+            pub fn trim_coarse_select(&mut self) -> TrimCoarseSelectW<'_, XoSignalSpec> {
+                TrimCoarseSelectW::new(self, 17)
+            }
+            #[doc = "Bit 18 - Use the programmed reverse trim code"]
+            #[inline(always)]
+            pub fn trim_reverse_select(&mut self) -> TrimReverseSelectW<'_, XoSignalSpec> {
+                TrimReverseSelectW::new(self, 18)
             }
         }
         #[doc = "Crystal-oscillator trim and signal control\n\nYou can [`read`](crate::Reg::read) this register and get [`xo_signal::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`xo_signal::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
