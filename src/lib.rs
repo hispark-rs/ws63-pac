@@ -31972,12 +31972,24 @@ pub mod share_mem_ctl {
         pub type R = crate::R<CfgRamCkenSpec>;
         #[doc = "Register `CFG_RAM_CKEN` writer"]
         pub type W = crate::W<CfgRamCkenSpec>;
-        impl core::fmt::Debug for R {
-            fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-                write!(f, "{}", self.bits())
+        #[doc = "Field `share_ram_cken` reader - Clock enables for the configurable shared RAM banks"]
+        pub type ShareRamCkenR = crate::FieldReader<u16>;
+        #[doc = "Field `share_ram_cken` writer - Clock enables for the configurable shared RAM banks"]
+        pub type ShareRamCkenW<'a, REG> = crate::FieldWriter<'a, REG, 14, u16>;
+        impl R {
+            #[doc = "Bits 10:23 - Clock enables for the configurable shared RAM banks"]
+            #[inline(always)]
+            pub fn share_ram_cken(&self) -> ShareRamCkenR {
+                ShareRamCkenR::new(((self.bits >> 10) & 0x3fff) as u16)
             }
         }
-        impl W {}
+        impl W {
+            #[doc = "Bits 10:23 - Clock enables for the configurable shared RAM banks"]
+            #[inline(always)]
+            pub fn share_ram_cken(&mut self) -> ShareRamCkenW<'_, CfgRamCkenSpec> {
+                ShareRamCkenW::new(self, 10)
+            }
+        }
         #[doc = "RAM clock enable\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_ram_cken::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_ram_cken::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct CfgRamCkenSpec;
         impl crate::RegisterSpec for CfgRamCkenSpec {
@@ -32001,12 +32013,122 @@ pub mod share_mem_ctl {
         pub type R = crate::R<CfgRamSelSpec>;
         #[doc = "Register `CFG_RAM_SEL` writer"]
         pub type W = crate::W<CfgRamSelSpec>;
-        impl core::fmt::Debug for R {
-            fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-                write!(f, "{}", self.bits())
+        #[doc = "Field `ram12_sel` reader - RAM12 selection: 0 packet RAM, 1 BGLE"]
+        pub type Ram12SelR = crate::BitReader;
+        #[doc = "Field `ram12_sel` writer - RAM12 selection: 0 packet RAM, 1 BGLE"]
+        pub type Ram12SelW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `ram11_sel` reader - RAM11 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram11SelR = crate::FieldReader;
+        #[doc = "Field `ram11_sel` writer - RAM11 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram11SelW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `ram10_sel` reader - RAM10 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram10SelR = crate::FieldReader;
+        #[doc = "Field `ram10_sel` writer - RAM10 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram10SelW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `ram9_sel` reader - RAM9 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram9SelR = crate::FieldReader;
+        #[doc = "Field `ram9_sel` writer - RAM9 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram9SelW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `ram8_sel` reader - RAM8 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram8SelR = crate::FieldReader;
+        #[doc = "Field `ram8_sel` writer - RAM8 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram8SelW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `ram7_sel` reader - RAM7 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram7SelR = crate::FieldReader;
+        #[doc = "Field `ram7_sel` writer - RAM7 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram7SelW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `ram6_sel` reader - RAM6 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram6SelR = crate::FieldReader;
+        #[doc = "Field `ram6_sel` writer - RAM6 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram6SelW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `ram5_sel` reader - RAM5 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram5SelR = crate::FieldReader;
+        #[doc = "Field `ram5_sel` writer - RAM5 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+        pub type Ram5SelW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        impl R {
+            #[doc = "Bit 0 - RAM12 selection: 0 packet RAM, 1 BGLE"]
+            #[inline(always)]
+            pub fn ram12_sel(&self) -> Ram12SelR {
+                Ram12SelR::new((self.bits & 1) != 0)
+            }
+            #[doc = "Bits 2:3 - RAM11 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram11_sel(&self) -> Ram11SelR {
+                Ram11SelR::new(((self.bits >> 2) & 3) as u8)
+            }
+            #[doc = "Bits 4:5 - RAM10 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram10_sel(&self) -> Ram10SelR {
+                Ram10SelR::new(((self.bits >> 4) & 3) as u8)
+            }
+            #[doc = "Bits 6:7 - RAM9 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram9_sel(&self) -> Ram9SelR {
+                Ram9SelR::new(((self.bits >> 6) & 3) as u8)
+            }
+            #[doc = "Bits 8:9 - RAM8 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram8_sel(&self) -> Ram8SelR {
+                Ram8SelR::new(((self.bits >> 8) & 3) as u8)
+            }
+            #[doc = "Bits 10:11 - RAM7 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram7_sel(&self) -> Ram7SelR {
+                Ram7SelR::new(((self.bits >> 10) & 3) as u8)
+            }
+            #[doc = "Bits 12:13 - RAM6 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram6_sel(&self) -> Ram6SelR {
+                Ram6SelR::new(((self.bits >> 12) & 3) as u8)
+            }
+            #[doc = "Bits 14:15 - RAM5 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram5_sel(&self) -> Ram5SelR {
+                Ram5SelR::new(((self.bits >> 14) & 3) as u8)
             }
         }
-        impl W {}
+        impl W {
+            #[doc = "Bit 0 - RAM12 selection: 0 packet RAM, 1 BGLE"]
+            #[inline(always)]
+            pub fn ram12_sel(&mut self) -> Ram12SelW<'_, CfgRamSelSpec> {
+                Ram12SelW::new(self, 0)
+            }
+            #[doc = "Bits 2:3 - RAM11 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram11_sel(&mut self) -> Ram11SelW<'_, CfgRamSelSpec> {
+                Ram11SelW::new(self, 2)
+            }
+            #[doc = "Bits 4:5 - RAM10 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram10_sel(&mut self) -> Ram10SelW<'_, CfgRamSelSpec> {
+                Ram10SelW::new(self, 4)
+            }
+            #[doc = "Bits 6:7 - RAM9 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram9_sel(&mut self) -> Ram9SelW<'_, CfgRamSelSpec> {
+                Ram9SelW::new(self, 6)
+            }
+            #[doc = "Bits 8:9 - RAM8 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram8_sel(&mut self) -> Ram8SelW<'_, CfgRamSelSpec> {
+                Ram8SelW::new(self, 8)
+            }
+            #[doc = "Bits 10:11 - RAM7 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram7_sel(&mut self) -> Ram7SelW<'_, CfgRamSelSpec> {
+                Ram7SelW::new(self, 10)
+            }
+            #[doc = "Bits 12:13 - RAM6 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram6_sel(&mut self) -> Ram6SelW<'_, CfgRamSelSpec> {
+                Ram6SelW::new(self, 12)
+            }
+            #[doc = "Bits 14:15 - RAM5 selection: 0 packet RAM, 1 BGLE, 2 ITCM, 3 DTCM"]
+            #[inline(always)]
+            pub fn ram5_sel(&mut self) -> Ram5SelW<'_, CfgRamSelSpec> {
+                Ram5SelW::new(self, 14)
+            }
+        }
         #[doc = "Share RAM control and RAM select\n\nYou can [`read`](crate::Reg::read) this register and get [`cfg_ram_sel::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`cfg_ram_sel::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct CfgRamSelSpec;
         impl crate::RegisterSpec for CfgRamSelSpec {
@@ -32610,6 +32732,70 @@ pub mod fama_remap {
         impl crate::Resettable for RemapDstBaseSpec {}
     }
 }
+#[doc = "Bluetooth exchange-memory control used while changing shared RAM ownership"]
+pub type BtEmCtl = crate::Periph<bt_em_ctl::RegisterBlock, 0x4900_3000>;
+impl core::fmt::Debug for BtEmCtl {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        f.debug_struct("BtEmCtl").finish()
+    }
+}
+#[doc = "Bluetooth exchange-memory control used while changing shared RAM ownership"]
+pub mod bt_em_ctl {
+    #[repr(C)]
+    #[doc = "Register block"]
+    pub struct RegisterBlock {
+        _reserved0: [u8; 0x74],
+        em_gt_mode: EmGtMode,
+    }
+    impl RegisterBlock {
+        #[doc = "0x74 - Bluetooth exchange-memory gate mode"]
+        #[inline(always)]
+        pub const fn em_gt_mode(&self) -> &EmGtMode {
+            &self.em_gt_mode
+        }
+    }
+    #[doc = "EM_GT_MODE (rw) register accessor: Bluetooth exchange-memory gate mode\n\nYou can [`read`](crate::Reg::read) this register and get [`em_gt_mode::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`em_gt_mode::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@em_gt_mode`] module"]
+    #[doc(alias = "EM_GT_MODE")]
+    pub type EmGtMode = crate::Reg<em_gt_mode::EmGtModeSpec>;
+    #[doc = "Bluetooth exchange-memory gate mode"]
+    pub mod em_gt_mode {
+        #[doc = "Register `EM_GT_MODE` reader"]
+        pub type R = crate::R<EmGtModeSpec>;
+        #[doc = "Register `EM_GT_MODE` writer"]
+        pub type W = crate::W<EmGtModeSpec>;
+        #[doc = "Field `enable` reader - Temporarily gate Bluetooth exchange-memory access"]
+        pub type EnableR = crate::BitReader;
+        #[doc = "Field `enable` writer - Temporarily gate Bluetooth exchange-memory access"]
+        pub type EnableW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - Temporarily gate Bluetooth exchange-memory access"]
+            #[inline(always)]
+            pub fn enable(&self) -> EnableR {
+                EnableR::new((self.bits & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Temporarily gate Bluetooth exchange-memory access"]
+            #[inline(always)]
+            pub fn enable(&mut self) -> EnableW<'_, EmGtModeSpec> {
+                EnableW::new(self, 0)
+            }
+        }
+        #[doc = "Bluetooth exchange-memory gate mode\n\nYou can [`read`](crate::Reg::read) this register and get [`em_gt_mode::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`em_gt_mode::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct EmGtModeSpec;
+        impl crate::RegisterSpec for EmGtModeSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`em_gt_mode::R`](R) reader structure"]
+        impl crate::Readable for EmGtModeSpec {}
+        #[doc = "`write(|w| ..)` method takes [`em_gt_mode::W`](W) writer structure"]
+        impl crate::Writable for EmGtModeSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets EM_GT_MODE to value 0"]
+        impl crate::Resettable for EmGtModeSpec {}
+    }
+}
 #[unsafe(no_mangle)]
 static mut DEVICE_PERIPHERALS: bool = false;
 #[doc = r" All the peripherals."]
@@ -32687,6 +32873,8 @@ pub struct Peripherals {
     pub share_mem_ctl: ShareMemCtl,
     #[doc = "FAMA_REMAP"]
     pub fama_remap: FamaRemap,
+    #[doc = "BT_EM_CTL"]
+    pub bt_em_ctl: BtEmCtl,
 }
 impl Peripherals {
     #[doc = r" Returns all the peripherals *once*."]
@@ -32746,6 +32934,7 @@ impl Peripherals {
                 rf_wb_ctl: RfWbCtl::steal(),
                 share_mem_ctl: ShareMemCtl::steal(),
                 fama_remap: FamaRemap::steal(),
+                bt_em_ctl: BtEmCtl::steal(),
             }
         }
     }
