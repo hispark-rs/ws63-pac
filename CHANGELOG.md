@@ -6,13 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-- Add the generated `RiscvPatch` peripheral for the mask-ROM instruction
-  patch controller and its 192 comparison registers.
+## [0.2.2] - 2026-07-12
 
 ### Added
 
 - Generated shared-RAM bank/clock fields and the `BT_EM_CTL` peripheral used by
   WS63 Wi-Fi runtime memory configuration.
+- Generated RF power-control registers used by the WS63 connectivity runtime.
+- Generated CMU factory XO-trim fields used to preserve calibrated clock state.
+- Generated `RiscvPatch` peripheral for the mask-ROM instruction patch
+  controller and its 192 comparison registers.
 
 ## [0.2.1] - 2026-07-09
 

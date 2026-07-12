@@ -1,6 +1,6 @@
 [package]
 name = "ws63-pac"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2024"
 description = "Peripheral Access Crate for HiSilicon WS63 (RISC-V) — generated via svd2rust"
 license = "MIT"
