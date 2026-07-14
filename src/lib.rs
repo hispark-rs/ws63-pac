@@ -23360,32 +23360,27 @@ pub mod timer {
         #[doc = "`reset()` method sets ABNOR_INTR_STAT to value 0"]
         impl crate::Resettable for AbnorIntrStatSpec {}
     }
-    #[doc = "EOI_REN (rw) register accessor: End-of-interrupt register\n\nYou can [`read`](crate::Reg::read) this register and get [`eoi_ren::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`eoi_ren::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@eoi_ren`] module"]
+    #[doc = "EOI_REN (w) register accessor: End-of-interrupt register\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`eoi_ren::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@eoi_ren`] module"]
     #[doc(alias = "EOI_REN")]
     pub type EoiRen = crate::Reg<eoi_ren::EoiRenSpec>;
     #[doc = "End-of-interrupt register"]
     pub mod eoi_ren {
-        #[doc = "Register `EOI_REN` reader"]
-        pub type R = crate::R<EoiRenSpec>;
         #[doc = "Register `EOI_REN` writer"]
         pub type W = crate::W<EoiRenSpec>;
-        #[doc = "Field `eoi` reader - Clear interrupts for all timers (read to clear)"]
-        pub type EoiR = crate::FieldReader;
-        impl R {
-            #[doc = "Bits 0:2 - Clear interrupts for all timers (read to clear)"]
+        #[doc = "Field `eoi` writer - Clear interrupts for all timers by writing one bit per channel; reads return zero and do not clear on WS63 silicon"]
+        pub type EoiW<'a, REG> = crate::FieldWriter<'a, REG, 3>;
+        impl W {
+            #[doc = "Bits 0:2 - Clear interrupts for all timers by writing one bit per channel; reads return zero and do not clear on WS63 silicon"]
             #[inline(always)]
-            pub fn eoi(&self) -> EoiR {
-                EoiR::new((self.bits & 7) as u8)
+            pub fn eoi(&mut self) -> EoiW<'_, EoiRenSpec> {
+                EoiW::new(self, 0)
             }
         }
-        impl W {}
-        #[doc = "End-of-interrupt register\n\nYou can [`read`](crate::Reg::read) this register and get [`eoi_ren::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`eoi_ren::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "End-of-interrupt register\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`eoi_ren::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct EoiRenSpec;
         impl crate::RegisterSpec for EoiRenSpec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`eoi_ren::R`](R) reader structure"]
-        impl crate::Readable for EoiRenSpec {}
         #[doc = "`write(|w| ..)` method takes [`eoi_ren::W`](W) writer structure"]
         impl crate::Writable for EoiRenSpec {
             type Safety = crate::Unsafe;
@@ -23699,32 +23694,27 @@ pub mod timer {
         #[doc = "`reset()` method sets TIMER%s_CONTROL to value 0"]
         impl crate::Resettable for TimerControlSpec {}
     }
-    #[doc = "TIMER_EOI (rw) register accessor: Timer %s \\[dim=3\\] end-of-interrupt\n\nYou can [`read`](crate::Reg::read) this register and get [`timer_eoi::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`timer_eoi::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@timer_eoi`] module"]
+    #[doc = "TIMER_EOI (w) register accessor: Timer %s \\[dim=3\\] end-of-interrupt\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`timer_eoi::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@timer_eoi`] module"]
     #[doc(alias = "TIMER_EOI")]
     pub type TimerEoi = crate::Reg<timer_eoi::TimerEoiSpec>;
     #[doc = "Timer %s \\[dim=3\\] end-of-interrupt"]
     pub mod timer_eoi {
-        #[doc = "Register `TIMER%s_EOI` reader"]
-        pub type R = crate::R<TimerEoiSpec>;
         #[doc = "Register `TIMER%s_EOI` writer"]
         pub type W = crate::W<TimerEoiSpec>;
-        #[doc = "Field `eoi` reader - Read to clear timer 0 interrupt"]
-        pub type EoiR = crate::BitReader;
-        impl R {
-            #[doc = "Bit 0 - Read to clear timer 0 interrupt"]
+        #[doc = "Field `eoi` writer - Write 1 to clear this timer interrupt; reads return zero and do not clear on WS63 silicon"]
+        pub type EoiW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl W {
+            #[doc = "Bit 0 - Write 1 to clear this timer interrupt; reads return zero and do not clear on WS63 silicon"]
             #[inline(always)]
-            pub fn eoi(&self) -> EoiR {
-                EoiR::new((self.bits & 1) != 0)
+            pub fn eoi(&mut self) -> EoiW<'_, TimerEoiSpec> {
+                EoiW::new(self, 0)
             }
         }
-        impl W {}
-        #[doc = "Timer %s \\[dim=3\\] end-of-interrupt\n\nYou can [`read`](crate::Reg::read) this register and get [`timer_eoi::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`timer_eoi::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Timer %s \\[dim=3\\] end-of-interrupt\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`timer_eoi::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct TimerEoiSpec;
         impl crate::RegisterSpec for TimerEoiSpec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`timer_eoi::R`](R) reader structure"]
-        impl crate::Readable for TimerEoiSpec {}
         #[doc = "`write(|w| ..)` method takes [`timer_eoi::W`](W) writer structure"]
         impl crate::Writable for TimerEoiSpec {
             type Safety = crate::Unsafe;
