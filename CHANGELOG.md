@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-07-14
+
+### Added
+
+- Add the WS63 `SOFT_INT0`/`SOFT_INT1` interrupt vectors and generated
+  `device.x` entries while retaining the `0.2.x` timer EOI API for compatibility
+  with already-published HAL releases.
+
 ## [0.2.2] - 2026-07-12
 
 ### Added
