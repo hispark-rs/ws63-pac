@@ -926,6 +926,14 @@ pub mod interrupt {
         GPIO_INT1 = 34,
         #[doc = "35 - GPIO_INT2"]
         GPIO_INT2 = 35,
+        #[doc = "36 - SOFT_INT0"]
+        SOFT_INT0 = 36,
+        #[doc = "37 - SOFT_INT1"]
+        SOFT_INT1 = 37,
+        #[doc = "38 - SOFT_INT2"]
+        SOFT_INT2 = 38,
+        #[doc = "39 - SOFT_INT3"]
+        SOFT_INT3 = 39,
         #[doc = "40 - COEX_WL_INT"]
         COEX_WL_INT = 40,
         #[doc = "41 - COEX_BT_INT"]
@@ -1175,13 +1183,11 @@ pub mod sys_ctl1 {
         #[doc = "`reset()` method sets SOFT_INT_EN to value 0"]
         impl crate::Resettable for SoftIntEnSpec {}
     }
-    #[doc = "SOFT_INT_SET (rw) register accessor: CPU soft interrupt set register (self-clearing)\n\nYou can [`read`](crate::Reg::read) this register and get [`soft_int_set::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`soft_int_set::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@soft_int_set`] module"]
+    #[doc = "SOFT_INT_SET (w) register accessor: CPU soft interrupt set register (self-clearing)\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`soft_int_set::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@soft_int_set`] module"]
     #[doc(alias = "SOFT_INT_SET")]
     pub type SoftIntSet = crate::Reg<soft_int_set::SoftIntSetSpec>;
     #[doc = "CPU soft interrupt set register (self-clearing)"]
     pub mod soft_int_set {
-        #[doc = "Register `SOFT_INT_SET` reader"]
-        pub type R = crate::R<SoftIntSetSpec>;
         #[doc = "Register `SOFT_INT_SET` writer"]
         pub type W = crate::W<SoftIntSetSpec>;
         #[doc = "Field `soft_int0_set` writer - CPU soft interrupt 0 set. 0: no effect; 1: set effective"]
@@ -1214,13 +1220,11 @@ pub mod sys_ctl1 {
                 SoftInt3SetW::new(self, 3)
             }
         }
-        #[doc = "CPU soft interrupt set register (self-clearing)\n\nYou can [`read`](crate::Reg::read) this register and get [`soft_int_set::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`soft_int_set::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "CPU soft interrupt set register (self-clearing)\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`soft_int_set::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SoftIntSetSpec;
         impl crate::RegisterSpec for SoftIntSetSpec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`soft_int_set::R`](R) reader structure"]
-        impl crate::Readable for SoftIntSetSpec {}
         #[doc = "`write(|w| ..)` method takes [`soft_int_set::W`](W) writer structure"]
         impl crate::Writable for SoftIntSetSpec {
             type Safety = crate::Unsafe;
@@ -1228,13 +1232,11 @@ pub mod sys_ctl1 {
         #[doc = "`reset()` method sets SOFT_INT_SET to value 0"]
         impl crate::Resettable for SoftIntSetSpec {}
     }
-    #[doc = "SOFT_INT_CLR (rw) register accessor: CPU soft interrupt clear register (self-clearing)\n\nYou can [`read`](crate::Reg::read) this register and get [`soft_int_clr::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`soft_int_clr::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@soft_int_clr`] module"]
+    #[doc = "SOFT_INT_CLR (w) register accessor: CPU soft interrupt clear register (self-clearing)\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`soft_int_clr::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@soft_int_clr`] module"]
     #[doc(alias = "SOFT_INT_CLR")]
     pub type SoftIntClr = crate::Reg<soft_int_clr::SoftIntClrSpec>;
     #[doc = "CPU soft interrupt clear register (self-clearing)"]
     pub mod soft_int_clr {
-        #[doc = "Register `SOFT_INT_CLR` reader"]
-        pub type R = crate::R<SoftIntClrSpec>;
         #[doc = "Register `SOFT_INT_CLR` writer"]
         pub type W = crate::W<SoftIntClrSpec>;
         #[doc = "Field `soft_int0_clr` writer - CPU soft interrupt 0 clear. 0: no effect; 1: clear effective"]
@@ -1267,13 +1269,11 @@ pub mod sys_ctl1 {
                 SoftInt3ClrW::new(self, 3)
             }
         }
-        #[doc = "CPU soft interrupt clear register (self-clearing)\n\nYou can [`read`](crate::Reg::read) this register and get [`soft_int_clr::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`soft_int_clr::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "CPU soft interrupt clear register (self-clearing)\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`soft_int_clr::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SoftIntClrSpec;
         impl crate::RegisterSpec for SoftIntClrSpec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`soft_int_clr::R`](R) reader structure"]
-        impl crate::Readable for SoftIntClrSpec {}
         #[doc = "`write(|w| ..)` method takes [`soft_int_clr::W`](W) writer structure"]
         impl crate::Writable for SoftIntClrSpec {
             type Safety = crate::Unsafe;
@@ -1281,15 +1281,13 @@ pub mod sys_ctl1 {
         #[doc = "`reset()` method sets SOFT_INT_CLR to value 0"]
         impl crate::Resettable for SoftIntClrSpec {}
     }
-    #[doc = "SOFT_INT_STS (rw) register accessor: CPU soft interrupt status register\n\nYou can [`read`](crate::Reg::read) this register and get [`soft_int_sts::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`soft_int_sts::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@soft_int_sts`] module"]
+    #[doc = "SOFT_INT_STS (r) register accessor: CPU soft interrupt status register\n\nYou can [`read`](crate::Reg::read) this register and get [`soft_int_sts::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@soft_int_sts`] module"]
     #[doc(alias = "SOFT_INT_STS")]
     pub type SoftIntSts = crate::Reg<soft_int_sts::SoftIntStsSpec>;
     #[doc = "CPU soft interrupt status register"]
     pub mod soft_int_sts {
         #[doc = "Register `SOFT_INT_STS` reader"]
         pub type R = crate::R<SoftIntStsSpec>;
-        #[doc = "Register `SOFT_INT_STS` writer"]
-        pub type W = crate::W<SoftIntStsSpec>;
         #[doc = "Field `soft_int0_sts` reader - CPU soft interrupt 0 status. 0: no interrupt; 1: interrupt active"]
         pub type SoftInt0StsR = crate::BitReader;
         #[doc = "Field `soft_int1_sts` reader - CPU soft interrupt 1 status. 0: no interrupt; 1: interrupt active"]
@@ -1320,18 +1318,13 @@ pub mod sys_ctl1 {
                 SoftInt3StsR::new(((self.bits >> 3) & 1) != 0)
             }
         }
-        impl W {}
-        #[doc = "CPU soft interrupt status register\n\nYou can [`read`](crate::Reg::read) this register and get [`soft_int_sts::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`soft_int_sts::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "CPU soft interrupt status register\n\nYou can [`read`](crate::Reg::read) this register and get [`soft_int_sts::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SoftIntStsSpec;
         impl crate::RegisterSpec for SoftIntStsSpec {
             type Ux = u32;
         }
         #[doc = "`read()` method returns [`soft_int_sts::R`](R) reader structure"]
         impl crate::Readable for SoftIntStsSpec {}
-        #[doc = "`write(|w| ..)` method takes [`soft_int_sts::W`](W) writer structure"]
-        impl crate::Writable for SoftIntStsSpec {
-            type Safety = crate::Unsafe;
-        }
         #[doc = "`reset()` method sets SOFT_INT_STS to value 0"]
         impl crate::Resettable for SoftIntStsSpec {}
     }

@@ -8,6 +8,10 @@ PROVIDE(I2C1_INT = DefaultHandler);
 PROVIDE(GPIO_INT0 = DefaultHandler);
 PROVIDE(GPIO_INT1 = DefaultHandler);
 PROVIDE(GPIO_INT2 = DefaultHandler);
+PROVIDE(SOFT_INT0 = DefaultHandler);
+PROVIDE(SOFT_INT1 = DefaultHandler);
+PROVIDE(SOFT_INT2 = DefaultHandler);
+PROVIDE(SOFT_INT3 = DefaultHandler);
 PROVIDE(COEX_WL_INT = DefaultHandler);
 PROVIDE(COEX_BT_INT = DefaultHandler);
 PROVIDE(COEX_WIFI_RESUME_INT = DefaultHandler);
@@ -39,4 +43,3 @@ PROVIDE(MAC_MONITOR_INT = DefaultHandler);
 PROVIDE(MEM_MONITOR_INT = DefaultHandler);
 PROVIDE(TCM_MONITOR_INT = DefaultHandler);
 PROVIDE(LSADC_INTR = DefaultHandler);
-
