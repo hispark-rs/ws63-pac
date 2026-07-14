@@ -6,14 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-## [0.2.3] - 2026-07-14
+## [0.3.0] - 2026-07-14
 
-### Fixed
+### Changed
+
+- **Breaking:** regenerate timer EOI registers as write-only command fields.
+  Consumers must write a complete command and can no longer call `read()` on
+  these registers.
+
+### Added
 
 - Add the WS63 `SOFT_INT0`/`SOFT_INT1` interrupt vectors and generated
   `device.x` entries required by the single-hart scheduler port.
-- Regenerate the timer EOI registers as write-only fields so PAC consumers do
-  not accidentally read or modify command registers.
+
+## [0.2.4] - 2026-07-14
+
+Compatibility release from the `0.2.x` maintenance branch. It adds the software
+interrupt vectors while retaining the old timer EOI API for already-published
+HAL versions.
+
+## [0.2.3] - 2026-07-14
+
+Superseded by `0.2.4`: this release accidentally exposed the breaking timer EOI
+access correction under a patch version. New consumers should use `0.3.0`;
+existing `0.2.x` consumers resolve to the compatibility release `0.2.4`.
 
 ## [0.2.2] - 2026-07-12
 
