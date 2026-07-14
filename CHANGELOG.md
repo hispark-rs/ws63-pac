@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-07-14
+
+### Fixed
+
+- Add the WS63 `SOFT_INT0`/`SOFT_INT1` interrupt vectors and generated
+  `device.x` entries required by the single-hart scheduler port.
+- Regenerate the timer EOI registers as write-only fields so PAC consumers do
+  not accidentally read or modify command registers.
+
 ## [0.2.2] - 2026-07-12
 
 ### Added
