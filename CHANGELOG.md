@@ -10,11 +10,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Model the SPACC hash-channel control, descriptor-ring, completion, error, and
   state-port registers required by the token-owned SHA/HMAC backend.
+- Model SPACC symmetric DMA rings and KM/KLAD keyslot/clear-key registers needed
+  by the token-owned AES backend.
 
 ### Fixed
 
 - Correct SPACC clear-command, bus-error, and clear-finish access modes so
   consumers cannot read a write-only command or write a read-only status.
+- Correct the AES key-length encodings and symmetric/KLAD W1C access modes.
 
 ## [0.3.0] - 2026-07-14
 

@@ -26139,34 +26139,64 @@ pub mod spacc {
         in_sym_chn0_iv2: InSymChn0Iv2,
         in_sym_chn0_iv3: InSymChn0Iv3,
         in_sym_chn0_data0: InSymChn0Data0,
-        _reserved17: [u8; 0x10ac],
-        in_hash_chn1_ctrl: (),
-        _reserved18: [u8; 0x10],
-        in_hash_chn1_key_ctrl: (),
-        _reserved19: [u8; 0x10],
-        in_hash_chn1_node_start_addr_h: (),
-        _reserved20: [u8; 0x04],
-        in_hash_chn1_node_start_addr_l: (),
-        _reserved21: [u8; 0x08],
-        in_hash_chn1_node_length: (),
-        _reserved22: [u8; 0x04],
-        in_hash_chn1_node_wr_point: (),
+        _reserved17: [u8; 0xac],
+        in_sym_chn1_ctrl: (),
+        _reserved18: [u8; 0x04],
+        in_sym_out_ctrl1: (),
+        _reserved19: [u8; 0x0c],
+        in_sym_chn1_key_ctrl: (),
+        _reserved20: [u8; 0x10],
+        in_sym_chn1_node_start_addr_h: (),
+        _reserved21: [u8; 0x04],
+        in_sym_chn1_node_start_addr_l: (),
+        _reserved22: [u8; 0x08],
+        in_sym_chn1_node_length: (),
         _reserved23: [u8; 0x04],
+        in_sym_chn1_node_wr_point: (),
+        _reserved24: [u8; 0x04],
+        in_sym_chn1_node_rd_point: (),
+        _reserved25: [u8; 0x0fcc],
+        in_hash_chn1_ctrl: (),
+        _reserved26: [u8; 0x10],
+        in_hash_chn1_key_ctrl: (),
+        _reserved27: [u8; 0x10],
+        in_hash_chn1_node_start_addr_h: (),
+        _reserved28: [u8; 0x04],
+        in_hash_chn1_node_start_addr_l: (),
+        _reserved29: [u8; 0x08],
+        in_hash_chn1_node_length: (),
+        _reserved30: [u8; 0x04],
+        in_hash_chn1_node_wr_point: (),
+        _reserved31: [u8; 0x04],
         in_hash_chn1_node_rd_point: (),
-        _reserved24: [u8; 0x8c],
+        _reserved32: [u8; 0x8c],
         in_hash_chn1_data_len: (),
-        _reserved25: [u8; 0x2eb8],
+        _reserved33: [u8; 0x2eb0],
+        ree_sym_calc_ctrl_check_err: ReeSymCalcCtrlCheckErr,
+        ree_sym_calc_ctrl_check_err_status: ReeSymCalcCtrlCheckErrStatus,
         ree_hash_calc_ctrl_check_err: ReeHashCalcCtrlCheckErr,
         ree_hash_calc_ctrl_check_err_status: ReeHashCalcCtrlCheckErrStatus,
-        _reserved27: [u8; 0x0580],
+        _reserved37: [u8; 0x0580],
         hash_chann_raw_int: HashChannRawInt,
         hash_chann_raw_int_en: HashChannRawIntEn,
-        _reserved29: [u8; 0x08],
+        _reserved39: [u8; 0x08],
         sym_chann_raw_int: SymChannRawInt,
-        _reserved30: [u8; 0x1a6c],
+        _reserved40: [u8; 0x1a6c],
         chann1_hash_state_val: (),
-        _reserved31: [u8; 0x04],
+        _reserved41: [u8; 0x04],
         chann1_hash_state_val_addr: (),
+        _reserved42: [u8; 0x1f7c],
+        out_sym_chan_raw_last_node_int: OutSymChanRawLastNodeInt,
+        _reserved43: [u8; 0x101c],
+        out_sym_chn1_node_start_addr_h: (),
+        _reserved44: [u8; 0x04],
+        out_sym_chn1_node_start_addr_l: (),
+        _reserved45: [u8; 0x04],
+        out_sym_chn1_node_length: (),
+        _reserved46: [u8; 0x08],
+        out_sym_chn1_node_wr_point: (),
+        _reserved47: [u8; 0x04],
+        out_sym_chn1_node_rd_point: (),
     }
     impl RegisterBlock {
         #[doc = "0x04 - SPACC interrupt enable"]
@@ -26253,6 +26283,266 @@ pub mod spacc {
         #[inline(always)]
         pub const fn in_sym_chn0_data0(&self) -> &InSymChn0Data0 {
             &self.in_sym_chn0_data0
+        }
+        #[doc = "0x4100..0x4108 - Symmetric channel %s control"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_SYM_CHN1_CTRL` register.</div>"]
+        #[inline(always)]
+        pub const fn in_sym_chn1_ctrl(&self, n: usize) -> &InSymChnCtrl {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16640)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x4100..0x4108 - Symmetric channel %s control"]
+        #[inline(always)]
+        pub fn in_sym_chn1_ctrl_iter(&self) -> impl Iterator<Item = &InSymChnCtrl> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16640)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x4200 - Symmetric channel 2 control"]
+        #[inline(always)]
+        pub const fn in_sym_chn2_ctrl(&self) -> &InSymChnCtrl {
+            self.in_sym_chn1_ctrl(1)
+        }
+        #[doc = "0x4104..0x410c - Symmetric channel %s output control"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_SYM_OUT_CTRL1` register.</div>"]
+        #[inline(always)]
+        pub const fn in_sym_out_ctrl1(&self, n: usize) -> &InSymOutCtrl {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16644)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x4104..0x410c - Symmetric channel %s output control"]
+        #[inline(always)]
+        pub fn in_sym_out_ctrl1_iter(&self) -> impl Iterator<Item = &InSymOutCtrl> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16644)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x4204 - Symmetric channel 2 output control"]
+        #[inline(always)]
+        pub const fn in_sym_out_ctrl2(&self) -> &InSymOutCtrl {
+            self.in_sym_out_ctrl1(1)
+        }
+        #[doc = "0x4110..0x4118 - Symmetric channel %s algorithm and keyslot control"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_SYM_CHN1_KEY_CTRL` register.</div>"]
+        #[inline(always)]
+        pub const fn in_sym_chn1_key_ctrl(&self, n: usize) -> &InSymChnKeyCtrl {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16656)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x4110..0x4118 - Symmetric channel %s algorithm and keyslot control"]
+        #[inline(always)]
+        pub fn in_sym_chn1_key_ctrl_iter(&self) -> impl Iterator<Item = &InSymChnKeyCtrl> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16656)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x4210 - Symmetric channel 2 algorithm and keyslot control"]
+        #[inline(always)]
+        pub const fn in_sym_chn2_key_ctrl(&self) -> &InSymChnKeyCtrl {
+            self.in_sym_chn1_key_ctrl(1)
+        }
+        #[doc = "0x4120..0x4128 - Symmetric input descriptor-list address bits 35:32"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_SYM_CHN1_NODE_START_ADDR_H` register.</div>"]
+        #[inline(always)]
+        pub const fn in_sym_chn1_node_start_addr_h(&self, n: usize) -> &InSymChnNodeStartAddrH {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16672)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x4120..0x4128 - Symmetric input descriptor-list address bits 35:32"]
+        #[inline(always)]
+        pub fn in_sym_chn1_node_start_addr_h_iter(
+            &self,
+        ) -> impl Iterator<Item = &InSymChnNodeStartAddrH> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16672)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x4220 - Symmetric input descriptor-list address bits 35:32"]
+        #[inline(always)]
+        pub const fn in_sym_chn2_node_start_addr_h(&self) -> &InSymChnNodeStartAddrH {
+            self.in_sym_chn1_node_start_addr_h(1)
+        }
+        #[doc = "0x4124..0x412c - Symmetric input descriptor-list address bits 31:0"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_SYM_CHN1_NODE_START_ADDR_L` register.</div>"]
+        #[inline(always)]
+        pub const fn in_sym_chn1_node_start_addr_l(&self, n: usize) -> &InSymChnNodeStartAddrL {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16676)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x4124..0x412c - Symmetric input descriptor-list address bits 31:0"]
+        #[inline(always)]
+        pub fn in_sym_chn1_node_start_addr_l_iter(
+            &self,
+        ) -> impl Iterator<Item = &InSymChnNodeStartAddrL> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16676)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x4224 - Symmetric input descriptor-list address bits 31:0"]
+        #[inline(always)]
+        pub const fn in_sym_chn2_node_start_addr_l(&self) -> &InSymChnNodeStartAddrL {
+            self.in_sym_chn1_node_start_addr_l(1)
+        }
+        #[doc = "0x412c..0x4134 - Symmetric input descriptor ring depth"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_SYM_CHN1_NODE_LENGTH` register.</div>"]
+        #[inline(always)]
+        pub const fn in_sym_chn1_node_length(&self, n: usize) -> &InSymChnNodeLength {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16684)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x412c..0x4134 - Symmetric input descriptor ring depth"]
+        #[inline(always)]
+        pub fn in_sym_chn1_node_length_iter(&self) -> impl Iterator<Item = &InSymChnNodeLength> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16684)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x422c - Symmetric input descriptor ring depth"]
+        #[inline(always)]
+        pub const fn in_sym_chn2_node_length(&self) -> &InSymChnNodeLength {
+            self.in_sym_chn1_node_length(1)
+        }
+        #[doc = "0x4130..0x4138 - Symmetric input descriptor producer pointer"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_SYM_CHN1_NODE_WR_POINT` register.</div>"]
+        #[inline(always)]
+        pub const fn in_sym_chn1_node_wr_point(&self, n: usize) -> &InSymChnNodeWrPoint {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16688)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x4130..0x4138 - Symmetric input descriptor producer pointer"]
+        #[inline(always)]
+        pub fn in_sym_chn1_node_wr_point_iter(&self) -> impl Iterator<Item = &InSymChnNodeWrPoint> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16688)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x4230 - Symmetric input descriptor producer pointer"]
+        #[inline(always)]
+        pub const fn in_sym_chn2_node_wr_point(&self) -> &InSymChnNodeWrPoint {
+            self.in_sym_chn1_node_wr_point(1)
+        }
+        #[doc = "0x4134..0x413c - Symmetric input descriptor consumer pointer"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_SYM_CHN1_NODE_RD_POINT` register.</div>"]
+        #[inline(always)]
+        pub const fn in_sym_chn1_node_rd_point(&self, n: usize) -> &InSymChnNodeRdPoint {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16692)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x4134..0x413c - Symmetric input descriptor consumer pointer"]
+        #[inline(always)]
+        pub fn in_sym_chn1_node_rd_point_iter(&self) -> impl Iterator<Item = &InSymChnNodeRdPoint> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(16692)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x4234 - Symmetric input descriptor consumer pointer"]
+        #[inline(always)]
+        pub const fn in_sym_chn2_node_rd_point(&self) -> &InSymChnNodeRdPoint {
+            self.in_sym_chn1_node_rd_point(1)
         }
         #[doc = "0x5100..0x5108 - Hash channel %s control"]
         #[doc = ""]
@@ -26518,6 +26808,16 @@ pub mod spacc {
         pub const fn in_hash_chn2_data_len(&self) -> &InHashChnDataLen {
             self.in_hash_chn1_data_len(1)
         }
+        #[doc = "0x8070 - REE symmetric-control validation error summary"]
+        #[inline(always)]
+        pub const fn ree_sym_calc_ctrl_check_err(&self) -> &ReeSymCalcCtrlCheckErr {
+            &self.ree_sym_calc_ctrl_check_err
+        }
+        #[doc = "0x8074 - REE symmetric-control validation error detail"]
+        #[inline(always)]
+        pub const fn ree_sym_calc_ctrl_check_err_status(&self) -> &ReeSymCalcCtrlCheckErrStatus {
+            &self.ree_sym_calc_ctrl_check_err_status
+        }
         #[doc = "0x8078 - REE hash-control validation error summary"]
         #[inline(always)]
         pub const fn ree_hash_calc_ctrl_check_err(&self) -> &ReeHashCalcCtrlCheckErr {
@@ -26538,7 +26838,7 @@ pub mod spacc {
         pub const fn hash_chann_raw_int_en(&self) -> &HashChannRawIntEn {
             &self.hash_chann_raw_int_en
         }
-        #[doc = "0x8610 - Sym channel raw interrupt status"]
+        #[doc = "0x8610 - Sym channel raw interrupt status; write one to clear"]
         #[inline(always)]
         pub const fn sym_chann_raw_int(&self) -> &SymChannRawInt {
             &self.sym_chann_raw_int
@@ -26608,6 +26908,179 @@ pub mod spacc {
         #[inline(always)]
         pub const fn chann2_hash_state_val_addr(&self) -> &ChannHashStateValAddr {
             self.chann1_hash_state_val_addr(1)
+        }
+        #[doc = "0xc000 - Output last-node completion status; write one to clear"]
+        #[inline(always)]
+        pub const fn out_sym_chan_raw_last_node_int(&self) -> &OutSymChanRawLastNodeInt {
+            &self.out_sym_chan_raw_last_node_int
+        }
+        #[doc = "0xd020..0xd028 - Symmetric output descriptor-list address bits 35:32"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `OUT_SYM_CHN1_NODE_START_ADDR_H` register.</div>"]
+        #[inline(always)]
+        pub const fn out_sym_chn1_node_start_addr_h(&self, n: usize) -> &OutSymChnNodeStartAddrH {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(53280)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0xd020..0xd028 - Symmetric output descriptor-list address bits 35:32"]
+        #[inline(always)]
+        pub fn out_sym_chn1_node_start_addr_h_iter(
+            &self,
+        ) -> impl Iterator<Item = &OutSymChnNodeStartAddrH> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(53280)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0xd120 - Symmetric output descriptor-list address bits 35:32"]
+        #[inline(always)]
+        pub const fn out_sym_chn2_node_start_addr_h(&self) -> &OutSymChnNodeStartAddrH {
+            self.out_sym_chn1_node_start_addr_h(1)
+        }
+        #[doc = "0xd024..0xd02c - Symmetric output descriptor-list address bits 31:0"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `OUT_SYM_CHN1_NODE_START_ADDR_L` register.</div>"]
+        #[inline(always)]
+        pub const fn out_sym_chn1_node_start_addr_l(&self, n: usize) -> &OutSymChnNodeStartAddrL {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(53284)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0xd024..0xd02c - Symmetric output descriptor-list address bits 31:0"]
+        #[inline(always)]
+        pub fn out_sym_chn1_node_start_addr_l_iter(
+            &self,
+        ) -> impl Iterator<Item = &OutSymChnNodeStartAddrL> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(53284)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0xd124 - Symmetric output descriptor-list address bits 31:0"]
+        #[inline(always)]
+        pub const fn out_sym_chn2_node_start_addr_l(&self) -> &OutSymChnNodeStartAddrL {
+            self.out_sym_chn1_node_start_addr_l(1)
+        }
+        #[doc = "0xd028..0xd030 - Symmetric output descriptor ring depth"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `OUT_SYM_CHN1_NODE_LENGTH` register.</div>"]
+        #[inline(always)]
+        pub const fn out_sym_chn1_node_length(&self, n: usize) -> &OutSymChnNodeLength {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(53288)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0xd028..0xd030 - Symmetric output descriptor ring depth"]
+        #[inline(always)]
+        pub fn out_sym_chn1_node_length_iter(&self) -> impl Iterator<Item = &OutSymChnNodeLength> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(53288)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0xd128 - Symmetric output descriptor ring depth"]
+        #[inline(always)]
+        pub const fn out_sym_chn2_node_length(&self) -> &OutSymChnNodeLength {
+            self.out_sym_chn1_node_length(1)
+        }
+        #[doc = "0xd030..0xd038 - Symmetric output descriptor producer pointer"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `OUT_SYM_CHN1_NODE_WR_POINT` register.</div>"]
+        #[inline(always)]
+        pub const fn out_sym_chn1_node_wr_point(&self, n: usize) -> &OutSymChnNodeWrPoint {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(53296)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0xd030..0xd038 - Symmetric output descriptor producer pointer"]
+        #[inline(always)]
+        pub fn out_sym_chn1_node_wr_point_iter(
+            &self,
+        ) -> impl Iterator<Item = &OutSymChnNodeWrPoint> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(53296)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0xd130 - Symmetric output descriptor producer pointer"]
+        #[inline(always)]
+        pub const fn out_sym_chn2_node_wr_point(&self) -> &OutSymChnNodeWrPoint {
+            self.out_sym_chn1_node_wr_point(1)
+        }
+        #[doc = "0xd034..0xd03c - Symmetric output descriptor consumer pointer"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `OUT_SYM_CHN1_NODE_RD_POINT` register.</div>"]
+        #[inline(always)]
+        pub const fn out_sym_chn1_node_rd_point(&self, n: usize) -> &OutSymChnNodeRdPoint {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(53300)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0xd034..0xd03c - Symmetric output descriptor consumer pointer"]
+        #[inline(always)]
+        pub fn out_sym_chn1_node_rd_point_iter(
+            &self,
+        ) -> impl Iterator<Item = &OutSymChnNodeRdPoint> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(53300)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0xd134 - Symmetric output descriptor consumer pointer"]
+        #[inline(always)]
+        pub const fn out_sym_chn2_node_rd_point(&self) -> &OutSymChnNodeRdPoint {
+            self.out_sym_chn1_node_rd_point(1)
         }
     }
     #[doc = "SPACC_IE (rw) register accessor: SPACC interrupt enable\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_ie::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_ie::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spacc_ie`] module"]
@@ -27511,6 +27984,473 @@ pub mod spacc {
         #[doc = "`reset()` method sets CHANN%s_HASH_STATE_VAL_ADDR to value 0"]
         impl crate::Resettable for ChannHashStateValAddrSpec {}
     }
+    #[doc = "IN_SYM_CHN_CTRL (rw) register accessor: Symmetric channel %s control\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_ctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_ctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_sym_chn_ctrl`] module"]
+    #[doc(alias = "IN_SYM_CHN_CTRL")]
+    pub type InSymChnCtrl = crate::Reg<in_sym_chn_ctrl::InSymChnCtrlSpec>;
+    #[doc = "Symmetric channel %s control"]
+    pub mod in_sym_chn_ctrl {
+        #[doc = "Register `IN_SYM_CHN%s_CTRL` reader"]
+        pub type R = crate::R<InSymChnCtrlSpec>;
+        #[doc = "Register `IN_SYM_CHN%s_CTRL` writer"]
+        pub type W = crate::W<InSymChnCtrlSpec>;
+        #[doc = "Field `sym_chn_ss` reader - Source security selector; 0xA selects non-secure REE"]
+        pub type SymChnSsR = crate::FieldReader;
+        #[doc = "Field `sym_chn_ss` writer - Source security selector; 0xA selects non-secure REE"]
+        pub type SymChnSsW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `sym_chn_ds` reader - Destination security selector; 0xA selects non-secure REE"]
+        pub type SymChnDsR = crate::FieldReader;
+        #[doc = "Field `sym_chn_ds` writer - Destination security selector; 0xA selects non-secure REE"]
+        pub type SymChnDsW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `sym_chn_en` reader - Enable the symmetric channel"]
+        pub type SymChnEnR = crate::BitReader;
+        #[doc = "Field `sym_chn_en` writer - Enable the symmetric channel"]
+        pub type SymChnEnW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bits 8:11 - Source security selector; 0xA selects non-secure REE"]
+            #[inline(always)]
+            pub fn sym_chn_ss(&self) -> SymChnSsR {
+                SymChnSsR::new(((self.bits >> 8) & 0x0f) as u8)
+            }
+            #[doc = "Bits 12:15 - Destination security selector; 0xA selects non-secure REE"]
+            #[inline(always)]
+            pub fn sym_chn_ds(&self) -> SymChnDsR {
+                SymChnDsR::new(((self.bits >> 12) & 0x0f) as u8)
+            }
+            #[doc = "Bit 31 - Enable the symmetric channel"]
+            #[inline(always)]
+            pub fn sym_chn_en(&self) -> SymChnEnR {
+                SymChnEnR::new(((self.bits >> 31) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bits 8:11 - Source security selector; 0xA selects non-secure REE"]
+            #[inline(always)]
+            pub fn sym_chn_ss(&mut self) -> SymChnSsW<'_, InSymChnCtrlSpec> {
+                SymChnSsW::new(self, 8)
+            }
+            #[doc = "Bits 12:15 - Destination security selector; 0xA selects non-secure REE"]
+            #[inline(always)]
+            pub fn sym_chn_ds(&mut self) -> SymChnDsW<'_, InSymChnCtrlSpec> {
+                SymChnDsW::new(self, 12)
+            }
+            #[doc = "Bit 31 - Enable the symmetric channel"]
+            #[inline(always)]
+            pub fn sym_chn_en(&mut self) -> SymChnEnW<'_, InSymChnCtrlSpec> {
+                SymChnEnW::new(self, 31)
+            }
+        }
+        #[doc = "Symmetric channel %s control\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_ctrl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_ctrl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InSymChnCtrlSpec;
+        impl crate::RegisterSpec for InSymChnCtrlSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_sym_chn_ctrl::R`](R) reader structure"]
+        impl crate::Readable for InSymChnCtrlSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_sym_chn_ctrl::W`](W) writer structure"]
+        impl crate::Writable for InSymChnCtrlSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_SYM_CHN%s_CTRL to value 0"]
+        impl crate::Resettable for InSymChnCtrlSpec {}
+    }
+    #[doc = "IN_SYM_OUT_CTRL (rw) register accessor: Symmetric channel %s output control\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_out_ctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_out_ctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_sym_out_ctrl`] module"]
+    #[doc(alias = "IN_SYM_OUT_CTRL")]
+    pub type InSymOutCtrl = crate::Reg<in_sym_out_ctrl::InSymOutCtrlSpec>;
+    #[doc = "Symmetric channel %s output control"]
+    pub mod in_sym_out_ctrl {
+        #[doc = "Register `IN_SYM_OUT_CTRL%s` reader"]
+        pub type R = crate::R<InSymOutCtrlSpec>;
+        #[doc = "Register `IN_SYM_OUT_CTRL%s` writer"]
+        pub type W = crate::W<InSymOutCtrlSpec>;
+        #[doc = "Field `dma_copy` reader - Enable DMA copy mode"]
+        pub type DmaCopyR = crate::BitReader;
+        #[doc = "Field `dma_copy` writer - Enable DMA copy mode"]
+        pub type DmaCopyW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - Enable DMA copy mode"]
+            #[inline(always)]
+            pub fn dma_copy(&self) -> DmaCopyR {
+                DmaCopyR::new((self.bits & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Enable DMA copy mode"]
+            #[inline(always)]
+            pub fn dma_copy(&mut self) -> DmaCopyW<'_, InSymOutCtrlSpec> {
+                DmaCopyW::new(self, 0)
+            }
+        }
+        #[doc = "Symmetric channel %s output control\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_out_ctrl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_out_ctrl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InSymOutCtrlSpec;
+        impl crate::RegisterSpec for InSymOutCtrlSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_sym_out_ctrl::R`](R) reader structure"]
+        impl crate::Readable for InSymOutCtrlSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_sym_out_ctrl::W`](W) writer structure"]
+        impl crate::Writable for InSymOutCtrlSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_SYM_OUT_CTRL%s to value 0"]
+        impl crate::Resettable for InSymOutCtrlSpec {}
+    }
+    #[doc = "IN_SYM_CHN_KEY_CTRL (rw) register accessor: Symmetric channel %s algorithm and keyslot control\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_key_ctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_key_ctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_sym_chn_key_ctrl`] module"]
+    #[doc(alias = "IN_SYM_CHN_KEY_CTRL")]
+    pub type InSymChnKeyCtrl = crate::Reg<in_sym_chn_key_ctrl::InSymChnKeyCtrlSpec>;
+    #[doc = "Symmetric channel %s algorithm and keyslot control"]
+    pub mod in_sym_chn_key_ctrl {
+        #[doc = "Register `IN_SYM_CHN%s_KEY_CTRL` reader"]
+        pub type R = crate::R<InSymChnKeyCtrlSpec>;
+        #[doc = "Register `IN_SYM_CHN%s_KEY_CTRL` writer"]
+        pub type W = crate::W<InSymChnKeyCtrlSpec>;
+        #[doc = "Field `key_chn_id` reader - MCipher keyslot ID"]
+        pub type KeyChnIdR = crate::FieldReader<u16>;
+        #[doc = "Field `key_chn_id` writer - MCipher keyslot ID"]
+        pub type KeyChnIdW<'a, REG> = crate::FieldWriter<'a, REG, 9, u16>;
+        #[doc = "Field `alg_sel` reader - Algorithm: 2=AES; 5=SM4"]
+        pub type AlgSelR = crate::FieldReader;
+        #[doc = "Field `alg_sel` writer - Algorithm: 2=AES; 5=SM4"]
+        pub type AlgSelW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `alg_mode` reader - Mode: 1=ECB; 3=CBC; 6=CTR; 0xC=CMAC"]
+        pub type AlgModeR = crate::FieldReader;
+        #[doc = "Field `alg_mode` writer - Mode: 1=ECB; 3=CBC; 6=CTR; 0xC=CMAC"]
+        pub type AlgModeW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `key_len` reader - Key length: 1=128bit; 2=192bit; 3=256bit"]
+        pub type KeyLenR = crate::FieldReader;
+        #[doc = "Field `key_len` writer - Key length: 1=128bit; 2=192bit; 3=256bit"]
+        pub type KeyLenW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `data_width` reader - Data width: 0=128bit; 1=64bit; 2=32bit"]
+        pub type DataWidthR = crate::FieldReader;
+        #[doc = "Field `data_width` writer - Data width: 0=128bit; 1=64bit; 2=32bit"]
+        pub type DataWidthW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `decrypt` reader - Decrypt when set"]
+        pub type DecryptR = crate::BitReader;
+        #[doc = "Field `decrypt` writer - Decrypt when set"]
+        pub type DecryptW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bits 0:8 - MCipher keyslot ID"]
+            #[inline(always)]
+            pub fn key_chn_id(&self) -> KeyChnIdR {
+                KeyChnIdR::new((self.bits & 0x01ff) as u16)
+            }
+            #[doc = "Bits 16:19 - Algorithm: 2=AES; 5=SM4"]
+            #[inline(always)]
+            pub fn alg_sel(&self) -> AlgSelR {
+                AlgSelR::new(((self.bits >> 16) & 0x0f) as u8)
+            }
+            #[doc = "Bits 20:23 - Mode: 1=ECB; 3=CBC; 6=CTR; 0xC=CMAC"]
+            #[inline(always)]
+            pub fn alg_mode(&self) -> AlgModeR {
+                AlgModeR::new(((self.bits >> 20) & 0x0f) as u8)
+            }
+            #[doc = "Bits 24:25 - Key length: 1=128bit; 2=192bit; 3=256bit"]
+            #[inline(always)]
+            pub fn key_len(&self) -> KeyLenR {
+                KeyLenR::new(((self.bits >> 24) & 3) as u8)
+            }
+            #[doc = "Bits 26:27 - Data width: 0=128bit; 1=64bit; 2=32bit"]
+            #[inline(always)]
+            pub fn data_width(&self) -> DataWidthR {
+                DataWidthR::new(((self.bits >> 26) & 3) as u8)
+            }
+            #[doc = "Bit 28 - Decrypt when set"]
+            #[inline(always)]
+            pub fn decrypt(&self) -> DecryptR {
+                DecryptR::new(((self.bits >> 28) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:8 - MCipher keyslot ID"]
+            #[inline(always)]
+            pub fn key_chn_id(&mut self) -> KeyChnIdW<'_, InSymChnKeyCtrlSpec> {
+                KeyChnIdW::new(self, 0)
+            }
+            #[doc = "Bits 16:19 - Algorithm: 2=AES; 5=SM4"]
+            #[inline(always)]
+            pub fn alg_sel(&mut self) -> AlgSelW<'_, InSymChnKeyCtrlSpec> {
+                AlgSelW::new(self, 16)
+            }
+            #[doc = "Bits 20:23 - Mode: 1=ECB; 3=CBC; 6=CTR; 0xC=CMAC"]
+            #[inline(always)]
+            pub fn alg_mode(&mut self) -> AlgModeW<'_, InSymChnKeyCtrlSpec> {
+                AlgModeW::new(self, 20)
+            }
+            #[doc = "Bits 24:25 - Key length: 1=128bit; 2=192bit; 3=256bit"]
+            #[inline(always)]
+            pub fn key_len(&mut self) -> KeyLenW<'_, InSymChnKeyCtrlSpec> {
+                KeyLenW::new(self, 24)
+            }
+            #[doc = "Bits 26:27 - Data width: 0=128bit; 1=64bit; 2=32bit"]
+            #[inline(always)]
+            pub fn data_width(&mut self) -> DataWidthW<'_, InSymChnKeyCtrlSpec> {
+                DataWidthW::new(self, 26)
+            }
+            #[doc = "Bit 28 - Decrypt when set"]
+            #[inline(always)]
+            pub fn decrypt(&mut self) -> DecryptW<'_, InSymChnKeyCtrlSpec> {
+                DecryptW::new(self, 28)
+            }
+        }
+        #[doc = "Symmetric channel %s algorithm and keyslot control\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_key_ctrl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_key_ctrl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InSymChnKeyCtrlSpec;
+        impl crate::RegisterSpec for InSymChnKeyCtrlSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_sym_chn_key_ctrl::R`](R) reader structure"]
+        impl crate::Readable for InSymChnKeyCtrlSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_sym_chn_key_ctrl::W`](W) writer structure"]
+        impl crate::Writable for InSymChnKeyCtrlSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_SYM_CHN%s_KEY_CTRL to value 0"]
+        impl crate::Resettable for InSymChnKeyCtrlSpec {}
+    }
+    #[doc = "IN_SYM_CHN_NODE_START_ADDR_H (rw) register accessor: Symmetric input descriptor-list address bits 35:32\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_node_start_addr_h::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_node_start_addr_h::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_sym_chn_node_start_addr_h`] module"]
+    #[doc(alias = "IN_SYM_CHN_NODE_START_ADDR_H")]
+    pub type InSymChnNodeStartAddrH =
+        crate::Reg<in_sym_chn_node_start_addr_h::InSymChnNodeStartAddrHSpec>;
+    #[doc = "Symmetric input descriptor-list address bits 35:32"]
+    pub mod in_sym_chn_node_start_addr_h {
+        #[doc = "Register `IN_SYM_CHN%s_NODE_START_ADDR_H` reader"]
+        pub type R = crate::R<InSymChnNodeStartAddrHSpec>;
+        #[doc = "Register `IN_SYM_CHN%s_NODE_START_ADDR_H` writer"]
+        pub type W = crate::W<InSymChnNodeStartAddrHSpec>;
+        #[doc = "Field `address_high` reader - Address bits 35:32"]
+        pub type AddressHighR = crate::FieldReader;
+        #[doc = "Field `address_high` writer - Address bits 35:32"]
+        pub type AddressHighW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        impl R {
+            #[doc = "Bits 0:3 - Address bits 35:32"]
+            #[inline(always)]
+            pub fn address_high(&self) -> AddressHighR {
+                AddressHighR::new((self.bits & 0x0f) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:3 - Address bits 35:32"]
+            #[inline(always)]
+            pub fn address_high(&mut self) -> AddressHighW<'_, InSymChnNodeStartAddrHSpec> {
+                AddressHighW::new(self, 0)
+            }
+        }
+        #[doc = "Symmetric input descriptor-list address bits 35:32\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_node_start_addr_h::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_node_start_addr_h::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InSymChnNodeStartAddrHSpec;
+        impl crate::RegisterSpec for InSymChnNodeStartAddrHSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_sym_chn_node_start_addr_h::R`](R) reader structure"]
+        impl crate::Readable for InSymChnNodeStartAddrHSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_sym_chn_node_start_addr_h::W`](W) writer structure"]
+        impl crate::Writable for InSymChnNodeStartAddrHSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_SYM_CHN%s_NODE_START_ADDR_H to value 0"]
+        impl crate::Resettable for InSymChnNodeStartAddrHSpec {}
+    }
+    #[doc = "IN_SYM_CHN_NODE_START_ADDR_L (rw) register accessor: Symmetric input descriptor-list address bits 31:0\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_node_start_addr_l::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_node_start_addr_l::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_sym_chn_node_start_addr_l`] module"]
+    #[doc(alias = "IN_SYM_CHN_NODE_START_ADDR_L")]
+    pub type InSymChnNodeStartAddrL =
+        crate::Reg<in_sym_chn_node_start_addr_l::InSymChnNodeStartAddrLSpec>;
+    #[doc = "Symmetric input descriptor-list address bits 31:0"]
+    pub mod in_sym_chn_node_start_addr_l {
+        #[doc = "Register `IN_SYM_CHN%s_NODE_START_ADDR_L` reader"]
+        pub type R = crate::R<InSymChnNodeStartAddrLSpec>;
+        #[doc = "Register `IN_SYM_CHN%s_NODE_START_ADDR_L` writer"]
+        pub type W = crate::W<InSymChnNodeStartAddrLSpec>;
+        #[doc = "Field `address_low` reader - Address bits 31:0"]
+        pub type AddressLowR = crate::FieldReader<u32>;
+        #[doc = "Field `address_low` writer - Address bits 31:0"]
+        pub type AddressLowW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Address bits 31:0"]
+            #[inline(always)]
+            pub fn address_low(&self) -> AddressLowR {
+                AddressLowR::new(self.bits)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:31 - Address bits 31:0"]
+            #[inline(always)]
+            pub fn address_low(&mut self) -> AddressLowW<'_, InSymChnNodeStartAddrLSpec> {
+                AddressLowW::new(self, 0)
+            }
+        }
+        #[doc = "Symmetric input descriptor-list address bits 31:0\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_node_start_addr_l::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_node_start_addr_l::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InSymChnNodeStartAddrLSpec;
+        impl crate::RegisterSpec for InSymChnNodeStartAddrLSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_sym_chn_node_start_addr_l::R`](R) reader structure"]
+        impl crate::Readable for InSymChnNodeStartAddrLSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_sym_chn_node_start_addr_l::W`](W) writer structure"]
+        impl crate::Writable for InSymChnNodeStartAddrLSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_SYM_CHN%s_NODE_START_ADDR_L to value 0"]
+        impl crate::Resettable for InSymChnNodeStartAddrLSpec {}
+    }
+    #[doc = "IN_SYM_CHN_NODE_LENGTH (rw) register accessor: Symmetric input descriptor ring depth\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_node_length::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_node_length::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_sym_chn_node_length`] module"]
+    #[doc(alias = "IN_SYM_CHN_NODE_LENGTH")]
+    pub type InSymChnNodeLength = crate::Reg<in_sym_chn_node_length::InSymChnNodeLengthSpec>;
+    #[doc = "Symmetric input descriptor ring depth"]
+    pub mod in_sym_chn_node_length {
+        #[doc = "Register `IN_SYM_CHN%s_NODE_LENGTH` reader"]
+        pub type R = crate::R<InSymChnNodeLengthSpec>;
+        #[doc = "Register `IN_SYM_CHN%s_NODE_LENGTH` writer"]
+        pub type W = crate::W<InSymChnNodeLengthSpec>;
+        #[doc = "Field `node_length` reader - Descriptor count"]
+        pub type NodeLengthR = crate::FieldReader;
+        #[doc = "Field `node_length` writer - Descriptor count"]
+        pub type NodeLengthW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+        impl R {
+            #[doc = "Bits 0:7 - Descriptor count"]
+            #[inline(always)]
+            pub fn node_length(&self) -> NodeLengthR {
+                NodeLengthR::new((self.bits & 0xff) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:7 - Descriptor count"]
+            #[inline(always)]
+            pub fn node_length(&mut self) -> NodeLengthW<'_, InSymChnNodeLengthSpec> {
+                NodeLengthW::new(self, 0)
+            }
+        }
+        #[doc = "Symmetric input descriptor ring depth\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_node_length::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_node_length::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InSymChnNodeLengthSpec;
+        impl crate::RegisterSpec for InSymChnNodeLengthSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_sym_chn_node_length::R`](R) reader structure"]
+        impl crate::Readable for InSymChnNodeLengthSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_sym_chn_node_length::W`](W) writer structure"]
+        impl crate::Writable for InSymChnNodeLengthSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_SYM_CHN%s_NODE_LENGTH to value 0"]
+        impl crate::Resettable for InSymChnNodeLengthSpec {}
+    }
+    #[doc = "IN_SYM_CHN_NODE_WR_POINT (rw) register accessor: Symmetric input descriptor producer pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_node_wr_point::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_node_wr_point::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_sym_chn_node_wr_point`] module"]
+    #[doc(alias = "IN_SYM_CHN_NODE_WR_POINT")]
+    pub type InSymChnNodeWrPoint = crate::Reg<in_sym_chn_node_wr_point::InSymChnNodeWrPointSpec>;
+    #[doc = "Symmetric input descriptor producer pointer"]
+    pub mod in_sym_chn_node_wr_point {
+        #[doc = "Register `IN_SYM_CHN%s_NODE_WR_POINT` reader"]
+        pub type R = crate::R<InSymChnNodeWrPointSpec>;
+        #[doc = "Register `IN_SYM_CHN%s_NODE_WR_POINT` writer"]
+        pub type W = crate::W<InSymChnNodeWrPointSpec>;
+        #[doc = "Field `write_pointer` reader - Producer index"]
+        pub type WritePointerR = crate::FieldReader;
+        #[doc = "Field `write_pointer` writer - Producer index"]
+        pub type WritePointerW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+        impl R {
+            #[doc = "Bits 0:7 - Producer index"]
+            #[inline(always)]
+            pub fn write_pointer(&self) -> WritePointerR {
+                WritePointerR::new((self.bits & 0xff) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:7 - Producer index"]
+            #[inline(always)]
+            pub fn write_pointer(&mut self) -> WritePointerW<'_, InSymChnNodeWrPointSpec> {
+                WritePointerW::new(self, 0)
+            }
+        }
+        #[doc = "Symmetric input descriptor producer pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_node_wr_point::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn_node_wr_point::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InSymChnNodeWrPointSpec;
+        impl crate::RegisterSpec for InSymChnNodeWrPointSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_sym_chn_node_wr_point::R`](R) reader structure"]
+        impl crate::Readable for InSymChnNodeWrPointSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_sym_chn_node_wr_point::W`](W) writer structure"]
+        impl crate::Writable for InSymChnNodeWrPointSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_SYM_CHN%s_NODE_WR_POINT to value 0"]
+        impl crate::Resettable for InSymChnNodeWrPointSpec {}
+    }
+    #[doc = "IN_SYM_CHN_NODE_RD_POINT (r) register accessor: Symmetric input descriptor consumer pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_node_rd_point::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_sym_chn_node_rd_point`] module"]
+    #[doc(alias = "IN_SYM_CHN_NODE_RD_POINT")]
+    pub type InSymChnNodeRdPoint = crate::Reg<in_sym_chn_node_rd_point::InSymChnNodeRdPointSpec>;
+    #[doc = "Symmetric input descriptor consumer pointer"]
+    pub mod in_sym_chn_node_rd_point {
+        #[doc = "Register `IN_SYM_CHN%s_NODE_RD_POINT` reader"]
+        pub type R = crate::R<InSymChnNodeRdPointSpec>;
+        #[doc = "Field `read_pointer` reader - Consumer index"]
+        pub type ReadPointerR = crate::FieldReader;
+        impl R {
+            #[doc = "Bits 0:7 - Consumer index"]
+            #[inline(always)]
+            pub fn read_pointer(&self) -> ReadPointerR {
+                ReadPointerR::new((self.bits & 0xff) as u8)
+            }
+        }
+        #[doc = "Symmetric input descriptor consumer pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn_node_rd_point::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InSymChnNodeRdPointSpec;
+        impl crate::RegisterSpec for InSymChnNodeRdPointSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_sym_chn_node_rd_point::R`](R) reader structure"]
+        impl crate::Readable for InSymChnNodeRdPointSpec {}
+        #[doc = "`reset()` method sets IN_SYM_CHN%s_NODE_RD_POINT to value 0"]
+        impl crate::Resettable for InSymChnNodeRdPointSpec {}
+    }
+    #[doc = "REE_SYM_CALC_CTRL_CHECK_ERR (r) register accessor: REE symmetric-control validation error summary\n\nYou can [`read`](crate::Reg::read) this register and get [`ree_sym_calc_ctrl_check_err::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@ree_sym_calc_ctrl_check_err`] module"]
+    #[doc(alias = "REE_SYM_CALC_CTRL_CHECK_ERR")]
+    pub type ReeSymCalcCtrlCheckErr =
+        crate::Reg<ree_sym_calc_ctrl_check_err::ReeSymCalcCtrlCheckErrSpec>;
+    #[doc = "REE symmetric-control validation error summary"]
+    pub mod ree_sym_calc_ctrl_check_err {
+        #[doc = "Register `REE_SYM_CALC_CTRL_CHECK_ERR` reader"]
+        pub type R = crate::R<ReeSymCalcCtrlCheckErrSpec>;
+        #[doc = "Field `error` reader - Non-zero when symmetric channel validation failed"]
+        pub type ErrorR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Non-zero when symmetric channel validation failed"]
+            #[inline(always)]
+            pub fn error(&self) -> ErrorR {
+                ErrorR::new(self.bits)
+            }
+        }
+        #[doc = "REE symmetric-control validation error summary\n\nYou can [`read`](crate::Reg::read) this register and get [`ree_sym_calc_ctrl_check_err::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct ReeSymCalcCtrlCheckErrSpec;
+        impl crate::RegisterSpec for ReeSymCalcCtrlCheckErrSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`ree_sym_calc_ctrl_check_err::R`](R) reader structure"]
+        impl crate::Readable for ReeSymCalcCtrlCheckErrSpec {}
+        #[doc = "`reset()` method sets REE_SYM_CALC_CTRL_CHECK_ERR to value 0"]
+        impl crate::Resettable for ReeSymCalcCtrlCheckErrSpec {}
+    }
+    #[doc = "REE_SYM_CALC_CTRL_CHECK_ERR_STATUS (r) register accessor: REE symmetric-control validation error detail\n\nYou can [`read`](crate::Reg::read) this register and get [`ree_sym_calc_ctrl_check_err_status::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@ree_sym_calc_ctrl_check_err_status`] module"]
+    #[doc(alias = "REE_SYM_CALC_CTRL_CHECK_ERR_STATUS")]
+    pub type ReeSymCalcCtrlCheckErrStatus =
+        crate::Reg<ree_sym_calc_ctrl_check_err_status::ReeSymCalcCtrlCheckErrStatusSpec>;
+    #[doc = "REE symmetric-control validation error detail"]
+    pub mod ree_sym_calc_ctrl_check_err_status {
+        #[doc = "Register `REE_SYM_CALC_CTRL_CHECK_ERR_STATUS` reader"]
+        pub type R = crate::R<ReeSymCalcCtrlCheckErrStatusSpec>;
+        #[doc = "Field `status` reader - Validation error detail"]
+        pub type StatusR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Validation error detail"]
+            #[inline(always)]
+            pub fn status(&self) -> StatusR {
+                StatusR::new(self.bits)
+            }
+        }
+        #[doc = "REE symmetric-control validation error detail\n\nYou can [`read`](crate::Reg::read) this register and get [`ree_sym_calc_ctrl_check_err_status::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct ReeSymCalcCtrlCheckErrStatusSpec;
+        impl crate::RegisterSpec for ReeSymCalcCtrlCheckErrStatusSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`ree_sym_calc_ctrl_check_err_status::R`](R) reader structure"]
+        impl crate::Readable for ReeSymCalcCtrlCheckErrStatusSpec {}
+        #[doc = "`reset()` method sets REE_SYM_CALC_CTRL_CHECK_ERR_STATUS to value 0"]
+        impl crate::Resettable for ReeSymCalcCtrlCheckErrStatusSpec {}
+    }
     #[doc = "IN_SYM_CHN0_CTRL (rw) register accessor: Sym channel 0 control register (no-DMA mode)\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn0_ctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn0_ctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_sym_chn0_ctrl`] module"]
     #[doc(alias = "IN_SYM_CHN0_CTRL")]
     pub type InSymChn0Ctrl = crate::Reg<in_sym_chn0_ctrl::InSymChn0CtrlSpec>;
@@ -27806,16 +28746,16 @@ pub mod spacc {
                 self.variant(AlgMode::Cmac)
             }
         }
-        #[doc = "Key length: 0=128bit; 1=192bit; 2=256bit\n\nValue on reset: 0"]
+        #[doc = "Key length: 1=128bit; 2=192bit; 3=256bit\n\nValue on reset: 0"]
         #[derive(Clone, Copy, Debug, PartialEq, Eq)]
         #[repr(u8)]
         pub enum KeyLen {
-            #[doc = "0: 128-bit key"]
-            Key128 = 0,
-            #[doc = "1: 192-bit key"]
-            Key192 = 1,
-            #[doc = "2: 256-bit key"]
-            Key256 = 2,
+            #[doc = "1: 128-bit key"]
+            Key128 = 1,
+            #[doc = "2: 192-bit key"]
+            Key192 = 2,
+            #[doc = "3: 256-bit key"]
+            Key256 = 3,
         }
         impl From<KeyLen> for u8 {
             #[inline(always)]
@@ -27827,16 +28767,16 @@ pub mod spacc {
             type Ux = u8;
         }
         impl crate::IsEnum for KeyLen {}
-        #[doc = "Field `key_len` reader - Key length: 0=128bit; 1=192bit; 2=256bit"]
+        #[doc = "Field `key_len` reader - Key length: 1=128bit; 2=192bit; 3=256bit"]
         pub type KeyLenR = crate::FieldReader<KeyLen>;
         impl KeyLenR {
             #[doc = "Get enumerated values variant"]
             #[inline(always)]
             pub const fn variant(&self) -> Option<KeyLen> {
                 match self.bits {
-                    0 => Some(KeyLen::Key128),
-                    1 => Some(KeyLen::Key192),
-                    2 => Some(KeyLen::Key256),
+                    1 => Some(KeyLen::Key128),
+                    2 => Some(KeyLen::Key192),
+                    3 => Some(KeyLen::Key256),
                     _ => None,
                 }
             }
@@ -27856,7 +28796,7 @@ pub mod spacc {
                 *self == KeyLen::Key256
             }
         }
-        #[doc = "Field `key_len` writer - Key length: 0=128bit; 1=192bit; 2=256bit"]
+        #[doc = "Field `key_len` writer - Key length: 1=128bit; 2=192bit; 3=256bit"]
         pub type KeyLenW<'a, REG> = crate::FieldWriter<'a, REG, 2, KeyLen>;
         impl<'a, REG> KeyLenW<'a, REG>
         where
@@ -27972,7 +28912,7 @@ pub mod spacc {
             pub fn alg_mode(&self) -> AlgModeR {
                 AlgModeR::new(((self.bits >> 20) & 0x0f) as u8)
             }
-            #[doc = "Bits 24:25 - Key length: 0=128bit; 1=192bit; 2=256bit"]
+            #[doc = "Bits 24:25 - Key length: 1=128bit; 2=192bit; 3=256bit"]
             #[inline(always)]
             pub fn key_len(&self) -> KeyLenR {
                 KeyLenR::new(((self.bits >> 24) & 3) as u8)
@@ -28004,7 +28944,7 @@ pub mod spacc {
             pub fn alg_mode(&mut self) -> AlgModeW<'_, InSymChn0KeyCtrlSpec> {
                 AlgModeW::new(self, 20)
             }
-            #[doc = "Bits 24:25 - Key length: 0=128bit; 1=192bit; 2=256bit"]
+            #[doc = "Bits 24:25 - Key length: 1=128bit; 2=192bit; 3=256bit"]
             #[inline(always)]
             pub fn key_len(&mut self) -> KeyLenW<'_, InSymChn0KeyCtrlSpec> {
                 KeyLenW::new(self, 24)
@@ -28349,10 +29289,10 @@ pub mod spacc {
         #[doc = "`reset()` method sets IN_SYM_CHN0_DATA0 to value 0"]
         impl crate::Resettable for InSymChn0Data0Spec {}
     }
-    #[doc = "SYM_CHANN_RAW_INT (rw) register accessor: Sym channel raw interrupt status\n\nYou can [`read`](crate::Reg::read) this register and get [`sym_chann_raw_int::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sym_chann_raw_int::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@sym_chann_raw_int`] module"]
+    #[doc = "SYM_CHANN_RAW_INT (rw) register accessor: Sym channel raw interrupt status; write one to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`sym_chann_raw_int::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sym_chann_raw_int::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@sym_chann_raw_int`] module"]
     #[doc(alias = "SYM_CHANN_RAW_INT")]
     pub type SymChannRawInt = crate::Reg<sym_chann_raw_int::SymChannRawIntSpec>;
-    #[doc = "Sym channel raw interrupt status"]
+    #[doc = "Sym channel raw interrupt status; write one to clear"]
     pub mod sym_chann_raw_int {
         #[doc = "Register `SYM_CHANN_RAW_INT` reader"]
         pub type R = crate::R<SymChannRawIntSpec>;
@@ -28360,6 +29300,8 @@ pub mod spacc {
         pub type W = crate::W<SymChannRawIntSpec>;
         #[doc = "Field `sym_chann_raw_int` reader - Raw interrupt per channel \\[15:0\\]"]
         pub type SymChannRawIntR = crate::FieldReader<u16>;
+        #[doc = "Field `sym_chann_raw_int` writer - Raw interrupt per channel \\[15:0\\]"]
+        pub type SymChannRawIntW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
         impl R {
             #[doc = "Bits 0:15 - Raw interrupt per channel \\[15:0\\]"]
             #[inline(always)]
@@ -28367,8 +29309,14 @@ pub mod spacc {
                 SymChannRawIntR::new((self.bits & 0xffff) as u16)
             }
         }
-        impl W {}
-        #[doc = "Sym channel raw interrupt status\n\nYou can [`read`](crate::Reg::read) this register and get [`sym_chann_raw_int::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sym_chann_raw_int::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        impl W {
+            #[doc = "Bits 0:15 - Raw interrupt per channel \\[15:0\\]"]
+            #[inline(always)]
+            pub fn sym_chann_raw_int(&mut self) -> SymChannRawIntW<'_, SymChannRawIntSpec> {
+                SymChannRawIntW::new(self, 0)
+            }
+        }
+        #[doc = "Sym channel raw interrupt status; write one to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`sym_chann_raw_int::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sym_chann_raw_int::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SymChannRawIntSpec;
         impl crate::RegisterSpec for SymChannRawIntSpec {
             type Ux = u32;
@@ -28378,9 +29326,247 @@ pub mod spacc {
         #[doc = "`write(|w| ..)` method takes [`sym_chann_raw_int::W`](W) writer structure"]
         impl crate::Writable for SymChannRawIntSpec {
             type Safety = crate::Unsafe;
+            const ONE_TO_MODIFY_FIELDS_BITMAP: u32 = 0xffff;
         }
         #[doc = "`reset()` method sets SYM_CHANN_RAW_INT to value 0"]
         impl crate::Resettable for SymChannRawIntSpec {}
+    }
+    #[doc = "OUT_SYM_CHAN_RAW_LAST_NODE_INT (rw) register accessor: Output last-node completion status; write one to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chan_raw_last_node_int::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`out_sym_chan_raw_last_node_int::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@out_sym_chan_raw_last_node_int`] module"]
+    #[doc(alias = "OUT_SYM_CHAN_RAW_LAST_NODE_INT")]
+    pub type OutSymChanRawLastNodeInt =
+        crate::Reg<out_sym_chan_raw_last_node_int::OutSymChanRawLastNodeIntSpec>;
+    #[doc = "Output last-node completion status; write one to clear"]
+    pub mod out_sym_chan_raw_last_node_int {
+        #[doc = "Register `OUT_SYM_CHAN_RAW_LAST_NODE_INT` reader"]
+        pub type R = crate::R<OutSymChanRawLastNodeIntSpec>;
+        #[doc = "Register `OUT_SYM_CHAN_RAW_LAST_NODE_INT` writer"]
+        pub type W = crate::W<OutSymChanRawLastNodeIntSpec>;
+        #[doc = "Field `out_sym_chan_raw_int` reader - Completion bits for symmetric channels"]
+        pub type OutSymChanRawIntR = crate::FieldReader<u16>;
+        #[doc = "Field `out_sym_chan_raw_int` writer - Completion bits for symmetric channels"]
+        pub type OutSymChanRawIntW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Completion bits for symmetric channels"]
+            #[inline(always)]
+            pub fn out_sym_chan_raw_int(&self) -> OutSymChanRawIntR {
+                OutSymChanRawIntR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Completion bits for symmetric channels"]
+            #[inline(always)]
+            pub fn out_sym_chan_raw_int(
+                &mut self,
+            ) -> OutSymChanRawIntW<'_, OutSymChanRawLastNodeIntSpec> {
+                OutSymChanRawIntW::new(self, 0)
+            }
+        }
+        #[doc = "Output last-node completion status; write one to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chan_raw_last_node_int::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`out_sym_chan_raw_last_node_int::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct OutSymChanRawLastNodeIntSpec;
+        impl crate::RegisterSpec for OutSymChanRawLastNodeIntSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`out_sym_chan_raw_last_node_int::R`](R) reader structure"]
+        impl crate::Readable for OutSymChanRawLastNodeIntSpec {}
+        #[doc = "`write(|w| ..)` method takes [`out_sym_chan_raw_last_node_int::W`](W) writer structure"]
+        impl crate::Writable for OutSymChanRawLastNodeIntSpec {
+            type Safety = crate::Unsafe;
+            const ONE_TO_MODIFY_FIELDS_BITMAP: u32 = 0xffff;
+        }
+        #[doc = "`reset()` method sets OUT_SYM_CHAN_RAW_LAST_NODE_INT to value 0"]
+        impl crate::Resettable for OutSymChanRawLastNodeIntSpec {}
+    }
+    #[doc = "OUT_SYM_CHN_NODE_START_ADDR_H (rw) register accessor: Symmetric output descriptor-list address bits 35:32\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chn_node_start_addr_h::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`out_sym_chn_node_start_addr_h::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@out_sym_chn_node_start_addr_h`] module"]
+    #[doc(alias = "OUT_SYM_CHN_NODE_START_ADDR_H")]
+    pub type OutSymChnNodeStartAddrH =
+        crate::Reg<out_sym_chn_node_start_addr_h::OutSymChnNodeStartAddrHSpec>;
+    #[doc = "Symmetric output descriptor-list address bits 35:32"]
+    pub mod out_sym_chn_node_start_addr_h {
+        #[doc = "Register `OUT_SYM_CHN%s_NODE_START_ADDR_H` reader"]
+        pub type R = crate::R<OutSymChnNodeStartAddrHSpec>;
+        #[doc = "Register `OUT_SYM_CHN%s_NODE_START_ADDR_H` writer"]
+        pub type W = crate::W<OutSymChnNodeStartAddrHSpec>;
+        #[doc = "Field `address_high` reader - Address bits 35:32"]
+        pub type AddressHighR = crate::FieldReader;
+        #[doc = "Field `address_high` writer - Address bits 35:32"]
+        pub type AddressHighW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        impl R {
+            #[doc = "Bits 0:3 - Address bits 35:32"]
+            #[inline(always)]
+            pub fn address_high(&self) -> AddressHighR {
+                AddressHighR::new((self.bits & 0x0f) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:3 - Address bits 35:32"]
+            #[inline(always)]
+            pub fn address_high(&mut self) -> AddressHighW<'_, OutSymChnNodeStartAddrHSpec> {
+                AddressHighW::new(self, 0)
+            }
+        }
+        #[doc = "Symmetric output descriptor-list address bits 35:32\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chn_node_start_addr_h::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`out_sym_chn_node_start_addr_h::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct OutSymChnNodeStartAddrHSpec;
+        impl crate::RegisterSpec for OutSymChnNodeStartAddrHSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`out_sym_chn_node_start_addr_h::R`](R) reader structure"]
+        impl crate::Readable for OutSymChnNodeStartAddrHSpec {}
+        #[doc = "`write(|w| ..)` method takes [`out_sym_chn_node_start_addr_h::W`](W) writer structure"]
+        impl crate::Writable for OutSymChnNodeStartAddrHSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets OUT_SYM_CHN%s_NODE_START_ADDR_H to value 0"]
+        impl crate::Resettable for OutSymChnNodeStartAddrHSpec {}
+    }
+    #[doc = "OUT_SYM_CHN_NODE_START_ADDR_L (rw) register accessor: Symmetric output descriptor-list address bits 31:0\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chn_node_start_addr_l::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`out_sym_chn_node_start_addr_l::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@out_sym_chn_node_start_addr_l`] module"]
+    #[doc(alias = "OUT_SYM_CHN_NODE_START_ADDR_L")]
+    pub type OutSymChnNodeStartAddrL =
+        crate::Reg<out_sym_chn_node_start_addr_l::OutSymChnNodeStartAddrLSpec>;
+    #[doc = "Symmetric output descriptor-list address bits 31:0"]
+    pub mod out_sym_chn_node_start_addr_l {
+        #[doc = "Register `OUT_SYM_CHN%s_NODE_START_ADDR_L` reader"]
+        pub type R = crate::R<OutSymChnNodeStartAddrLSpec>;
+        #[doc = "Register `OUT_SYM_CHN%s_NODE_START_ADDR_L` writer"]
+        pub type W = crate::W<OutSymChnNodeStartAddrLSpec>;
+        #[doc = "Field `address_low` reader - Address bits 31:0"]
+        pub type AddressLowR = crate::FieldReader<u32>;
+        #[doc = "Field `address_low` writer - Address bits 31:0"]
+        pub type AddressLowW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Address bits 31:0"]
+            #[inline(always)]
+            pub fn address_low(&self) -> AddressLowR {
+                AddressLowR::new(self.bits)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:31 - Address bits 31:0"]
+            #[inline(always)]
+            pub fn address_low(&mut self) -> AddressLowW<'_, OutSymChnNodeStartAddrLSpec> {
+                AddressLowW::new(self, 0)
+            }
+        }
+        #[doc = "Symmetric output descriptor-list address bits 31:0\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chn_node_start_addr_l::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`out_sym_chn_node_start_addr_l::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct OutSymChnNodeStartAddrLSpec;
+        impl crate::RegisterSpec for OutSymChnNodeStartAddrLSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`out_sym_chn_node_start_addr_l::R`](R) reader structure"]
+        impl crate::Readable for OutSymChnNodeStartAddrLSpec {}
+        #[doc = "`write(|w| ..)` method takes [`out_sym_chn_node_start_addr_l::W`](W) writer structure"]
+        impl crate::Writable for OutSymChnNodeStartAddrLSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets OUT_SYM_CHN%s_NODE_START_ADDR_L to value 0"]
+        impl crate::Resettable for OutSymChnNodeStartAddrLSpec {}
+    }
+    #[doc = "OUT_SYM_CHN_NODE_LENGTH (rw) register accessor: Symmetric output descriptor ring depth\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chn_node_length::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`out_sym_chn_node_length::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@out_sym_chn_node_length`] module"]
+    #[doc(alias = "OUT_SYM_CHN_NODE_LENGTH")]
+    pub type OutSymChnNodeLength = crate::Reg<out_sym_chn_node_length::OutSymChnNodeLengthSpec>;
+    #[doc = "Symmetric output descriptor ring depth"]
+    pub mod out_sym_chn_node_length {
+        #[doc = "Register `OUT_SYM_CHN%s_NODE_LENGTH` reader"]
+        pub type R = crate::R<OutSymChnNodeLengthSpec>;
+        #[doc = "Register `OUT_SYM_CHN%s_NODE_LENGTH` writer"]
+        pub type W = crate::W<OutSymChnNodeLengthSpec>;
+        #[doc = "Field `node_length` reader - Descriptor count"]
+        pub type NodeLengthR = crate::FieldReader;
+        #[doc = "Field `node_length` writer - Descriptor count"]
+        pub type NodeLengthW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+        impl R {
+            #[doc = "Bits 0:7 - Descriptor count"]
+            #[inline(always)]
+            pub fn node_length(&self) -> NodeLengthR {
+                NodeLengthR::new((self.bits & 0xff) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:7 - Descriptor count"]
+            #[inline(always)]
+            pub fn node_length(&mut self) -> NodeLengthW<'_, OutSymChnNodeLengthSpec> {
+                NodeLengthW::new(self, 0)
+            }
+        }
+        #[doc = "Symmetric output descriptor ring depth\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chn_node_length::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`out_sym_chn_node_length::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct OutSymChnNodeLengthSpec;
+        impl crate::RegisterSpec for OutSymChnNodeLengthSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`out_sym_chn_node_length::R`](R) reader structure"]
+        impl crate::Readable for OutSymChnNodeLengthSpec {}
+        #[doc = "`write(|w| ..)` method takes [`out_sym_chn_node_length::W`](W) writer structure"]
+        impl crate::Writable for OutSymChnNodeLengthSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets OUT_SYM_CHN%s_NODE_LENGTH to value 0"]
+        impl crate::Resettable for OutSymChnNodeLengthSpec {}
+    }
+    #[doc = "OUT_SYM_CHN_NODE_WR_POINT (rw) register accessor: Symmetric output descriptor producer pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chn_node_wr_point::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`out_sym_chn_node_wr_point::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@out_sym_chn_node_wr_point`] module"]
+    #[doc(alias = "OUT_SYM_CHN_NODE_WR_POINT")]
+    pub type OutSymChnNodeWrPoint = crate::Reg<out_sym_chn_node_wr_point::OutSymChnNodeWrPointSpec>;
+    #[doc = "Symmetric output descriptor producer pointer"]
+    pub mod out_sym_chn_node_wr_point {
+        #[doc = "Register `OUT_SYM_CHN%s_NODE_WR_POINT` reader"]
+        pub type R = crate::R<OutSymChnNodeWrPointSpec>;
+        #[doc = "Register `OUT_SYM_CHN%s_NODE_WR_POINT` writer"]
+        pub type W = crate::W<OutSymChnNodeWrPointSpec>;
+        #[doc = "Field `write_pointer` reader - Producer index"]
+        pub type WritePointerR = crate::FieldReader;
+        #[doc = "Field `write_pointer` writer - Producer index"]
+        pub type WritePointerW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+        impl R {
+            #[doc = "Bits 0:7 - Producer index"]
+            #[inline(always)]
+            pub fn write_pointer(&self) -> WritePointerR {
+                WritePointerR::new((self.bits & 0xff) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:7 - Producer index"]
+            #[inline(always)]
+            pub fn write_pointer(&mut self) -> WritePointerW<'_, OutSymChnNodeWrPointSpec> {
+                WritePointerW::new(self, 0)
+            }
+        }
+        #[doc = "Symmetric output descriptor producer pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chn_node_wr_point::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`out_sym_chn_node_wr_point::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct OutSymChnNodeWrPointSpec;
+        impl crate::RegisterSpec for OutSymChnNodeWrPointSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`out_sym_chn_node_wr_point::R`](R) reader structure"]
+        impl crate::Readable for OutSymChnNodeWrPointSpec {}
+        #[doc = "`write(|w| ..)` method takes [`out_sym_chn_node_wr_point::W`](W) writer structure"]
+        impl crate::Writable for OutSymChnNodeWrPointSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets OUT_SYM_CHN%s_NODE_WR_POINT to value 0"]
+        impl crate::Resettable for OutSymChnNodeWrPointSpec {}
+    }
+    #[doc = "OUT_SYM_CHN_NODE_RD_POINT (r) register accessor: Symmetric output descriptor consumer pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chn_node_rd_point::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@out_sym_chn_node_rd_point`] module"]
+    #[doc(alias = "OUT_SYM_CHN_NODE_RD_POINT")]
+    pub type OutSymChnNodeRdPoint = crate::Reg<out_sym_chn_node_rd_point::OutSymChnNodeRdPointSpec>;
+    #[doc = "Symmetric output descriptor consumer pointer"]
+    pub mod out_sym_chn_node_rd_point {
+        #[doc = "Register `OUT_SYM_CHN%s_NODE_RD_POINT` reader"]
+        pub type R = crate::R<OutSymChnNodeRdPointSpec>;
+        #[doc = "Field `read_pointer` reader - Consumer index"]
+        pub type ReadPointerR = crate::FieldReader;
+        impl R {
+            #[doc = "Bits 0:7 - Consumer index"]
+            #[inline(always)]
+            pub fn read_pointer(&self) -> ReadPointerR {
+                ReadPointerR::new((self.bits & 0xff) as u8)
+            }
+        }
+        #[doc = "Symmetric output descriptor consumer pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`out_sym_chn_node_rd_point::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct OutSymChnNodeRdPointSpec;
+        impl crate::RegisterSpec for OutSymChnNodeRdPointSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`out_sym_chn_node_rd_point::R`](R) reader structure"]
+        impl crate::Readable for OutSymChnNodeRdPointSpec {}
+        #[doc = "`reset()` method sets OUT_SYM_CHN%s_NODE_RD_POINT to value 0"]
+        impl crate::Resettable for OutSymChnNodeRdPointSpec {}
     }
 }
 #[doc = "Public Key Engine - modular arithmetic accelerator"]
@@ -29502,23 +30688,29 @@ pub mod km {
         kl_state: KlState,
         _reserved17: [u8; 0x04],
         kl_error: KlError,
-        _reserved18: [u8; 0x04],
+        kc_error: KcError,
         kl_int_en: KlIntEn,
-        _reserved19: [u8; 0x04],
+        kl_int_raw: KlIntRaw,
         kl_int: KlInt,
-        _reserved20: [u8; 0x28],
+        _reserved22: [u8; 0x28],
         kl_lock_ctrl: KlLockCtrl,
-        _reserved21: [u8; 0x0c],
+        kl_unlock_ctrl: KlUnlockCtrl,
+        kl_com_lock_info: KlComLockInfo,
+        kl_com_lock_status: KlComLockStatus,
         kl_com_ctrl: KlComCtrl,
         kl_com_status: KlComStatus,
-        _reserved23: [u8; 0x0574],
+        _reserved28: [u8; 0x03ac],
+        kl_clr_ctrl: KlClrCtrl,
+        _reserved29: [u8; 0x01c4],
         kl_alarm_info: KlAlarmInfo,
-        _reserved24: [u8; 0x04fc],
+        _reserved30: [u8; 0x04fc],
         kc_teecpu_lock_cmd: KcTeecpuLockCmd,
         kc_reecpu_lock_cmd: KcReecpuLockCmd,
         kc_pcpu_lock_cmd: KcPcpuLockCmd,
         kc_aidsp_lock_cmd: KcAidspLockCmd,
-        _reserved28: [u8; 0x20],
+        _reserved34: [u8; 0x04],
+        kc_reecpu_flush_busy: KcReecpuFlushBusy,
+        _reserved35: [u8; 0x18],
         kc_rd_slot_num: KcRdSlotNum,
         kc_rd_lock_status: KcRdLockStatus,
     }
@@ -29631,10 +30823,20 @@ pub mod km {
         pub const fn kl_error(&self) -> &KlError {
             &self.kl_error
         }
+        #[doc = "0x103c - Key controller error register"]
+        #[inline(always)]
+        pub const fn kc_error(&self) -> &KcError {
+            &self.kc_error
+        }
         #[doc = "0x1040 - KLAD interrupt enable"]
         #[inline(always)]
         pub const fn kl_int_en(&self) -> &KlIntEn {
             &self.kl_int_en
+        }
+        #[doc = "0x1044 - KLAD raw interrupt status; write one to clear"]
+        #[inline(always)]
+        pub const fn kl_int_raw(&self) -> &KlIntRaw {
+            &self.kl_int_raw
         }
         #[doc = "0x1048 - KLAD interrupt status"]
         #[inline(always)]
@@ -29646,6 +30848,21 @@ pub mod km {
         pub const fn kl_lock_ctrl(&self) -> &KlLockCtrl {
             &self.kl_lock_ctrl
         }
+        #[doc = "0x1078 - KLAD unlock control"]
+        #[inline(always)]
+        pub const fn kl_unlock_ctrl(&self) -> &KlUnlockCtrl {
+            &self.kl_unlock_ctrl
+        }
+        #[doc = "0x107c - KLAD common lock result"]
+        #[inline(always)]
+        pub const fn kl_com_lock_info(&self) -> &KlComLockInfo {
+            &self.kl_com_lock_info
+        }
+        #[doc = "0x1080 - KLAD common lock owner status"]
+        #[inline(always)]
+        pub const fn kl_com_lock_status(&self) -> &KlComLockStatus {
+            &self.kl_com_lock_status
+        }
         #[doc = "0x1084 - KLAD common control"]
         #[inline(always)]
         pub const fn kl_com_ctrl(&self) -> &KlComCtrl {
@@ -29655,6 +30872,11 @@ pub mod km {
         #[inline(always)]
         pub const fn kl_com_status(&self) -> &KlComStatus {
             &self.kl_com_status
+        }
+        #[doc = "0x1438 - KLAD clear-key route control"]
+        #[inline(always)]
+        pub const fn kl_clr_ctrl(&self) -> &KlClrCtrl {
+            &self.kl_clr_ctrl
         }
         #[doc = "0x1600 - KLAD alarm info register"]
         #[inline(always)]
@@ -29680,6 +30902,11 @@ pub mod km {
         #[inline(always)]
         pub const fn kc_aidsp_lock_cmd(&self) -> &KcAidspLockCmd {
             &self.kc_aidsp_lock_cmd
+        }
+        #[doc = "0x1b14 - REE keyslot flush status"]
+        #[inline(always)]
+        pub const fn kc_reecpu_flush_busy(&self) -> &KcReecpuFlushBusy {
+            &self.kc_reecpu_flush_busy
         }
         #[doc = "0x1b30 - Keyslot query slot number selection"]
         #[inline(always)]
@@ -30062,26 +31289,15 @@ pub mod km {
         #[doc = "`reset()` method sets RKP_PBKDF2_VAL[%s] to value 0"]
         impl crate::Resettable for RkpPbkdf2ValSpec {}
     }
-    #[doc = "KL_DATA_IN_0 (rw) register accessor: Key data input word 0\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_data_in_0::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_data_in_0::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_data_in_0`] module"]
+    #[doc = "KL_DATA_IN_0 (w) register accessor: Key data input word 0\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_data_in_0::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_data_in_0`] module"]
     #[doc(alias = "KL_DATA_IN_0")]
     pub type KlDataIn0 = crate::Reg<kl_data_in_0::KlDataIn0Spec>;
     #[doc = "Key data input word 0"]
     pub mod kl_data_in_0 {
-        #[doc = "Register `KL_DATA_IN_0` reader"]
-        pub type R = crate::R<KlDataIn0Spec>;
         #[doc = "Register `KL_DATA_IN_0` writer"]
         pub type W = crate::W<KlDataIn0Spec>;
-        #[doc = "Field `data` reader - Key data\\[31:0\\]"]
-        pub type DataR = crate::FieldReader<u32>;
         #[doc = "Field `data` writer - Key data\\[31:0\\]"]
         pub type DataW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
-        impl R {
-            #[doc = "Bits 0:31 - Key data\\[31:0\\]"]
-            #[inline(always)]
-            pub fn data(&self) -> DataR {
-                DataR::new(self.bits)
-            }
-        }
         impl W {
             #[doc = "Bits 0:31 - Key data\\[31:0\\]"]
             #[inline(always)]
@@ -30089,13 +31305,11 @@ pub mod km {
                 DataW::new(self, 0)
             }
         }
-        #[doc = "Key data input word 0\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_data_in_0::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_data_in_0::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Key data input word 0\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_data_in_0::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct KlDataIn0Spec;
         impl crate::RegisterSpec for KlDataIn0Spec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`kl_data_in_0::R`](R) reader structure"]
-        impl crate::Readable for KlDataIn0Spec {}
         #[doc = "`write(|w| ..)` method takes [`kl_data_in_0::W`](W) writer structure"]
         impl crate::Writable for KlDataIn0Spec {
             type Safety = crate::Unsafe;
@@ -30112,17 +31326,8 @@ pub mod km {
         pub type R = crate::R<KlDataIn1Spec>;
         #[doc = "Register `KL_DATA_IN_1` writer"]
         pub type W = crate::W<KlDataIn1Spec>;
-        #[doc = "Field `data` reader - Key data\\[63:32\\]"]
-        pub type DataR = crate::FieldReader<u32>;
         #[doc = "Field `data` writer - Key data\\[63:32\\]"]
         pub type DataW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
-        impl R {
-            #[doc = "Bits 0:31 - Key data\\[63:32\\]"]
-            #[inline(always)]
-            pub fn data(&self) -> DataR {
-                DataR::new(self.bits)
-            }
-        }
         impl W {
             #[doc = "Bits 0:31 - Key data\\[63:32\\]"]
             #[inline(always)]
@@ -30153,17 +31358,8 @@ pub mod km {
         pub type R = crate::R<KlDataIn2Spec>;
         #[doc = "Register `KL_DATA_IN_2` writer"]
         pub type W = crate::W<KlDataIn2Spec>;
-        #[doc = "Field `data` reader - Key data\\[95:64\\]"]
-        pub type DataR = crate::FieldReader<u32>;
         #[doc = "Field `data` writer - Key data\\[95:64\\]"]
         pub type DataW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
-        impl R {
-            #[doc = "Bits 0:31 - Key data\\[95:64\\]"]
-            #[inline(always)]
-            pub fn data(&self) -> DataR {
-                DataR::new(self.bits)
-            }
-        }
         impl W {
             #[doc = "Bits 0:31 - Key data\\[95:64\\]"]
             #[inline(always)]
@@ -30194,17 +31390,8 @@ pub mod km {
         pub type R = crate::R<KlDataIn3Spec>;
         #[doc = "Register `KL_DATA_IN_3` writer"]
         pub type W = crate::W<KlDataIn3Spec>;
-        #[doc = "Field `data` reader - Key data\\[127:96\\]"]
-        pub type DataR = crate::FieldReader<u32>;
         #[doc = "Field `data` writer - Key data\\[127:96\\]"]
         pub type DataW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
-        impl R {
-            #[doc = "Bits 0:31 - Key data\\[127:96\\]"]
-            #[inline(always)]
-            pub fn data(&self) -> DataR {
-                DataR::new(self.bits)
-            }
-        }
         impl W {
             #[doc = "Bits 0:31 - Key data\\[127:96\\]"]
             #[inline(always)]
@@ -30541,6 +31728,32 @@ pub mod km {
         #[doc = "`reset()` method sets KL_ERROR to value 0"]
         impl crate::Resettable for KlErrorSpec {}
     }
+    #[doc = "KC_ERROR (r) register accessor: Key controller error register\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_error::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_error`] module"]
+    #[doc(alias = "KC_ERROR")]
+    pub type KcError = crate::Reg<kc_error::KcErrorSpec>;
+    #[doc = "Key controller error register"]
+    pub mod kc_error {
+        #[doc = "Register `KC_ERROR` reader"]
+        pub type R = crate::R<KcErrorSpec>;
+        #[doc = "Field `error` reader - Key controller error code"]
+        pub type ErrorR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Key controller error code"]
+            #[inline(always)]
+            pub fn error(&self) -> ErrorR {
+                ErrorR::new(self.bits)
+            }
+        }
+        #[doc = "Key controller error register\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_error::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct KcErrorSpec;
+        impl crate::RegisterSpec for KcErrorSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`kc_error::R`](R) reader structure"]
+        impl crate::Readable for KcErrorSpec {}
+        #[doc = "`reset()` method sets KC_ERROR to value 0"]
+        impl crate::Resettable for KcErrorSpec {}
+    }
     #[doc = "KL_INT_EN (rw) register accessor: KLAD interrupt enable\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_int_en::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_int_en::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_int_en`] module"]
     #[doc(alias = "KL_INT_EN")]
     pub type KlIntEn = crate::Reg<kl_int_en::KlIntEnSpec>;
@@ -30614,6 +31827,62 @@ pub mod km {
         }
         #[doc = "`reset()` method sets KL_INT to value 0"]
         impl crate::Resettable for KlIntSpec {}
+    }
+    #[doc = "KL_INT_RAW (rw) register accessor: KLAD raw interrupt status; write one to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_int_raw::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_int_raw::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_int_raw`] module"]
+    #[doc(alias = "KL_INT_RAW")]
+    pub type KlIntRaw = crate::Reg<kl_int_raw::KlIntRawSpec>;
+    #[doc = "KLAD raw interrupt status; write one to clear"]
+    pub mod kl_int_raw {
+        #[doc = "Register `KL_INT_RAW` reader"]
+        pub type R = crate::R<KlIntRawSpec>;
+        #[doc = "Register `KL_INT_RAW` writer"]
+        pub type W = crate::W<KlIntRawSpec>;
+        #[doc = "Field `kl_int_raw` reader - Common KLAD completion; write one to clear"]
+        pub type KlIntRawR = crate::BitReader;
+        #[doc = "Field `kl_int_raw` writer - Common KLAD completion; write one to clear"]
+        pub type KlIntRawW<'a, REG> = crate::BitWriter1C<'a, REG>;
+        #[doc = "Field `clr_kl_int_raw` reader - Clear-key route completion; write one to clear"]
+        pub type ClrKlIntRawR = crate::BitReader;
+        #[doc = "Field `clr_kl_int_raw` writer - Clear-key route completion; write one to clear"]
+        pub type ClrKlIntRawW<'a, REG> = crate::BitWriter1C<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - Common KLAD completion; write one to clear"]
+            #[inline(always)]
+            pub fn kl_int_raw(&self) -> KlIntRawR {
+                KlIntRawR::new((self.bits & 1) != 0)
+            }
+            #[doc = "Bit 14 - Clear-key route completion; write one to clear"]
+            #[inline(always)]
+            pub fn clr_kl_int_raw(&self) -> ClrKlIntRawR {
+                ClrKlIntRawR::new(((self.bits >> 14) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Common KLAD completion; write one to clear"]
+            #[inline(always)]
+            pub fn kl_int_raw(&mut self) -> KlIntRawW<'_, KlIntRawSpec> {
+                KlIntRawW::new(self, 0)
+            }
+            #[doc = "Bit 14 - Clear-key route completion; write one to clear"]
+            #[inline(always)]
+            pub fn clr_kl_int_raw(&mut self) -> ClrKlIntRawW<'_, KlIntRawSpec> {
+                ClrKlIntRawW::new(self, 14)
+            }
+        }
+        #[doc = "KLAD raw interrupt status; write one to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_int_raw::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_int_raw::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct KlIntRawSpec;
+        impl crate::RegisterSpec for KlIntRawSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`kl_int_raw::R`](R) reader structure"]
+        impl crate::Readable for KlIntRawSpec {}
+        #[doc = "`write(|w| ..)` method takes [`kl_int_raw::W`](W) writer structure"]
+        impl crate::Writable for KlIntRawSpec {
+            type Safety = crate::Unsafe;
+            const ONE_TO_MODIFY_FIELDS_BITMAP: u32 = 0x4001;
+        }
+        #[doc = "`reset()` method sets KL_INT_RAW to value 0"]
+        impl crate::Resettable for KlIntRawSpec {}
     }
     #[doc = "KL_COM_CTRL (rw) register accessor: KLAD common control\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_com_ctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_com_ctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_com_ctrl`] module"]
     #[doc(alias = "KL_COM_CTRL")]
@@ -30793,6 +32062,121 @@ pub mod km {
         #[doc = "`reset()` method sets KL_LOCK_CTRL to value 0"]
         impl crate::Resettable for KlLockCtrlSpec {}
     }
+    #[doc = "KL_UNLOCK_CTRL (w) register accessor: KLAD unlock control\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_unlock_ctrl::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_unlock_ctrl`] module"]
+    #[doc(alias = "KL_UNLOCK_CTRL")]
+    pub type KlUnlockCtrl = crate::Reg<kl_unlock_ctrl::KlUnlockCtrlSpec>;
+    #[doc = "KLAD unlock control"]
+    pub mod kl_unlock_ctrl {
+        #[doc = "Register `KL_UNLOCK_CTRL` writer"]
+        pub type W = crate::W<KlUnlockCtrlSpec>;
+        #[doc = "Field `kl_unlock` writer - Unlock request"]
+        pub type KlUnlockW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `kl_unlock_num` writer - Unlock sequence number"]
+        pub type KlUnlockNumW<'a, REG> = crate::FieldWriter<'a, REG, 3>;
+        #[doc = "Field `kl_com_unlock_num` writer - Common unlock sequence number"]
+        pub type KlComUnlockNumW<'a, REG> = crate::FieldWriter<'a, REG, 3>;
+        impl W {
+            #[doc = "Bit 0 - Unlock request"]
+            #[inline(always)]
+            pub fn kl_unlock(&mut self) -> KlUnlockW<'_, KlUnlockCtrlSpec> {
+                KlUnlockW::new(self, 0)
+            }
+            #[doc = "Bits 4:6 - Unlock sequence number"]
+            #[inline(always)]
+            pub fn kl_unlock_num(&mut self) -> KlUnlockNumW<'_, KlUnlockCtrlSpec> {
+                KlUnlockNumW::new(self, 4)
+            }
+            #[doc = "Bits 8:10 - Common unlock sequence number"]
+            #[inline(always)]
+            pub fn kl_com_unlock_num(&mut self) -> KlComUnlockNumW<'_, KlUnlockCtrlSpec> {
+                KlComUnlockNumW::new(self, 8)
+            }
+        }
+        #[doc = "KLAD unlock control\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_unlock_ctrl::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct KlUnlockCtrlSpec;
+        impl crate::RegisterSpec for KlUnlockCtrlSpec {
+            type Ux = u32;
+        }
+        #[doc = "`write(|w| ..)` method takes [`kl_unlock_ctrl::W`](W) writer structure"]
+        impl crate::Writable for KlUnlockCtrlSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets KL_UNLOCK_CTRL to value 0"]
+        impl crate::Resettable for KlUnlockCtrlSpec {}
+    }
+    #[doc = "KL_COM_LOCK_INFO (r) register accessor: KLAD common lock result\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_com_lock_info::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_com_lock_info`] module"]
+    #[doc(alias = "KL_COM_LOCK_INFO")]
+    pub type KlComLockInfo = crate::Reg<kl_com_lock_info::KlComLockInfoSpec>;
+    #[doc = "KLAD common lock result"]
+    pub mod kl_com_lock_info {
+        #[doc = "Register `KL_COM_LOCK_INFO` reader"]
+        pub type R = crate::R<KlComLockInfoSpec>;
+        #[doc = "Field `lock_busy` reader - Lock operation busy state"]
+        pub type LockBusyR = crate::FieldReader;
+        #[doc = "Field `lock_fail` reader - Lock failure state"]
+        pub type LockFailR = crate::FieldReader;
+        #[doc = "Field `unlock_fail` reader - Unlock failure state"]
+        pub type UnlockFailR = crate::FieldReader;
+        #[doc = "Field `lock_num` reader - Current lock sequence number"]
+        pub type LockNumR = crate::FieldReader;
+        impl R {
+            #[doc = "Bits 0:1 - Lock operation busy state"]
+            #[inline(always)]
+            pub fn lock_busy(&self) -> LockBusyR {
+                LockBusyR::new((self.bits & 3) as u8)
+            }
+            #[doc = "Bits 2:3 - Lock failure state"]
+            #[inline(always)]
+            pub fn lock_fail(&self) -> LockFailR {
+                LockFailR::new(((self.bits >> 2) & 3) as u8)
+            }
+            #[doc = "Bits 4:5 - Unlock failure state"]
+            #[inline(always)]
+            pub fn unlock_fail(&self) -> UnlockFailR {
+                UnlockFailR::new(((self.bits >> 4) & 3) as u8)
+            }
+            #[doc = "Bits 8:10 - Current lock sequence number"]
+            #[inline(always)]
+            pub fn lock_num(&self) -> LockNumR {
+                LockNumR::new(((self.bits >> 8) & 7) as u8)
+            }
+        }
+        #[doc = "KLAD common lock result\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_com_lock_info::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct KlComLockInfoSpec;
+        impl crate::RegisterSpec for KlComLockInfoSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`kl_com_lock_info::R`](R) reader structure"]
+        impl crate::Readable for KlComLockInfoSpec {}
+        #[doc = "`reset()` method sets KL_COM_LOCK_INFO to value 0"]
+        impl crate::Resettable for KlComLockInfoSpec {}
+    }
+    #[doc = "KL_COM_LOCK_STATUS (r) register accessor: KLAD common lock owner status\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_com_lock_status::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_com_lock_status`] module"]
+    #[doc(alias = "KL_COM_LOCK_STATUS")]
+    pub type KlComLockStatus = crate::Reg<kl_com_lock_status::KlComLockStatusSpec>;
+    #[doc = "KLAD common lock owner status"]
+    pub mod kl_com_lock_status {
+        #[doc = "Register `KL_COM_LOCK_STATUS` reader"]
+        pub type R = crate::R<KlComLockStatusSpec>;
+        #[doc = "Field `lock_status` reader - 0xAA means locked by the caller"]
+        pub type LockStatusR = crate::FieldReader;
+        impl R {
+            #[doc = "Bits 0:7 - 0xAA means locked by the caller"]
+            #[inline(always)]
+            pub fn lock_status(&self) -> LockStatusR {
+                LockStatusR::new((self.bits & 0xff) as u8)
+            }
+        }
+        #[doc = "KLAD common lock owner status\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_com_lock_status::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct KlComLockStatusSpec;
+        impl crate::RegisterSpec for KlComLockStatusSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`kl_com_lock_status::R`](R) reader structure"]
+        impl crate::Readable for KlComLockStatusSpec {}
+        #[doc = "`reset()` method sets KL_COM_LOCK_STATUS to value 0"]
+        impl crate::Resettable for KlComLockStatusSpec {}
+    }
     #[doc = "KL_ALARM_INFO (rw) register accessor: KLAD alarm info register\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_alarm_info::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_alarm_info::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_alarm_info`] module"]
     #[doc(alias = "KL_ALARM_INFO")]
     pub type KlAlarmInfo = crate::Reg<kl_alarm_info::KlAlarmInfoSpec>;
@@ -30832,6 +32216,75 @@ pub mod km {
         }
         #[doc = "`reset()` method sets KL_ALARM_INFO to value 0"]
         impl crate::Resettable for KlAlarmInfoSpec {}
+    }
+    #[doc = "KL_CLR_CTRL (rw) register accessor: KLAD clear-key route control\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_clr_ctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_clr_ctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_clr_ctrl`] module"]
+    #[doc(alias = "KL_CLR_CTRL")]
+    pub type KlClrCtrl = crate::Reg<kl_clr_ctrl::KlClrCtrlSpec>;
+    #[doc = "KLAD clear-key route control"]
+    pub mod kl_clr_ctrl {
+        #[doc = "Register `KL_CLR_CTRL` reader"]
+        pub type R = crate::R<KlClrCtrlSpec>;
+        #[doc = "Register `KL_CLR_CTRL` writer"]
+        pub type W = crate::W<KlClrCtrlSpec>;
+        #[doc = "Field `start` reader - Start clear-key route; hardware clears on completion"]
+        pub type StartR = crate::BitReader;
+        #[doc = "Field `start` writer - Start clear-key route; hardware clears on completion"]
+        pub type StartW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `key_size` reader - Key size: 1=128bit; 2=192bit; 3=256bit"]
+        pub type KeySizeR = crate::FieldReader;
+        #[doc = "Field `key_size` writer - Key size: 1=128bit; 2=192bit; 3=256bit"]
+        pub type KeySizeW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `key_count` reader - Software HMAC key block index"]
+        pub type KeyCountR = crate::FieldReader;
+        #[doc = "Field `key_count` writer - Software HMAC key block index"]
+        pub type KeyCountW<'a, REG> = crate::FieldWriter<'a, REG, 3>;
+        impl R {
+            #[doc = "Bit 0 - Start clear-key route; hardware clears on completion"]
+            #[inline(always)]
+            pub fn start(&self) -> StartR {
+                StartR::new((self.bits & 1) != 0)
+            }
+            #[doc = "Bits 2:3 - Key size: 1=128bit; 2=192bit; 3=256bit"]
+            #[inline(always)]
+            pub fn key_size(&self) -> KeySizeR {
+                KeySizeR::new(((self.bits >> 2) & 3) as u8)
+            }
+            #[doc = "Bits 13:15 - Software HMAC key block index"]
+            #[inline(always)]
+            pub fn key_count(&self) -> KeyCountR {
+                KeyCountR::new(((self.bits >> 13) & 7) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Start clear-key route; hardware clears on completion"]
+            #[inline(always)]
+            pub fn start(&mut self) -> StartW<'_, KlClrCtrlSpec> {
+                StartW::new(self, 0)
+            }
+            #[doc = "Bits 2:3 - Key size: 1=128bit; 2=192bit; 3=256bit"]
+            #[inline(always)]
+            pub fn key_size(&mut self) -> KeySizeW<'_, KlClrCtrlSpec> {
+                KeySizeW::new(self, 2)
+            }
+            #[doc = "Bits 13:15 - Software HMAC key block index"]
+            #[inline(always)]
+            pub fn key_count(&mut self) -> KeyCountW<'_, KlClrCtrlSpec> {
+                KeyCountW::new(self, 13)
+            }
+        }
+        #[doc = "KLAD clear-key route control\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_clr_ctrl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_clr_ctrl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct KlClrCtrlSpec;
+        impl crate::RegisterSpec for KlClrCtrlSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`kl_clr_ctrl::R`](R) reader structure"]
+        impl crate::Readable for KlClrCtrlSpec {}
+        #[doc = "`write(|w| ..)` method takes [`kl_clr_ctrl::W`](W) writer structure"]
+        impl crate::Writable for KlClrCtrlSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets KL_CLR_CTRL to value 0"]
+        impl crate::Resettable for KlClrCtrlSpec {}
     }
     #[doc = "KC_TEECPU_LOCK_CMD (rw) register accessor: TEE CPU keyslot lock command\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_teecpu_lock_cmd::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_teecpu_lock_cmd::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_teecpu_lock_cmd`] module"]
     #[doc(alias = "KC_TEECPU_LOCK_CMD")]
@@ -30956,6 +32409,46 @@ pub mod km {
         }
         #[doc = "`reset()` method sets KC_REECPU_LOCK_CMD to value 0"]
         impl crate::Resettable for KcReecpuLockCmdSpec {}
+    }
+    #[doc = "KC_REECPU_FLUSH_BUSY (r) register accessor: REE keyslot flush status\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_reecpu_flush_busy::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_reecpu_flush_busy`] module"]
+    #[doc(alias = "KC_REECPU_FLUSH_BUSY")]
+    pub type KcReecpuFlushBusy = crate::Reg<kc_reecpu_flush_busy::KcReecpuFlushBusySpec>;
+    #[doc = "REE keyslot flush status"]
+    pub mod kc_reecpu_flush_busy {
+        #[doc = "Register `KC_REECPU_FLUSH_BUSY` reader"]
+        pub type R = crate::R<KcReecpuFlushBusySpec>;
+        #[doc = "Field `flush_busy` reader - Keyslot flush is in progress"]
+        pub type FlushBusyR = crate::BitReader;
+        #[doc = "Field `unlock_fail` reader - Last keyslot unlock failed"]
+        pub type UnlockFailR = crate::BitReader;
+        #[doc = "Field `timeout_error` reader - Last keyslot flush timed out"]
+        pub type TimeoutErrorR = crate::BitReader;
+        impl R {
+            #[doc = "Bit 0 - Keyslot flush is in progress"]
+            #[inline(always)]
+            pub fn flush_busy(&self) -> FlushBusyR {
+                FlushBusyR::new((self.bits & 1) != 0)
+            }
+            #[doc = "Bit 1 - Last keyslot unlock failed"]
+            #[inline(always)]
+            pub fn unlock_fail(&self) -> UnlockFailR {
+                UnlockFailR::new(((self.bits >> 1) & 1) != 0)
+            }
+            #[doc = "Bit 2 - Last keyslot flush timed out"]
+            #[inline(always)]
+            pub fn timeout_error(&self) -> TimeoutErrorR {
+                TimeoutErrorR::new(((self.bits >> 2) & 1) != 0)
+            }
+        }
+        #[doc = "REE keyslot flush status\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_reecpu_flush_busy::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct KcReecpuFlushBusySpec;
+        impl crate::RegisterSpec for KcReecpuFlushBusySpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`kc_reecpu_flush_busy::R`](R) reader structure"]
+        impl crate::Readable for KcReecpuFlushBusySpec {}
+        #[doc = "`reset()` method sets KC_REECPU_FLUSH_BUSY to value 0"]
+        impl crate::Resettable for KcReecpuFlushBusySpec {}
     }
     #[doc = "KC_PCPU_LOCK_CMD (rw) register accessor: PCPU keyslot lock command\n\nYou can [`read`](crate::Reg::read) this register and get [`kc_pcpu_lock_cmd::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kc_pcpu_lock_cmd::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kc_pcpu_lock_cmd`] module"]
     #[doc(alias = "KC_PCPU_LOCK_CMD")]
