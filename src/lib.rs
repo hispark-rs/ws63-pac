@@ -28477,7 +28477,18 @@ pub mod km {
     #[repr(C)]
     #[doc = "Register block"]
     pub struct RegisterBlock {
-        _reserved0: [u8; 0x1000],
+        rkp_lock: RkpLock,
+        rkp_cmd_cfg: RkpCmdCfg,
+        kdf_error: KdfError,
+        _reserved3: [u8; 0x04],
+        rkp_raw_int: RkpRawInt,
+        rkp_int_enable: RkpIntEnable,
+        rkp_int: RkpInt,
+        _reserved6: [u8; 0xe4],
+        rkp_pbkdf2_data: [RkpPbkdf2Data; 32],
+        rkp_pbkdf2_key: [RkpPbkdf2Key; 32],
+        rkp_pbkdf2_val: [RkpPbkdf2Val; 16],
+        _reserved9: [u8; 0x0dc0],
         kl_data_in_0: KlDataIn0,
         kl_data_in_1: KlDataIn1,
         kl_data_in_2: KlDataIn2,
@@ -28485,31 +28496,94 @@ pub mod km {
         kl_key_addr: KlKeyAddr,
         kl_key_cfg: KlKeyCfg,
         kl_key_sec_cfg: KlKeySecCfg,
-        _reserved7: [u8; 0x14],
+        _reserved16: [u8; 0x14],
         kl_state: KlState,
-        _reserved8: [u8; 0x04],
+        _reserved17: [u8; 0x04],
         kl_error: KlError,
-        _reserved9: [u8; 0x04],
+        _reserved18: [u8; 0x04],
         kl_int_en: KlIntEn,
-        _reserved10: [u8; 0x04],
+        _reserved19: [u8; 0x04],
         kl_int: KlInt,
-        _reserved11: [u8; 0x28],
+        _reserved20: [u8; 0x28],
         kl_lock_ctrl: KlLockCtrl,
-        _reserved12: [u8; 0x0c],
+        _reserved21: [u8; 0x0c],
         kl_com_ctrl: KlComCtrl,
         kl_com_status: KlComStatus,
-        _reserved14: [u8; 0x0574],
+        _reserved23: [u8; 0x0574],
         kl_alarm_info: KlAlarmInfo,
-        _reserved15: [u8; 0x04fc],
+        _reserved24: [u8; 0x04fc],
         kc_teecpu_lock_cmd: KcTeecpuLockCmd,
         kc_reecpu_lock_cmd: KcReecpuLockCmd,
         kc_pcpu_lock_cmd: KcPcpuLockCmd,
         kc_aidsp_lock_cmd: KcAidspLockCmd,
-        _reserved19: [u8; 0x20],
+        _reserved28: [u8; 0x20],
         kc_rd_slot_num: KcRdSlotNum,
         kc_rd_lock_status: KcRdLockStatus,
     }
     impl RegisterBlock {
+        #[doc = "0x00 - Root-key-protection engine lock owner"]
+        #[inline(always)]
+        pub const fn rkp_lock(&self) -> &RkpLock {
+            &self.rkp_lock
+        }
+        #[doc = "0x04 - RKP PBKDF2 command and algorithm configuration"]
+        #[inline(always)]
+        pub const fn rkp_cmd_cfg(&self) -> &RkpCmdCfg {
+            &self.rkp_cmd_cfg
+        }
+        #[doc = "0x08 - RKP PBKDF2 error status"]
+        #[inline(always)]
+        pub const fn kdf_error(&self) -> &KdfError {
+            &self.kdf_error
+        }
+        #[doc = "0x10 - RKP raw interrupt status and write-one-to-clear acknowledgement"]
+        #[inline(always)]
+        pub const fn rkp_raw_int(&self) -> &RkpRawInt {
+            &self.rkp_raw_int
+        }
+        #[doc = "0x14 - RKP completion interrupt enable"]
+        #[inline(always)]
+        pub const fn rkp_int_enable(&self) -> &RkpIntEnable {
+            &self.rkp_int_enable
+        }
+        #[doc = "0x18 - Masked RKP completion interrupt status"]
+        #[inline(always)]
+        pub const fn rkp_int(&self) -> &RkpInt {
+            &self.rkp_int
+        }
+        #[doc = "0x100..0x180 - PBKDF2 padded salt word %s"]
+        #[inline(always)]
+        pub const fn rkp_pbkdf2_data(&self, n: usize) -> &RkpPbkdf2Data {
+            &self.rkp_pbkdf2_data[n]
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x100..0x180 - PBKDF2 padded salt word %s"]
+        #[inline(always)]
+        pub fn rkp_pbkdf2_data_iter(&self) -> impl Iterator<Item = &RkpPbkdf2Data> {
+            self.rkp_pbkdf2_data.iter()
+        }
+        #[doc = "0x180..0x200 - PBKDF2 padded password word %s"]
+        #[inline(always)]
+        pub const fn rkp_pbkdf2_key(&self, n: usize) -> &RkpPbkdf2Key {
+            &self.rkp_pbkdf2_key[n]
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x180..0x200 - PBKDF2 padded password word %s"]
+        #[inline(always)]
+        pub fn rkp_pbkdf2_key_iter(&self) -> impl Iterator<Item = &RkpPbkdf2Key> {
+            self.rkp_pbkdf2_key.iter()
+        }
+        #[doc = "0x200..0x240 - PBKDF2 initial-state or output word %s"]
+        #[inline(always)]
+        pub const fn rkp_pbkdf2_val(&self, n: usize) -> &RkpPbkdf2Val {
+            &self.rkp_pbkdf2_val[n]
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x200..0x240 - PBKDF2 initial-state or output word %s"]
+        #[inline(always)]
+        pub fn rkp_pbkdf2_val_iter(&self) -> impl Iterator<Item = &RkpPbkdf2Val> {
+            self.rkp_pbkdf2_val.iter()
+        }
         #[doc = "0x1000 - Key data input word 0"]
         #[inline(always)]
         pub const fn kl_data_in_0(&self) -> &KlDataIn0 {
@@ -28615,6 +28689,376 @@ pub mod km {
         pub const fn kc_rd_lock_status(&self) -> &KcRdLockStatus {
             &self.kc_rd_lock_status
         }
+    }
+    #[doc = "RKP_LOCK (rw) register accessor: Root-key-protection engine lock owner\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_lock::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_lock::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rkp_lock`] module"]
+    #[doc(alias = "RKP_LOCK")]
+    pub type RkpLock = crate::Reg<rkp_lock::RkpLockSpec>;
+    #[doc = "Root-key-protection engine lock owner"]
+    pub mod rkp_lock {
+        #[doc = "Register `RKP_LOCK` reader"]
+        pub type R = crate::R<RkpLockSpec>;
+        #[doc = "Register `RKP_LOCK` writer"]
+        pub type W = crate::W<RkpLockSpec>;
+        #[doc = "Field `km_lock_status` reader - Lock owner: 0=idle, 1=REE, 2=TEE, 4=PCPU, 5=AIDSP"]
+        pub type KmLockStatusR = crate::FieldReader;
+        #[doc = "Field `km_lock_status` writer - Lock owner: 0=idle, 1=REE, 2=TEE, 4=PCPU, 5=AIDSP"]
+        pub type KmLockStatusW<'a, REG> = crate::FieldWriter<'a, REG, 3>;
+        impl R {
+            #[doc = "Bits 0:2 - Lock owner: 0=idle, 1=REE, 2=TEE, 4=PCPU, 5=AIDSP"]
+            #[inline(always)]
+            pub fn km_lock_status(&self) -> KmLockStatusR {
+                KmLockStatusR::new((self.bits & 7) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:2 - Lock owner: 0=idle, 1=REE, 2=TEE, 4=PCPU, 5=AIDSP"]
+            #[inline(always)]
+            pub fn km_lock_status(&mut self) -> KmLockStatusW<'_, RkpLockSpec> {
+                KmLockStatusW::new(self, 0)
+            }
+        }
+        #[doc = "Root-key-protection engine lock owner\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_lock::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_lock::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RkpLockSpec;
+        impl crate::RegisterSpec for RkpLockSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rkp_lock::R`](R) reader structure"]
+        impl crate::Readable for RkpLockSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rkp_lock::W`](W) writer structure"]
+        impl crate::Writable for RkpLockSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RKP_LOCK to value 0"]
+        impl crate::Resettable for RkpLockSpec {}
+    }
+    #[doc = "RKP_CMD_CFG (rw) register accessor: RKP PBKDF2 command and algorithm configuration\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_cmd_cfg::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_cmd_cfg::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rkp_cmd_cfg`] module"]
+    #[doc(alias = "RKP_CMD_CFG")]
+    pub type RkpCmdCfg = crate::Reg<rkp_cmd_cfg::RkpCmdCfgSpec>;
+    #[doc = "RKP PBKDF2 command and algorithm configuration"]
+    pub mod rkp_cmd_cfg {
+        #[doc = "Register `RKP_CMD_CFG` reader"]
+        pub type R = crate::R<RkpCmdCfgSpec>;
+        #[doc = "Register `RKP_CMD_CFG` writer"]
+        pub type W = crate::W<RkpCmdCfgSpec>;
+        #[doc = "Field `sw_calc_req` reader - Start software-key PBKDF2 calculation; hardware clears on completion"]
+        pub type SwCalcReqR = crate::BitReader;
+        #[doc = "Field `sw_calc_req` writer - Start software-key PBKDF2 calculation; hardware clears on completion"]
+        pub type SwCalcReqW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `pbkdf2_alg_sel_cfg` reader - PBKDF2 hash algorithm: 0=SHA256, 1=SHA1, 3=SHA384, 4=SHA512, 5=SM3"]
+        pub type Pbkdf2AlgSelCfgR = crate::FieldReader;
+        #[doc = "Field `pbkdf2_alg_sel_cfg` writer - PBKDF2 hash algorithm: 0=SHA256, 1=SHA1, 3=SHA384, 4=SHA512, 5=SM3"]
+        pub type Pbkdf2AlgSelCfgW<'a, REG> = crate::FieldWriter<'a, REG, 3>;
+        #[doc = "Field `pbkdf2_key_sel_cfg` reader - PBKDF2 key source; 3 selects the software-provided key window"]
+        pub type Pbkdf2KeySelCfgR = crate::FieldReader;
+        #[doc = "Field `pbkdf2_key_sel_cfg` writer - PBKDF2 key source; 3 selects the software-provided key window"]
+        pub type Pbkdf2KeySelCfgW<'a, REG> = crate::FieldWriter<'a, REG, 5>;
+        #[doc = "Field `pbkdf2_key_len` reader - Hardware-key length selector; unused for the software-key path"]
+        pub type Pbkdf2KeyLenR = crate::FieldReader;
+        #[doc = "Field `pbkdf2_key_len` writer - Hardware-key length selector; unused for the software-key path"]
+        pub type Pbkdf2KeyLenW<'a, REG> = crate::FieldWriter<'a, REG, 2>;
+        #[doc = "Field `rkp_pbkdf_calc_time` reader - PBKDF2 iteration count"]
+        pub type RkpPbkdfCalcTimeR = crate::FieldReader<u16>;
+        #[doc = "Field `rkp_pbkdf_calc_time` writer - PBKDF2 iteration count"]
+        pub type RkpPbkdfCalcTimeW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bit 0 - Start software-key PBKDF2 calculation; hardware clears on completion"]
+            #[inline(always)]
+            pub fn sw_calc_req(&self) -> SwCalcReqR {
+                SwCalcReqR::new((self.bits & 1) != 0)
+            }
+            #[doc = "Bits 1:3 - PBKDF2 hash algorithm: 0=SHA256, 1=SHA1, 3=SHA384, 4=SHA512, 5=SM3"]
+            #[inline(always)]
+            pub fn pbkdf2_alg_sel_cfg(&self) -> Pbkdf2AlgSelCfgR {
+                Pbkdf2AlgSelCfgR::new(((self.bits >> 1) & 7) as u8)
+            }
+            #[doc = "Bits 4:8 - PBKDF2 key source; 3 selects the software-provided key window"]
+            #[inline(always)]
+            pub fn pbkdf2_key_sel_cfg(&self) -> Pbkdf2KeySelCfgR {
+                Pbkdf2KeySelCfgR::new(((self.bits >> 4) & 0x1f) as u8)
+            }
+            #[doc = "Bits 14:15 - Hardware-key length selector; unused for the software-key path"]
+            #[inline(always)]
+            pub fn pbkdf2_key_len(&self) -> Pbkdf2KeyLenR {
+                Pbkdf2KeyLenR::new(((self.bits >> 14) & 3) as u8)
+            }
+            #[doc = "Bits 16:31 - PBKDF2 iteration count"]
+            #[inline(always)]
+            pub fn rkp_pbkdf_calc_time(&self) -> RkpPbkdfCalcTimeR {
+                RkpPbkdfCalcTimeR::new(((self.bits >> 16) & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Start software-key PBKDF2 calculation; hardware clears on completion"]
+            #[inline(always)]
+            pub fn sw_calc_req(&mut self) -> SwCalcReqW<'_, RkpCmdCfgSpec> {
+                SwCalcReqW::new(self, 0)
+            }
+            #[doc = "Bits 1:3 - PBKDF2 hash algorithm: 0=SHA256, 1=SHA1, 3=SHA384, 4=SHA512, 5=SM3"]
+            #[inline(always)]
+            pub fn pbkdf2_alg_sel_cfg(&mut self) -> Pbkdf2AlgSelCfgW<'_, RkpCmdCfgSpec> {
+                Pbkdf2AlgSelCfgW::new(self, 1)
+            }
+            #[doc = "Bits 4:8 - PBKDF2 key source; 3 selects the software-provided key window"]
+            #[inline(always)]
+            pub fn pbkdf2_key_sel_cfg(&mut self) -> Pbkdf2KeySelCfgW<'_, RkpCmdCfgSpec> {
+                Pbkdf2KeySelCfgW::new(self, 4)
+            }
+            #[doc = "Bits 14:15 - Hardware-key length selector; unused for the software-key path"]
+            #[inline(always)]
+            pub fn pbkdf2_key_len(&mut self) -> Pbkdf2KeyLenW<'_, RkpCmdCfgSpec> {
+                Pbkdf2KeyLenW::new(self, 14)
+            }
+            #[doc = "Bits 16:31 - PBKDF2 iteration count"]
+            #[inline(always)]
+            pub fn rkp_pbkdf_calc_time(&mut self) -> RkpPbkdfCalcTimeW<'_, RkpCmdCfgSpec> {
+                RkpPbkdfCalcTimeW::new(self, 16)
+            }
+        }
+        #[doc = "RKP PBKDF2 command and algorithm configuration\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_cmd_cfg::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_cmd_cfg::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RkpCmdCfgSpec;
+        impl crate::RegisterSpec for RkpCmdCfgSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rkp_cmd_cfg::R`](R) reader structure"]
+        impl crate::Readable for RkpCmdCfgSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rkp_cmd_cfg::W`](W) writer structure"]
+        impl crate::Writable for RkpCmdCfgSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RKP_CMD_CFG to value 0"]
+        impl crate::Resettable for RkpCmdCfgSpec {}
+    }
+    #[doc = "KDF_ERROR (r) register accessor: RKP PBKDF2 error status\n\nYou can [`read`](crate::Reg::read) this register and get [`kdf_error::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kdf_error`] module"]
+    #[doc(alias = "KDF_ERROR")]
+    pub type KdfError = crate::Reg<kdf_error::KdfErrorSpec>;
+    #[doc = "RKP PBKDF2 error status"]
+    pub mod kdf_error {
+        #[doc = "Register `KDF_ERROR` reader"]
+        pub type R = crate::R<KdfErrorSpec>;
+        #[doc = "Field `error` reader - Non-zero when the most recent KDF operation failed"]
+        pub type ErrorR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Non-zero when the most recent KDF operation failed"]
+            #[inline(always)]
+            pub fn error(&self) -> ErrorR {
+                ErrorR::new(self.bits)
+            }
+        }
+        #[doc = "RKP PBKDF2 error status\n\nYou can [`read`](crate::Reg::read) this register and get [`kdf_error::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct KdfErrorSpec;
+        impl crate::RegisterSpec for KdfErrorSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`kdf_error::R`](R) reader structure"]
+        impl crate::Readable for KdfErrorSpec {}
+        #[doc = "`reset()` method sets KDF_ERROR to value 0"]
+        impl crate::Resettable for KdfErrorSpec {}
+    }
+    #[doc = "RKP_RAW_INT (rw) register accessor: RKP raw interrupt status and write-one-to-clear acknowledgement\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_raw_int::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_raw_int::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rkp_raw_int`] module"]
+    #[doc(alias = "RKP_RAW_INT")]
+    pub type RkpRawInt = crate::Reg<rkp_raw_int::RkpRawIntSpec>;
+    #[doc = "RKP raw interrupt status and write-one-to-clear acknowledgement"]
+    pub mod rkp_raw_int {
+        #[doc = "Register `RKP_RAW_INT` reader"]
+        pub type R = crate::R<RkpRawIntSpec>;
+        #[doc = "Register `RKP_RAW_INT` writer"]
+        pub type W = crate::W<RkpRawIntSpec>;
+        #[doc = "Field `rkp_raw_int` reader - Raw RKP completion interrupt; write one to clear"]
+        pub type RkpRawIntR = crate::BitReader;
+        #[doc = "Field `rkp_raw_int` writer - Raw RKP completion interrupt; write one to clear"]
+        pub type RkpRawIntW<'a, REG> = crate::BitWriter1C<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - Raw RKP completion interrupt; write one to clear"]
+            #[inline(always)]
+            pub fn rkp_raw_int(&self) -> RkpRawIntR {
+                RkpRawIntR::new((self.bits & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Raw RKP completion interrupt; write one to clear"]
+            #[inline(always)]
+            pub fn rkp_raw_int(&mut self) -> RkpRawIntW<'_, RkpRawIntSpec> {
+                RkpRawIntW::new(self, 0)
+            }
+        }
+        #[doc = "RKP raw interrupt status and write-one-to-clear acknowledgement\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_raw_int::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_raw_int::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RkpRawIntSpec;
+        impl crate::RegisterSpec for RkpRawIntSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rkp_raw_int::R`](R) reader structure"]
+        impl crate::Readable for RkpRawIntSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rkp_raw_int::W`](W) writer structure"]
+        impl crate::Writable for RkpRawIntSpec {
+            type Safety = crate::Unsafe;
+            const ONE_TO_MODIFY_FIELDS_BITMAP: u32 = 0x01;
+        }
+        #[doc = "`reset()` method sets RKP_RAW_INT to value 0"]
+        impl crate::Resettable for RkpRawIntSpec {}
+    }
+    #[doc = "RKP_INT_ENABLE (rw) register accessor: RKP completion interrupt enable\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_int_enable::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_int_enable::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rkp_int_enable`] module"]
+    #[doc(alias = "RKP_INT_ENABLE")]
+    pub type RkpIntEnable = crate::Reg<rkp_int_enable::RkpIntEnableSpec>;
+    #[doc = "RKP completion interrupt enable"]
+    pub mod rkp_int_enable {
+        #[doc = "Register `RKP_INT_ENABLE` reader"]
+        pub type R = crate::R<RkpIntEnableSpec>;
+        #[doc = "Register `RKP_INT_ENABLE` writer"]
+        pub type W = crate::W<RkpIntEnableSpec>;
+        #[doc = "Field `rkp_int_enable` reader - Enable RKP completion interrupt"]
+        pub type RkpIntEnableR = crate::BitReader;
+        #[doc = "Field `rkp_int_enable` writer - Enable RKP completion interrupt"]
+        pub type RkpIntEnableW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bit 0 - Enable RKP completion interrupt"]
+            #[inline(always)]
+            pub fn rkp_int_enable(&self) -> RkpIntEnableR {
+                RkpIntEnableR::new((self.bits & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Enable RKP completion interrupt"]
+            #[inline(always)]
+            pub fn rkp_int_enable(&mut self) -> RkpIntEnableW<'_, RkpIntEnableSpec> {
+                RkpIntEnableW::new(self, 0)
+            }
+        }
+        #[doc = "RKP completion interrupt enable\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_int_enable::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_int_enable::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RkpIntEnableSpec;
+        impl crate::RegisterSpec for RkpIntEnableSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rkp_int_enable::R`](R) reader structure"]
+        impl crate::Readable for RkpIntEnableSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rkp_int_enable::W`](W) writer structure"]
+        impl crate::Writable for RkpIntEnableSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RKP_INT_ENABLE to value 0"]
+        impl crate::Resettable for RkpIntEnableSpec {}
+    }
+    #[doc = "RKP_INT (r) register accessor: Masked RKP completion interrupt status\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_int::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rkp_int`] module"]
+    #[doc(alias = "RKP_INT")]
+    pub type RkpInt = crate::Reg<rkp_int::RkpIntSpec>;
+    #[doc = "Masked RKP completion interrupt status"]
+    pub mod rkp_int {
+        #[doc = "Register `RKP_INT` reader"]
+        pub type R = crate::R<RkpIntSpec>;
+        #[doc = "Field `rkp_int` reader - Masked RKP completion interrupt"]
+        pub type RkpIntR = crate::BitReader;
+        impl R {
+            #[doc = "Bit 0 - Masked RKP completion interrupt"]
+            #[inline(always)]
+            pub fn rkp_int(&self) -> RkpIntR {
+                RkpIntR::new((self.bits & 1) != 0)
+            }
+        }
+        #[doc = "Masked RKP completion interrupt status\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_int::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RkpIntSpec;
+        impl crate::RegisterSpec for RkpIntSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rkp_int::R`](R) reader structure"]
+        impl crate::Readable for RkpIntSpec {}
+        #[doc = "`reset()` method sets RKP_INT to value 0"]
+        impl crate::Resettable for RkpIntSpec {}
+    }
+    #[doc = "RKP_PBKDF2_DATA (w) register accessor: PBKDF2 padded salt word %s\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_pbkdf2_data::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rkp_pbkdf2_data`] module"]
+    #[doc(alias = "RKP_PBKDF2_DATA")]
+    pub type RkpPbkdf2Data = crate::Reg<rkp_pbkdf2_data::RkpPbkdf2DataSpec>;
+    #[doc = "PBKDF2 padded salt word %s"]
+    pub mod rkp_pbkdf2_data {
+        #[doc = "Register `RKP_PBKDF2_DATA[%s]` writer"]
+        pub type W = crate::W<RkpPbkdf2DataSpec>;
+        #[doc = "Field `data` writer - Padded salt word"]
+        pub type DataW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        impl W {
+            #[doc = "Bits 0:31 - Padded salt word"]
+            #[inline(always)]
+            pub fn data(&mut self) -> DataW<'_, RkpPbkdf2DataSpec> {
+                DataW::new(self, 0)
+            }
+        }
+        #[doc = "PBKDF2 padded salt word %s\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_pbkdf2_data::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RkpPbkdf2DataSpec;
+        impl crate::RegisterSpec for RkpPbkdf2DataSpec {
+            type Ux = u32;
+        }
+        #[doc = "`write(|w| ..)` method takes [`rkp_pbkdf2_data::W`](W) writer structure"]
+        impl crate::Writable for RkpPbkdf2DataSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RKP_PBKDF2_DATA[%s] to value 0"]
+        impl crate::Resettable for RkpPbkdf2DataSpec {}
+    }
+    #[doc = "RKP_PBKDF2_KEY (w) register accessor: PBKDF2 padded password word %s\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_pbkdf2_key::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rkp_pbkdf2_key`] module"]
+    #[doc(alias = "RKP_PBKDF2_KEY")]
+    pub type RkpPbkdf2Key = crate::Reg<rkp_pbkdf2_key::RkpPbkdf2KeySpec>;
+    #[doc = "PBKDF2 padded password word %s"]
+    pub mod rkp_pbkdf2_key {
+        #[doc = "Register `RKP_PBKDF2_KEY[%s]` writer"]
+        pub type W = crate::W<RkpPbkdf2KeySpec>;
+        #[doc = "Field `data` writer - Padded password word"]
+        pub type DataW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        impl W {
+            #[doc = "Bits 0:31 - Padded password word"]
+            #[inline(always)]
+            pub fn data(&mut self) -> DataW<'_, RkpPbkdf2KeySpec> {
+                DataW::new(self, 0)
+            }
+        }
+        #[doc = "PBKDF2 padded password word %s\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_pbkdf2_key::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RkpPbkdf2KeySpec;
+        impl crate::RegisterSpec for RkpPbkdf2KeySpec {
+            type Ux = u32;
+        }
+        #[doc = "`write(|w| ..)` method takes [`rkp_pbkdf2_key::W`](W) writer structure"]
+        impl crate::Writable for RkpPbkdf2KeySpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RKP_PBKDF2_KEY[%s] to value 0"]
+        impl crate::Resettable for RkpPbkdf2KeySpec {}
+    }
+    #[doc = "RKP_PBKDF2_VAL (rw) register accessor: PBKDF2 initial-state or output word %s\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_pbkdf2_val::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_pbkdf2_val::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rkp_pbkdf2_val`] module"]
+    #[doc(alias = "RKP_PBKDF2_VAL")]
+    pub type RkpPbkdf2Val = crate::Reg<rkp_pbkdf2_val::RkpPbkdf2ValSpec>;
+    #[doc = "PBKDF2 initial-state or output word %s"]
+    pub mod rkp_pbkdf2_val {
+        #[doc = "Register `RKP_PBKDF2_VAL[%s]` reader"]
+        pub type R = crate::R<RkpPbkdf2ValSpec>;
+        #[doc = "Register `RKP_PBKDF2_VAL[%s]` writer"]
+        pub type W = crate::W<RkpPbkdf2ValSpec>;
+        #[doc = "Field `data` reader - Initial hash state before start; derived key material after completion"]
+        pub type DataR = crate::FieldReader<u32>;
+        #[doc = "Field `data` writer - Initial hash state before start; derived key material after completion"]
+        pub type DataW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Initial hash state before start; derived key material after completion"]
+            #[inline(always)]
+            pub fn data(&self) -> DataR {
+                DataR::new(self.bits)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:31 - Initial hash state before start; derived key material after completion"]
+            #[inline(always)]
+            pub fn data(&mut self) -> DataW<'_, RkpPbkdf2ValSpec> {
+                DataW::new(self, 0)
+            }
+        }
+        #[doc = "PBKDF2 initial-state or output word %s\n\nYou can [`read`](crate::Reg::read) this register and get [`rkp_pbkdf2_val::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`rkp_pbkdf2_val::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RkpPbkdf2ValSpec;
+        impl crate::RegisterSpec for RkpPbkdf2ValSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rkp_pbkdf2_val::R`](R) reader structure"]
+        impl crate::Readable for RkpPbkdf2ValSpec {}
+        #[doc = "`write(|w| ..)` method takes [`rkp_pbkdf2_val::W`](W) writer structure"]
+        impl crate::Writable for RkpPbkdf2ValSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets RKP_PBKDF2_VAL[%s] to value 0"]
+        impl crate::Resettable for RkpPbkdf2ValSpec {}
     }
     #[doc = "KL_DATA_IN_0 (rw) register accessor: Key data input word 0\n\nYou can [`read`](crate::Reg::read) this register and get [`kl_data_in_0::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`kl_data_in_0::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@kl_data_in_0`] module"]
     #[doc(alias = "KL_DATA_IN_0")]
