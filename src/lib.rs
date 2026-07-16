@@ -26114,31 +26114,59 @@ pub mod spacc {
         _reserved0: [u8; 0x04],
         spacc_ie: SpaccIe,
         spacc_int_raw_sym_clr_finish: SpaccIntRawSymClrFinish,
-        _reserved2: [u8; 0x14],
+        _reserved2: [u8; 0x08],
+        spacc_int_raw_hash_clear_finish: SpaccIntRawHashClearFinish,
+        _reserved3: [u8; 0x08],
         spacc_sym_chn_lock: SpaccSymChnLock,
-        _reserved3: [u8; 0x1c],
-        spacc_hash_chn_lock: SpaccHashChnLock,
         _reserved4: [u8; 0x1c],
+        spacc_hash_chn_lock: SpaccHashChnLock,
+        _reserved5: [u8; 0x1c],
         spacc_sym_chn_clear_req: SpaccSymChnClearReq,
-        _reserved5: [u8; 0x04],
+        _reserved6: [u8; 0x04],
         spacc_hash_chn_clear_req: SpaccHashChnClearReq,
-        _reserved6: [u8; 0x0194],
+        _reserved7: [u8; 0x0194],
         spacc_bus_err: SpaccBusErr,
-        _reserved7: [u8; 0x3dfc],
+        _reserved8: [u8; 0x3dfc],
         in_sym_chn0_ctrl: InSymChn0Ctrl,
         in_sym_chn0_special_ctrl: InSymChn0SpecialCtrl,
-        _reserved9: [u8; 0x08],
+        _reserved10: [u8; 0x08],
         in_sym_chn0_key_ctrl: InSymChn0KeyCtrl,
-        _reserved10: [u8; 0x1c],
+        _reserved11: [u8; 0x1c],
         in_sym_chn0_iv_data_ctrl: InSymChn0IvDataCtrl,
-        _reserved11: [u8; 0x0c],
+        _reserved12: [u8; 0x0c],
         in_sym_chn0_iv0: InSymChn0Iv0,
         in_sym_chn0_iv1: InSymChn0Iv1,
         in_sym_chn0_iv2: InSymChn0Iv2,
         in_sym_chn0_iv3: InSymChn0Iv3,
         in_sym_chn0_data0: InSymChn0Data0,
-        _reserved16: [u8; 0x45bc],
+        _reserved17: [u8; 0x10ac],
+        in_hash_chn1_ctrl: (),
+        _reserved18: [u8; 0x10],
+        in_hash_chn1_key_ctrl: (),
+        _reserved19: [u8; 0x10],
+        in_hash_chn1_node_start_addr_h: (),
+        _reserved20: [u8; 0x04],
+        in_hash_chn1_node_start_addr_l: (),
+        _reserved21: [u8; 0x08],
+        in_hash_chn1_node_length: (),
+        _reserved22: [u8; 0x04],
+        in_hash_chn1_node_wr_point: (),
+        _reserved23: [u8; 0x04],
+        in_hash_chn1_node_rd_point: (),
+        _reserved24: [u8; 0x8c],
+        in_hash_chn1_data_len: (),
+        _reserved25: [u8; 0x2eb8],
+        ree_hash_calc_ctrl_check_err: ReeHashCalcCtrlCheckErr,
+        ree_hash_calc_ctrl_check_err_status: ReeHashCalcCtrlCheckErrStatus,
+        _reserved27: [u8; 0x0580],
+        hash_chann_raw_int: HashChannRawInt,
+        hash_chann_raw_int_en: HashChannRawIntEn,
+        _reserved29: [u8; 0x08],
         sym_chann_raw_int: SymChannRawInt,
+        _reserved30: [u8; 0x1a6c],
+        chann1_hash_state_val: (),
+        _reserved31: [u8; 0x04],
+        chann1_hash_state_val_addr: (),
     }
     impl RegisterBlock {
         #[doc = "0x04 - SPACC interrupt enable"]
@@ -26150,6 +26178,11 @@ pub mod spacc {
         #[inline(always)]
         pub const fn spacc_int_raw_sym_clr_finish(&self) -> &SpaccIntRawSymClrFinish {
             &self.spacc_int_raw_sym_clr_finish
+        }
+        #[doc = "0x14 - Hash channel-clear completion status; write one to clear"]
+        #[inline(always)]
+        pub const fn spacc_int_raw_hash_clear_finish(&self) -> &SpaccIntRawHashClearFinish {
+            &self.spacc_int_raw_hash_clear_finish
         }
         #[doc = "0x20 - Sym channel lock register"]
         #[inline(always)]
@@ -26221,10 +26254,360 @@ pub mod spacc {
         pub const fn in_sym_chn0_data0(&self) -> &InSymChn0Data0 {
             &self.in_sym_chn0_data0
         }
+        #[doc = "0x5100..0x5108 - Hash channel %s control"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_HASH_CHN1_CTRL` register.</div>"]
+        #[inline(always)]
+        pub const fn in_hash_chn1_ctrl(&self, n: usize) -> &InHashChnCtrl {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20736)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x5100..0x5108 - Hash channel %s control"]
+        #[inline(always)]
+        pub fn in_hash_chn1_ctrl_iter(&self) -> impl Iterator<Item = &InHashChnCtrl> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20736)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x5200 - Hash channel 2 control"]
+        #[inline(always)]
+        pub const fn in_hash_chn2_ctrl(&self) -> &InHashChnCtrl {
+            self.in_hash_chn1_ctrl(1)
+        }
+        #[doc = "0x5110..0x5118 - Hash channel %s algorithm and keyslot control"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_HASH_CHN1_KEY_CTRL` register.</div>"]
+        #[inline(always)]
+        pub const fn in_hash_chn1_key_ctrl(&self, n: usize) -> &InHashChnKeyCtrl {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20752)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x5110..0x5118 - Hash channel %s algorithm and keyslot control"]
+        #[inline(always)]
+        pub fn in_hash_chn1_key_ctrl_iter(&self) -> impl Iterator<Item = &InHashChnKeyCtrl> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20752)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x5210 - Hash channel 2 algorithm and keyslot control"]
+        #[inline(always)]
+        pub const fn in_hash_chn2_key_ctrl(&self) -> &InHashChnKeyCtrl {
+            self.in_hash_chn1_key_ctrl(1)
+        }
+        #[doc = "0x5120..0x5128 - Hash channel %s descriptor-list address bits 35:32"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_HASH_CHN1_NODE_START_ADDR_H` register.</div>"]
+        #[inline(always)]
+        pub const fn in_hash_chn1_node_start_addr_h(&self, n: usize) -> &InHashChnNodeStartAddrH {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20768)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x5120..0x5128 - Hash channel %s descriptor-list address bits 35:32"]
+        #[inline(always)]
+        pub fn in_hash_chn1_node_start_addr_h_iter(
+            &self,
+        ) -> impl Iterator<Item = &InHashChnNodeStartAddrH> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20768)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x5220 - Hash channel 2 descriptor-list address bits 35:32"]
+        #[inline(always)]
+        pub const fn in_hash_chn2_node_start_addr_h(&self) -> &InHashChnNodeStartAddrH {
+            self.in_hash_chn1_node_start_addr_h(1)
+        }
+        #[doc = "0x5124..0x512c - Hash channel %s descriptor-list address bits 31:0"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_HASH_CHN1_NODE_START_ADDR_L` register.</div>"]
+        #[inline(always)]
+        pub const fn in_hash_chn1_node_start_addr_l(&self, n: usize) -> &InHashChnNodeStartAddrL {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20772)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x5124..0x512c - Hash channel %s descriptor-list address bits 31:0"]
+        #[inline(always)]
+        pub fn in_hash_chn1_node_start_addr_l_iter(
+            &self,
+        ) -> impl Iterator<Item = &InHashChnNodeStartAddrL> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20772)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x5224 - Hash channel 2 descriptor-list address bits 31:0"]
+        #[inline(always)]
+        pub const fn in_hash_chn2_node_start_addr_l(&self) -> &InHashChnNodeStartAddrL {
+            self.in_hash_chn1_node_start_addr_l(1)
+        }
+        #[doc = "0x512c..0x5134 - Hash channel %s descriptor ring depth"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_HASH_CHN1_NODE_LENGTH` register.</div>"]
+        #[inline(always)]
+        pub const fn in_hash_chn1_node_length(&self, n: usize) -> &InHashChnNodeLength {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20780)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x512c..0x5134 - Hash channel %s descriptor ring depth"]
+        #[inline(always)]
+        pub fn in_hash_chn1_node_length_iter(&self) -> impl Iterator<Item = &InHashChnNodeLength> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20780)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x522c - Hash channel 2 descriptor ring depth"]
+        #[inline(always)]
+        pub const fn in_hash_chn2_node_length(&self) -> &InHashChnNodeLength {
+            self.in_hash_chn1_node_length(1)
+        }
+        #[doc = "0x5130..0x5138 - Hash channel %s descriptor write pointer"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_HASH_CHN1_NODE_WR_POINT` register.</div>"]
+        #[inline(always)]
+        pub const fn in_hash_chn1_node_wr_point(&self, n: usize) -> &InHashChnNodeWrPoint {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20784)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x5130..0x5138 - Hash channel %s descriptor write pointer"]
+        #[inline(always)]
+        pub fn in_hash_chn1_node_wr_point_iter(
+            &self,
+        ) -> impl Iterator<Item = &InHashChnNodeWrPoint> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20784)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x5230 - Hash channel 2 descriptor write pointer"]
+        #[inline(always)]
+        pub const fn in_hash_chn2_node_wr_point(&self) -> &InHashChnNodeWrPoint {
+            self.in_hash_chn1_node_wr_point(1)
+        }
+        #[doc = "0x5134..0x513c - Hash channel %s descriptor read pointer"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_HASH_CHN1_NODE_RD_POINT` register.</div>"]
+        #[inline(always)]
+        pub const fn in_hash_chn1_node_rd_point(&self, n: usize) -> &InHashChnNodeRdPoint {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20788)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x5134..0x513c - Hash channel %s descriptor read pointer"]
+        #[inline(always)]
+        pub fn in_hash_chn1_node_rd_point_iter(
+            &self,
+        ) -> impl Iterator<Item = &InHashChnNodeRdPoint> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20788)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x5234 - Hash channel 2 descriptor read pointer"]
+        #[inline(always)]
+        pub const fn in_hash_chn2_node_rd_point(&self) -> &InHashChnNodeRdPoint {
+            self.in_hash_chn1_node_rd_point(1)
+        }
+        #[doc = "0x51c0..0x51c8 - Hash channel %s unprocessed byte count"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `IN_HASH_CHN1_DATA_LEN` register.</div>"]
+        #[inline(always)]
+        pub const fn in_hash_chn1_data_len(&self, n: usize) -> &InHashChnDataLen {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20928)
+                    .add(256 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0x51c0..0x51c8 - Hash channel %s unprocessed byte count"]
+        #[inline(always)]
+        pub fn in_hash_chn1_data_len_iter(&self) -> impl Iterator<Item = &InHashChnDataLen> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(20928)
+                    .add(256 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0x52c0 - Hash channel 2 unprocessed byte count"]
+        #[inline(always)]
+        pub const fn in_hash_chn2_data_len(&self) -> &InHashChnDataLen {
+            self.in_hash_chn1_data_len(1)
+        }
+        #[doc = "0x8078 - REE hash-control validation error summary"]
+        #[inline(always)]
+        pub const fn ree_hash_calc_ctrl_check_err(&self) -> &ReeHashCalcCtrlCheckErr {
+            &self.ree_hash_calc_ctrl_check_err
+        }
+        #[doc = "0x807c - REE hash-control validation error detail"]
+        #[inline(always)]
+        pub const fn ree_hash_calc_ctrl_check_err_status(&self) -> &ReeHashCalcCtrlCheckErrStatus {
+            &self.ree_hash_calc_ctrl_check_err_status
+        }
+        #[doc = "0x8600 - Hash channel completion status; write one to clear"]
+        #[inline(always)]
+        pub const fn hash_chann_raw_int(&self) -> &HashChannRawInt {
+            &self.hash_chann_raw_int
+        }
+        #[doc = "0x8604 - Hash channel completion interrupt enable"]
+        #[inline(always)]
+        pub const fn hash_chann_raw_int_en(&self) -> &HashChannRawIntEn {
+            &self.hash_chann_raw_int_en
+        }
         #[doc = "0x8610 - Sym channel raw interrupt status"]
         #[inline(always)]
         pub const fn sym_chann_raw_int(&self) -> &SymChannRawInt {
             &self.sym_chann_raw_int
+        }
+        #[doc = "0xa080..0xa088 - Hash channel %s indexed state data"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `CHANN1_HASH_STATE_VAL` register.</div>"]
+        #[inline(always)]
+        pub const fn chann1_hash_state_val(&self, n: usize) -> &ChannHashStateVal {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(41088)
+                    .add(128 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0xa080..0xa088 - Hash channel %s indexed state data"]
+        #[inline(always)]
+        pub fn chann1_hash_state_val_iter(&self) -> impl Iterator<Item = &ChannHashStateVal> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(41088)
+                    .add(128 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0xa100 - Hash channel 2 indexed state data"]
+        #[inline(always)]
+        pub const fn chann2_hash_state_val(&self) -> &ChannHashStateVal {
+            self.chann1_hash_state_val(1)
+        }
+        #[doc = "0xa084..0xa08c - Hash channel %s state-word selector"]
+        #[doc = ""]
+        #[doc = "<div class=\"warning\">`n` is the index of register in the array. `n == 0` corresponds to `CHANN1_HASH_STATE_VAL_ADDR` register.</div>"]
+        #[inline(always)]
+        pub const fn chann1_hash_state_val_addr(&self, n: usize) -> &ChannHashStateValAddr {
+            #[allow(clippy::no_effect)]
+            [(); 2][n];
+            unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(41092)
+                    .add(128 * n)
+                    .cast()
+            }
+        }
+        #[doc = "Iterator for array of:"]
+        #[doc = "0xa084..0xa08c - Hash channel %s state-word selector"]
+        #[inline(always)]
+        pub fn chann1_hash_state_val_addr_iter(
+            &self,
+        ) -> impl Iterator<Item = &ChannHashStateValAddr> {
+            (0..2).map(move |n| unsafe {
+                &*core::ptr::from_ref(self)
+                    .cast::<u8>()
+                    .add(41092)
+                    .add(128 * n)
+                    .cast()
+            })
+        }
+        #[doc = "0xa104 - Hash channel 2 state-word selector"]
+        #[inline(always)]
+        pub const fn chann2_hash_state_val_addr(&self) -> &ChannHashStateValAddr {
+            self.chann1_hash_state_val_addr(1)
         }
     }
     #[doc = "SPACC_IE (rw) register accessor: SPACC interrupt enable\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_ie::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_ie::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spacc_ie`] module"]
@@ -26306,16 +26689,26 @@ pub mod spacc {
         pub type R = crate::R<SpaccIntRawSymClrFinishSpec>;
         #[doc = "Register `SPACC_INT_RAW_SYM_CLR_FINISH` writer"]
         pub type W = crate::W<SpaccIntRawSymClrFinishSpec>;
-        #[doc = "Field `raw_sym_clr_finish_int` reader - Raw interrupt for sym clear finish"]
+        #[doc = "Field `raw_sym_clr_finish_int` reader - Raw interrupt for sym clear finish; write one to clear"]
         pub type RawSymClrFinishIntR = crate::FieldReader<u16>;
+        #[doc = "Field `raw_sym_clr_finish_int` writer - Raw interrupt for sym clear finish; write one to clear"]
+        pub type RawSymClrFinishIntW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
         impl R {
-            #[doc = "Bits 0:15 - Raw interrupt for sym clear finish"]
+            #[doc = "Bits 0:15 - Raw interrupt for sym clear finish; write one to clear"]
             #[inline(always)]
             pub fn raw_sym_clr_finish_int(&self) -> RawSymClrFinishIntR {
                 RawSymClrFinishIntR::new((self.bits & 0xffff) as u16)
             }
         }
-        impl W {}
+        impl W {
+            #[doc = "Bits 0:15 - Raw interrupt for sym clear finish; write one to clear"]
+            #[inline(always)]
+            pub fn raw_sym_clr_finish_int(
+                &mut self,
+            ) -> RawSymClrFinishIntW<'_, SpaccIntRawSymClrFinishSpec> {
+                RawSymClrFinishIntW::new(self, 0)
+            }
+        }
         #[doc = "Sym clear finish raw interrupt\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_int_raw_sym_clr_finish::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_int_raw_sym_clr_finish::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SpaccIntRawSymClrFinishSpec;
         impl crate::RegisterSpec for SpaccIntRawSymClrFinishSpec {
@@ -26326,9 +26719,55 @@ pub mod spacc {
         #[doc = "`write(|w| ..)` method takes [`spacc_int_raw_sym_clr_finish::W`](W) writer structure"]
         impl crate::Writable for SpaccIntRawSymClrFinishSpec {
             type Safety = crate::Unsafe;
+            const ONE_TO_MODIFY_FIELDS_BITMAP: u32 = 0xffff;
         }
         #[doc = "`reset()` method sets SPACC_INT_RAW_SYM_CLR_FINISH to value 0"]
         impl crate::Resettable for SpaccIntRawSymClrFinishSpec {}
+    }
+    #[doc = "SPACC_INT_RAW_HASH_CLEAR_FINISH (rw) register accessor: Hash channel-clear completion status; write one to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_int_raw_hash_clear_finish::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_int_raw_hash_clear_finish::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spacc_int_raw_hash_clear_finish`] module"]
+    #[doc(alias = "SPACC_INT_RAW_HASH_CLEAR_FINISH")]
+    pub type SpaccIntRawHashClearFinish =
+        crate::Reg<spacc_int_raw_hash_clear_finish::SpaccIntRawHashClearFinishSpec>;
+    #[doc = "Hash channel-clear completion status; write one to clear"]
+    pub mod spacc_int_raw_hash_clear_finish {
+        #[doc = "Register `SPACC_INT_RAW_HASH_CLEAR_FINISH` reader"]
+        pub type R = crate::R<SpaccIntRawHashClearFinishSpec>;
+        #[doc = "Register `SPACC_INT_RAW_HASH_CLEAR_FINISH` writer"]
+        pub type W = crate::W<SpaccIntRawHashClearFinishSpec>;
+        #[doc = "Field `raw_hash_clear_finish` reader - Hash channel-clear completion bits"]
+        pub type RawHashClearFinishR = crate::FieldReader<u16>;
+        #[doc = "Field `raw_hash_clear_finish` writer - Hash channel-clear completion bits"]
+        pub type RawHashClearFinishW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Hash channel-clear completion bits"]
+            #[inline(always)]
+            pub fn raw_hash_clear_finish(&self) -> RawHashClearFinishR {
+                RawHashClearFinishR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Hash channel-clear completion bits"]
+            #[inline(always)]
+            pub fn raw_hash_clear_finish(
+                &mut self,
+            ) -> RawHashClearFinishW<'_, SpaccIntRawHashClearFinishSpec> {
+                RawHashClearFinishW::new(self, 0)
+            }
+        }
+        #[doc = "Hash channel-clear completion status; write one to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_int_raw_hash_clear_finish::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_int_raw_hash_clear_finish::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct SpaccIntRawHashClearFinishSpec;
+        impl crate::RegisterSpec for SpaccIntRawHashClearFinishSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`spacc_int_raw_hash_clear_finish::R`](R) reader structure"]
+        impl crate::Readable for SpaccIntRawHashClearFinishSpec {}
+        #[doc = "`write(|w| ..)` method takes [`spacc_int_raw_hash_clear_finish::W`](W) writer structure"]
+        impl crate::Writable for SpaccIntRawHashClearFinishSpec {
+            type Safety = crate::Unsafe;
+            const ONE_TO_MODIFY_FIELDS_BITMAP: u32 = 0xffff;
+        }
+        #[doc = "`reset()` method sets SPACC_INT_RAW_HASH_CLEAR_FINISH to value 0"]
+        impl crate::Resettable for SpaccIntRawHashClearFinishSpec {}
     }
     #[doc = "SPACC_SYM_CHN_LOCK (rw) register accessor: Sym channel lock register\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_sym_chn_lock::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_sym_chn_lock::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spacc_sym_chn_lock`] module"]
     #[doc(alias = "SPACC_SYM_CHN_LOCK")]
@@ -26412,13 +26851,11 @@ pub mod spacc {
         #[doc = "`reset()` method sets SPACC_HASH_CHN_LOCK to value 0"]
         impl crate::Resettable for SpaccHashChnLockSpec {}
     }
-    #[doc = "SPACC_SYM_CHN_CLEAR_REQ (rw) register accessor: Sym channel clear request\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_sym_chn_clear_req::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_sym_chn_clear_req::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spacc_sym_chn_clear_req`] module"]
+    #[doc = "SPACC_SYM_CHN_CLEAR_REQ (w) register accessor: Sym channel clear request\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_sym_chn_clear_req::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spacc_sym_chn_clear_req`] module"]
     #[doc(alias = "SPACC_SYM_CHN_CLEAR_REQ")]
     pub type SpaccSymChnClearReq = crate::Reg<spacc_sym_chn_clear_req::SpaccSymChnClearReqSpec>;
     #[doc = "Sym channel clear request"]
     pub mod spacc_sym_chn_clear_req {
-        #[doc = "Register `SPACC_SYM_CHN_CLEAR_REQ` reader"]
-        pub type R = crate::R<SpaccSymChnClearReqSpec>;
         #[doc = "Register `SPACC_SYM_CHN_CLEAR_REQ` writer"]
         pub type W = crate::W<SpaccSymChnClearReqSpec>;
         #[doc = "Field `sym_chn_clear_req` writer - Clear request for symmetric channels"]
@@ -26430,13 +26867,11 @@ pub mod spacc {
                 SymChnClearReqW::new(self, 0)
             }
         }
-        #[doc = "Sym channel clear request\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_sym_chn_clear_req::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_sym_chn_clear_req::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Sym channel clear request\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_sym_chn_clear_req::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SpaccSymChnClearReqSpec;
         impl crate::RegisterSpec for SpaccSymChnClearReqSpec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`spacc_sym_chn_clear_req::R`](R) reader structure"]
-        impl crate::Readable for SpaccSymChnClearReqSpec {}
         #[doc = "`write(|w| ..)` method takes [`spacc_sym_chn_clear_req::W`](W) writer structure"]
         impl crate::Writable for SpaccSymChnClearReqSpec {
             type Safety = crate::Unsafe;
@@ -26444,13 +26879,11 @@ pub mod spacc {
         #[doc = "`reset()` method sets SPACC_SYM_CHN_CLEAR_REQ to value 0"]
         impl crate::Resettable for SpaccSymChnClearReqSpec {}
     }
-    #[doc = "SPACC_HASH_CHN_CLEAR_REQ (rw) register accessor: Hash channel clear request\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_hash_chn_clear_req::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_hash_chn_clear_req::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spacc_hash_chn_clear_req`] module"]
+    #[doc = "SPACC_HASH_CHN_CLEAR_REQ (w) register accessor: Hash channel clear request\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_hash_chn_clear_req::W`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spacc_hash_chn_clear_req`] module"]
     #[doc(alias = "SPACC_HASH_CHN_CLEAR_REQ")]
     pub type SpaccHashChnClearReq = crate::Reg<spacc_hash_chn_clear_req::SpaccHashChnClearReqSpec>;
     #[doc = "Hash channel clear request"]
     pub mod spacc_hash_chn_clear_req {
-        #[doc = "Register `SPACC_HASH_CHN_CLEAR_REQ` reader"]
-        pub type R = crate::R<SpaccHashChnClearReqSpec>;
         #[doc = "Register `SPACC_HASH_CHN_CLEAR_REQ` writer"]
         pub type W = crate::W<SpaccHashChnClearReqSpec>;
         #[doc = "Field `hash_chn_clear_req` writer - Clear request for hash channels"]
@@ -26462,13 +26895,11 @@ pub mod spacc {
                 HashChnClearReqW::new(self, 0)
             }
         }
-        #[doc = "Hash channel clear request\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_hash_chn_clear_req::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_hash_chn_clear_req::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Hash channel clear request\n\nYou can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_hash_chn_clear_req::W`](W). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SpaccHashChnClearReqSpec;
         impl crate::RegisterSpec for SpaccHashChnClearReqSpec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`spacc_hash_chn_clear_req::R`](R) reader structure"]
-        impl crate::Readable for SpaccHashChnClearReqSpec {}
         #[doc = "`write(|w| ..)` method takes [`spacc_hash_chn_clear_req::W`](W) writer structure"]
         impl crate::Writable for SpaccHashChnClearReqSpec {
             type Safety = crate::Unsafe;
@@ -26476,15 +26907,13 @@ pub mod spacc {
         #[doc = "`reset()` method sets SPACC_HASH_CHN_CLEAR_REQ to value 0"]
         impl crate::Resettable for SpaccHashChnClearReqSpec {}
     }
-    #[doc = "SPACC_BUS_ERR (rw) register accessor: Bus error register\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_bus_err::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_bus_err::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spacc_bus_err`] module"]
+    #[doc = "SPACC_BUS_ERR (r) register accessor: Bus error register\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_bus_err::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@spacc_bus_err`] module"]
     #[doc(alias = "SPACC_BUS_ERR")]
     pub type SpaccBusErr = crate::Reg<spacc_bus_err::SpaccBusErrSpec>;
     #[doc = "Bus error register"]
     pub mod spacc_bus_err {
         #[doc = "Register `SPACC_BUS_ERR` reader"]
         pub type R = crate::R<SpaccBusErrSpec>;
-        #[doc = "Register `SPACC_BUS_ERR` writer"]
-        pub type W = crate::W<SpaccBusErrSpec>;
         #[doc = "Field `bus_err` reader - Bus error status"]
         pub type BusErrR = crate::FieldReader<u32>;
         impl R {
@@ -26494,20 +26923,593 @@ pub mod spacc {
                 BusErrR::new(self.bits)
             }
         }
-        impl W {}
-        #[doc = "Bus error register\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_bus_err::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`spacc_bus_err::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Bus error register\n\nYou can [`read`](crate::Reg::read) this register and get [`spacc_bus_err::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct SpaccBusErrSpec;
         impl crate::RegisterSpec for SpaccBusErrSpec {
             type Ux = u32;
         }
         #[doc = "`read()` method returns [`spacc_bus_err::R`](R) reader structure"]
         impl crate::Readable for SpaccBusErrSpec {}
-        #[doc = "`write(|w| ..)` method takes [`spacc_bus_err::W`](W) writer structure"]
-        impl crate::Writable for SpaccBusErrSpec {
-            type Safety = crate::Unsafe;
-        }
         #[doc = "`reset()` method sets SPACC_BUS_ERR to value 0"]
         impl crate::Resettable for SpaccBusErrSpec {}
+    }
+    #[doc = "IN_HASH_CHN_CTRL (rw) register accessor: Hash channel %s control\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_ctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_ctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_hash_chn_ctrl`] module"]
+    #[doc(alias = "IN_HASH_CHN_CTRL")]
+    pub type InHashChnCtrl = crate::Reg<in_hash_chn_ctrl::InHashChnCtrlSpec>;
+    #[doc = "Hash channel %s control"]
+    pub mod in_hash_chn_ctrl {
+        #[doc = "Register `IN_HASH_CHN%s_CTRL` reader"]
+        pub type R = crate::R<InHashChnCtrlSpec>;
+        #[doc = "Register `IN_HASH_CHN%s_CTRL` writer"]
+        pub type W = crate::W<InHashChnCtrlSpec>;
+        #[doc = "Field `hash_chn_ss` reader - Security-source selector; 0xA selects non-secure REE"]
+        pub type HashChnSsR = crate::FieldReader;
+        #[doc = "Field `hash_chn_ss` writer - Security-source selector; 0xA selects non-secure REE"]
+        pub type HashChnSsW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `hash_chn_en` reader - Enable the hash channel"]
+        pub type HashChnEnR = crate::BitReader;
+        #[doc = "Field `hash_chn_en` writer - Enable the hash channel"]
+        pub type HashChnEnW<'a, REG> = crate::BitWriter<'a, REG>;
+        impl R {
+            #[doc = "Bits 8:11 - Security-source selector; 0xA selects non-secure REE"]
+            #[inline(always)]
+            pub fn hash_chn_ss(&self) -> HashChnSsR {
+                HashChnSsR::new(((self.bits >> 8) & 0x0f) as u8)
+            }
+            #[doc = "Bit 31 - Enable the hash channel"]
+            #[inline(always)]
+            pub fn hash_chn_en(&self) -> HashChnEnR {
+                HashChnEnR::new(((self.bits >> 31) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bits 8:11 - Security-source selector; 0xA selects non-secure REE"]
+            #[inline(always)]
+            pub fn hash_chn_ss(&mut self) -> HashChnSsW<'_, InHashChnCtrlSpec> {
+                HashChnSsW::new(self, 8)
+            }
+            #[doc = "Bit 31 - Enable the hash channel"]
+            #[inline(always)]
+            pub fn hash_chn_en(&mut self) -> HashChnEnW<'_, InHashChnCtrlSpec> {
+                HashChnEnW::new(self, 31)
+            }
+        }
+        #[doc = "Hash channel %s control\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_ctrl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_ctrl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InHashChnCtrlSpec;
+        impl crate::RegisterSpec for InHashChnCtrlSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_hash_chn_ctrl::R`](R) reader structure"]
+        impl crate::Readable for InHashChnCtrlSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_hash_chn_ctrl::W`](W) writer structure"]
+        impl crate::Writable for InHashChnCtrlSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_HASH_CHN%s_CTRL to value 0"]
+        impl crate::Resettable for InHashChnCtrlSpec {}
+    }
+    #[doc = "IN_HASH_CHN_KEY_CTRL (rw) register accessor: Hash channel %s algorithm and keyslot control\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_key_ctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_key_ctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_hash_chn_key_ctrl`] module"]
+    #[doc(alias = "IN_HASH_CHN_KEY_CTRL")]
+    pub type InHashChnKeyCtrl = crate::Reg<in_hash_chn_key_ctrl::InHashChnKeyCtrlSpec>;
+    #[doc = "Hash channel %s algorithm and keyslot control"]
+    pub mod in_hash_chn_key_ctrl {
+        #[doc = "Register `IN_HASH_CHN%s_KEY_CTRL` reader"]
+        pub type R = crate::R<InHashChnKeyCtrlSpec>;
+        #[doc = "Register `IN_HASH_CHN%s_KEY_CTRL` writer"]
+        pub type W = crate::W<InHashChnKeyCtrlSpec>;
+        #[doc = "Field `hash_key_chn_id` reader - HMAC keyslot channel ID"]
+        pub type HashKeyChnIdR = crate::FieldReader;
+        #[doc = "Field `hash_key_chn_id` writer - HMAC keyslot channel ID"]
+        pub type HashKeyChnIdW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `hmac_vld` reader - Use the selected HMAC keyslot"]
+        pub type HmacVldR = crate::BitReader;
+        #[doc = "Field `hmac_vld` writer - Use the selected HMAC keyslot"]
+        pub type HmacVldW<'a, REG> = crate::BitWriter<'a, REG>;
+        #[doc = "Field `hash_chn_alg_sel` reader - Hash family: 0xA=SHA-1; 0xB=SHA-2; 0xC=SM3"]
+        pub type HashChnAlgSelR = crate::FieldReader;
+        #[doc = "Field `hash_chn_alg_sel` writer - Hash family: 0xA=SHA-1; 0xB=SHA-2; 0xC=SM3"]
+        pub type HashChnAlgSelW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        #[doc = "Field `hash_chn_alg_mode` reader - SHA-2 mode: 0=224; 1=256; 2=384; 3=512"]
+        pub type HashChnAlgModeR = crate::FieldReader;
+        #[doc = "Field `hash_chn_alg_mode` writer - SHA-2 mode: 0=224; 1=256; 2=384; 3=512"]
+        pub type HashChnAlgModeW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        impl R {
+            #[doc = "Bits 0:3 - HMAC keyslot channel ID"]
+            #[inline(always)]
+            pub fn hash_key_chn_id(&self) -> HashKeyChnIdR {
+                HashKeyChnIdR::new((self.bits & 0x0f) as u8)
+            }
+            #[doc = "Bit 9 - Use the selected HMAC keyslot"]
+            #[inline(always)]
+            pub fn hmac_vld(&self) -> HmacVldR {
+                HmacVldR::new(((self.bits >> 9) & 1) != 0)
+            }
+            #[doc = "Bits 16:19 - Hash family: 0xA=SHA-1; 0xB=SHA-2; 0xC=SM3"]
+            #[inline(always)]
+            pub fn hash_chn_alg_sel(&self) -> HashChnAlgSelR {
+                HashChnAlgSelR::new(((self.bits >> 16) & 0x0f) as u8)
+            }
+            #[doc = "Bits 20:23 - SHA-2 mode: 0=224; 1=256; 2=384; 3=512"]
+            #[inline(always)]
+            pub fn hash_chn_alg_mode(&self) -> HashChnAlgModeR {
+                HashChnAlgModeR::new(((self.bits >> 20) & 0x0f) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:3 - HMAC keyslot channel ID"]
+            #[inline(always)]
+            pub fn hash_key_chn_id(&mut self) -> HashKeyChnIdW<'_, InHashChnKeyCtrlSpec> {
+                HashKeyChnIdW::new(self, 0)
+            }
+            #[doc = "Bit 9 - Use the selected HMAC keyslot"]
+            #[inline(always)]
+            pub fn hmac_vld(&mut self) -> HmacVldW<'_, InHashChnKeyCtrlSpec> {
+                HmacVldW::new(self, 9)
+            }
+            #[doc = "Bits 16:19 - Hash family: 0xA=SHA-1; 0xB=SHA-2; 0xC=SM3"]
+            #[inline(always)]
+            pub fn hash_chn_alg_sel(&mut self) -> HashChnAlgSelW<'_, InHashChnKeyCtrlSpec> {
+                HashChnAlgSelW::new(self, 16)
+            }
+            #[doc = "Bits 20:23 - SHA-2 mode: 0=224; 1=256; 2=384; 3=512"]
+            #[inline(always)]
+            pub fn hash_chn_alg_mode(&mut self) -> HashChnAlgModeW<'_, InHashChnKeyCtrlSpec> {
+                HashChnAlgModeW::new(self, 20)
+            }
+        }
+        #[doc = "Hash channel %s algorithm and keyslot control\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_key_ctrl::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_key_ctrl::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InHashChnKeyCtrlSpec;
+        impl crate::RegisterSpec for InHashChnKeyCtrlSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_hash_chn_key_ctrl::R`](R) reader structure"]
+        impl crate::Readable for InHashChnKeyCtrlSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_hash_chn_key_ctrl::W`](W) writer structure"]
+        impl crate::Writable for InHashChnKeyCtrlSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_HASH_CHN%s_KEY_CTRL to value 0"]
+        impl crate::Resettable for InHashChnKeyCtrlSpec {}
+    }
+    #[doc = "IN_HASH_CHN_NODE_START_ADDR_H (rw) register accessor: Hash channel %s descriptor-list address bits 35:32\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_node_start_addr_h::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_node_start_addr_h::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_hash_chn_node_start_addr_h`] module"]
+    #[doc(alias = "IN_HASH_CHN_NODE_START_ADDR_H")]
+    pub type InHashChnNodeStartAddrH =
+        crate::Reg<in_hash_chn_node_start_addr_h::InHashChnNodeStartAddrHSpec>;
+    #[doc = "Hash channel %s descriptor-list address bits 35:32"]
+    pub mod in_hash_chn_node_start_addr_h {
+        #[doc = "Register `IN_HASH_CHN%s_NODE_START_ADDR_H` reader"]
+        pub type R = crate::R<InHashChnNodeStartAddrHSpec>;
+        #[doc = "Register `IN_HASH_CHN%s_NODE_START_ADDR_H` writer"]
+        pub type W = crate::W<InHashChnNodeStartAddrHSpec>;
+        #[doc = "Field `address_high` reader - Descriptor-list address bits 35:32"]
+        pub type AddressHighR = crate::FieldReader;
+        #[doc = "Field `address_high` writer - Descriptor-list address bits 35:32"]
+        pub type AddressHighW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
+        impl R {
+            #[doc = "Bits 0:3 - Descriptor-list address bits 35:32"]
+            #[inline(always)]
+            pub fn address_high(&self) -> AddressHighR {
+                AddressHighR::new((self.bits & 0x0f) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:3 - Descriptor-list address bits 35:32"]
+            #[inline(always)]
+            pub fn address_high(&mut self) -> AddressHighW<'_, InHashChnNodeStartAddrHSpec> {
+                AddressHighW::new(self, 0)
+            }
+        }
+        #[doc = "Hash channel %s descriptor-list address bits 35:32\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_node_start_addr_h::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_node_start_addr_h::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InHashChnNodeStartAddrHSpec;
+        impl crate::RegisterSpec for InHashChnNodeStartAddrHSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_hash_chn_node_start_addr_h::R`](R) reader structure"]
+        impl crate::Readable for InHashChnNodeStartAddrHSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_hash_chn_node_start_addr_h::W`](W) writer structure"]
+        impl crate::Writable for InHashChnNodeStartAddrHSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_HASH_CHN%s_NODE_START_ADDR_H to value 0"]
+        impl crate::Resettable for InHashChnNodeStartAddrHSpec {}
+    }
+    #[doc = "IN_HASH_CHN_NODE_START_ADDR_L (rw) register accessor: Hash channel %s descriptor-list address bits 31:0\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_node_start_addr_l::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_node_start_addr_l::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_hash_chn_node_start_addr_l`] module"]
+    #[doc(alias = "IN_HASH_CHN_NODE_START_ADDR_L")]
+    pub type InHashChnNodeStartAddrL =
+        crate::Reg<in_hash_chn_node_start_addr_l::InHashChnNodeStartAddrLSpec>;
+    #[doc = "Hash channel %s descriptor-list address bits 31:0"]
+    pub mod in_hash_chn_node_start_addr_l {
+        #[doc = "Register `IN_HASH_CHN%s_NODE_START_ADDR_L` reader"]
+        pub type R = crate::R<InHashChnNodeStartAddrLSpec>;
+        #[doc = "Register `IN_HASH_CHN%s_NODE_START_ADDR_L` writer"]
+        pub type W = crate::W<InHashChnNodeStartAddrLSpec>;
+        #[doc = "Field `address_low` reader - Descriptor-list address bits 31:0"]
+        pub type AddressLowR = crate::FieldReader<u32>;
+        #[doc = "Field `address_low` writer - Descriptor-list address bits 31:0"]
+        pub type AddressLowW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Descriptor-list address bits 31:0"]
+            #[inline(always)]
+            pub fn address_low(&self) -> AddressLowR {
+                AddressLowR::new(self.bits)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:31 - Descriptor-list address bits 31:0"]
+            #[inline(always)]
+            pub fn address_low(&mut self) -> AddressLowW<'_, InHashChnNodeStartAddrLSpec> {
+                AddressLowW::new(self, 0)
+            }
+        }
+        #[doc = "Hash channel %s descriptor-list address bits 31:0\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_node_start_addr_l::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_node_start_addr_l::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InHashChnNodeStartAddrLSpec;
+        impl crate::RegisterSpec for InHashChnNodeStartAddrLSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_hash_chn_node_start_addr_l::R`](R) reader structure"]
+        impl crate::Readable for InHashChnNodeStartAddrLSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_hash_chn_node_start_addr_l::W`](W) writer structure"]
+        impl crate::Writable for InHashChnNodeStartAddrLSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_HASH_CHN%s_NODE_START_ADDR_L to value 0"]
+        impl crate::Resettable for InHashChnNodeStartAddrLSpec {}
+    }
+    #[doc = "IN_HASH_CHN_NODE_LENGTH (rw) register accessor: Hash channel %s descriptor ring depth\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_node_length::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_node_length::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_hash_chn_node_length`] module"]
+    #[doc(alias = "IN_HASH_CHN_NODE_LENGTH")]
+    pub type InHashChnNodeLength = crate::Reg<in_hash_chn_node_length::InHashChnNodeLengthSpec>;
+    #[doc = "Hash channel %s descriptor ring depth"]
+    pub mod in_hash_chn_node_length {
+        #[doc = "Register `IN_HASH_CHN%s_NODE_LENGTH` reader"]
+        pub type R = crate::R<InHashChnNodeLengthSpec>;
+        #[doc = "Register `IN_HASH_CHN%s_NODE_LENGTH` writer"]
+        pub type W = crate::W<InHashChnNodeLengthSpec>;
+        #[doc = "Field `node_length` reader - Number of descriptors in the ring"]
+        pub type NodeLengthR = crate::FieldReader;
+        #[doc = "Field `node_length` writer - Number of descriptors in the ring"]
+        pub type NodeLengthW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+        impl R {
+            #[doc = "Bits 0:7 - Number of descriptors in the ring"]
+            #[inline(always)]
+            pub fn node_length(&self) -> NodeLengthR {
+                NodeLengthR::new((self.bits & 0xff) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:7 - Number of descriptors in the ring"]
+            #[inline(always)]
+            pub fn node_length(&mut self) -> NodeLengthW<'_, InHashChnNodeLengthSpec> {
+                NodeLengthW::new(self, 0)
+            }
+        }
+        #[doc = "Hash channel %s descriptor ring depth\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_node_length::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_node_length::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InHashChnNodeLengthSpec;
+        impl crate::RegisterSpec for InHashChnNodeLengthSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_hash_chn_node_length::R`](R) reader structure"]
+        impl crate::Readable for InHashChnNodeLengthSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_hash_chn_node_length::W`](W) writer structure"]
+        impl crate::Writable for InHashChnNodeLengthSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_HASH_CHN%s_NODE_LENGTH to value 0"]
+        impl crate::Resettable for InHashChnNodeLengthSpec {}
+    }
+    #[doc = "IN_HASH_CHN_NODE_WR_POINT (rw) register accessor: Hash channel %s descriptor write pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_node_wr_point::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_node_wr_point::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_hash_chn_node_wr_point`] module"]
+    #[doc(alias = "IN_HASH_CHN_NODE_WR_POINT")]
+    pub type InHashChnNodeWrPoint = crate::Reg<in_hash_chn_node_wr_point::InHashChnNodeWrPointSpec>;
+    #[doc = "Hash channel %s descriptor write pointer"]
+    pub mod in_hash_chn_node_wr_point {
+        #[doc = "Register `IN_HASH_CHN%s_NODE_WR_POINT` reader"]
+        pub type R = crate::R<InHashChnNodeWrPointSpec>;
+        #[doc = "Register `IN_HASH_CHN%s_NODE_WR_POINT` writer"]
+        pub type W = crate::W<InHashChnNodeWrPointSpec>;
+        #[doc = "Field `write_pointer` reader - Descriptor producer index"]
+        pub type WritePointerR = crate::FieldReader;
+        #[doc = "Field `write_pointer` writer - Descriptor producer index"]
+        pub type WritePointerW<'a, REG> = crate::FieldWriter<'a, REG, 8>;
+        impl R {
+            #[doc = "Bits 0:7 - Descriptor producer index"]
+            #[inline(always)]
+            pub fn write_pointer(&self) -> WritePointerR {
+                WritePointerR::new((self.bits & 0xff) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:7 - Descriptor producer index"]
+            #[inline(always)]
+            pub fn write_pointer(&mut self) -> WritePointerW<'_, InHashChnNodeWrPointSpec> {
+                WritePointerW::new(self, 0)
+            }
+        }
+        #[doc = "Hash channel %s descriptor write pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_node_wr_point::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_hash_chn_node_wr_point::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InHashChnNodeWrPointSpec;
+        impl crate::RegisterSpec for InHashChnNodeWrPointSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_hash_chn_node_wr_point::R`](R) reader structure"]
+        impl crate::Readable for InHashChnNodeWrPointSpec {}
+        #[doc = "`write(|w| ..)` method takes [`in_hash_chn_node_wr_point::W`](W) writer structure"]
+        impl crate::Writable for InHashChnNodeWrPointSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets IN_HASH_CHN%s_NODE_WR_POINT to value 0"]
+        impl crate::Resettable for InHashChnNodeWrPointSpec {}
+    }
+    #[doc = "IN_HASH_CHN_NODE_RD_POINT (r) register accessor: Hash channel %s descriptor read pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_node_rd_point::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_hash_chn_node_rd_point`] module"]
+    #[doc(alias = "IN_HASH_CHN_NODE_RD_POINT")]
+    pub type InHashChnNodeRdPoint = crate::Reg<in_hash_chn_node_rd_point::InHashChnNodeRdPointSpec>;
+    #[doc = "Hash channel %s descriptor read pointer"]
+    pub mod in_hash_chn_node_rd_point {
+        #[doc = "Register `IN_HASH_CHN%s_NODE_RD_POINT` reader"]
+        pub type R = crate::R<InHashChnNodeRdPointSpec>;
+        #[doc = "Field `read_pointer` reader - Descriptor consumer index"]
+        pub type ReadPointerR = crate::FieldReader;
+        impl R {
+            #[doc = "Bits 0:7 - Descriptor consumer index"]
+            #[inline(always)]
+            pub fn read_pointer(&self) -> ReadPointerR {
+                ReadPointerR::new((self.bits & 0xff) as u8)
+            }
+        }
+        #[doc = "Hash channel %s descriptor read pointer\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_node_rd_point::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InHashChnNodeRdPointSpec;
+        impl crate::RegisterSpec for InHashChnNodeRdPointSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_hash_chn_node_rd_point::R`](R) reader structure"]
+        impl crate::Readable for InHashChnNodeRdPointSpec {}
+        #[doc = "`reset()` method sets IN_HASH_CHN%s_NODE_RD_POINT to value 0"]
+        impl crate::Resettable for InHashChnNodeRdPointSpec {}
+    }
+    #[doc = "IN_HASH_CHN_DATA_LEN (r) register accessor: Hash channel %s unprocessed byte count\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_data_len::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_hash_chn_data_len`] module"]
+    #[doc(alias = "IN_HASH_CHN_DATA_LEN")]
+    pub type InHashChnDataLen = crate::Reg<in_hash_chn_data_len::InHashChnDataLenSpec>;
+    #[doc = "Hash channel %s unprocessed byte count"]
+    pub mod in_hash_chn_data_len {
+        #[doc = "Register `IN_HASH_CHN%s_DATA_LEN` reader"]
+        pub type R = crate::R<InHashChnDataLenSpec>;
+        #[doc = "Field `data_len` reader - Bytes not yet consumed by the engine"]
+        pub type DataLenR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Bytes not yet consumed by the engine"]
+            #[inline(always)]
+            pub fn data_len(&self) -> DataLenR {
+                DataLenR::new(self.bits)
+            }
+        }
+        #[doc = "Hash channel %s unprocessed byte count\n\nYou can [`read`](crate::Reg::read) this register and get [`in_hash_chn_data_len::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct InHashChnDataLenSpec;
+        impl crate::RegisterSpec for InHashChnDataLenSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`in_hash_chn_data_len::R`](R) reader structure"]
+        impl crate::Readable for InHashChnDataLenSpec {}
+        #[doc = "`reset()` method sets IN_HASH_CHN%s_DATA_LEN to value 0"]
+        impl crate::Resettable for InHashChnDataLenSpec {}
+    }
+    #[doc = "REE_HASH_CALC_CTRL_CHECK_ERR (r) register accessor: REE hash-control validation error summary\n\nYou can [`read`](crate::Reg::read) this register and get [`ree_hash_calc_ctrl_check_err::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@ree_hash_calc_ctrl_check_err`] module"]
+    #[doc(alias = "REE_HASH_CALC_CTRL_CHECK_ERR")]
+    pub type ReeHashCalcCtrlCheckErr =
+        crate::Reg<ree_hash_calc_ctrl_check_err::ReeHashCalcCtrlCheckErrSpec>;
+    #[doc = "REE hash-control validation error summary"]
+    pub mod ree_hash_calc_ctrl_check_err {
+        #[doc = "Register `REE_HASH_CALC_CTRL_CHECK_ERR` reader"]
+        pub type R = crate::R<ReeHashCalcCtrlCheckErrSpec>;
+        #[doc = "Field `error` reader - Non-zero when hash channel control validation failed"]
+        pub type ErrorR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Non-zero when hash channel control validation failed"]
+            #[inline(always)]
+            pub fn error(&self) -> ErrorR {
+                ErrorR::new(self.bits)
+            }
+        }
+        #[doc = "REE hash-control validation error summary\n\nYou can [`read`](crate::Reg::read) this register and get [`ree_hash_calc_ctrl_check_err::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct ReeHashCalcCtrlCheckErrSpec;
+        impl crate::RegisterSpec for ReeHashCalcCtrlCheckErrSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`ree_hash_calc_ctrl_check_err::R`](R) reader structure"]
+        impl crate::Readable for ReeHashCalcCtrlCheckErrSpec {}
+        #[doc = "`reset()` method sets REE_HASH_CALC_CTRL_CHECK_ERR to value 0"]
+        impl crate::Resettable for ReeHashCalcCtrlCheckErrSpec {}
+    }
+    #[doc = "REE_HASH_CALC_CTRL_CHECK_ERR_STATUS (r) register accessor: REE hash-control validation error detail\n\nYou can [`read`](crate::Reg::read) this register and get [`ree_hash_calc_ctrl_check_err_status::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@ree_hash_calc_ctrl_check_err_status`] module"]
+    #[doc(alias = "REE_HASH_CALC_CTRL_CHECK_ERR_STATUS")]
+    pub type ReeHashCalcCtrlCheckErrStatus =
+        crate::Reg<ree_hash_calc_ctrl_check_err_status::ReeHashCalcCtrlCheckErrStatusSpec>;
+    #[doc = "REE hash-control validation error detail"]
+    pub mod ree_hash_calc_ctrl_check_err_status {
+        #[doc = "Register `REE_HASH_CALC_CTRL_CHECK_ERR_STATUS` reader"]
+        pub type R = crate::R<ReeHashCalcCtrlCheckErrStatusSpec>;
+        #[doc = "Field `status` reader - Hash-control validation error detail"]
+        pub type StatusR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Hash-control validation error detail"]
+            #[inline(always)]
+            pub fn status(&self) -> StatusR {
+                StatusR::new(self.bits)
+            }
+        }
+        #[doc = "REE hash-control validation error detail\n\nYou can [`read`](crate::Reg::read) this register and get [`ree_hash_calc_ctrl_check_err_status::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct ReeHashCalcCtrlCheckErrStatusSpec;
+        impl crate::RegisterSpec for ReeHashCalcCtrlCheckErrStatusSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`ree_hash_calc_ctrl_check_err_status::R`](R) reader structure"]
+        impl crate::Readable for ReeHashCalcCtrlCheckErrStatusSpec {}
+        #[doc = "`reset()` method sets REE_HASH_CALC_CTRL_CHECK_ERR_STATUS to value 0"]
+        impl crate::Resettable for ReeHashCalcCtrlCheckErrStatusSpec {}
+    }
+    #[doc = "HASH_CHANN_RAW_INT (rw) register accessor: Hash channel completion status; write one to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`hash_chann_raw_int::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`hash_chann_raw_int::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@hash_chann_raw_int`] module"]
+    #[doc(alias = "HASH_CHANN_RAW_INT")]
+    pub type HashChannRawInt = crate::Reg<hash_chann_raw_int::HashChannRawIntSpec>;
+    #[doc = "Hash channel completion status; write one to clear"]
+    pub mod hash_chann_raw_int {
+        #[doc = "Register `HASH_CHANN_RAW_INT` reader"]
+        pub type R = crate::R<HashChannRawIntSpec>;
+        #[doc = "Register `HASH_CHANN_RAW_INT` writer"]
+        pub type W = crate::W<HashChannRawIntSpec>;
+        #[doc = "Field `hash_chann_raw_int` reader - Completion bits for hash channels 0 through 15"]
+        pub type HashChannRawIntR = crate::FieldReader<u16>;
+        #[doc = "Field `hash_chann_raw_int` writer - Completion bits for hash channels 0 through 15"]
+        pub type HashChannRawIntW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Completion bits for hash channels 0 through 15"]
+            #[inline(always)]
+            pub fn hash_chann_raw_int(&self) -> HashChannRawIntR {
+                HashChannRawIntR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Completion bits for hash channels 0 through 15"]
+            #[inline(always)]
+            pub fn hash_chann_raw_int(&mut self) -> HashChannRawIntW<'_, HashChannRawIntSpec> {
+                HashChannRawIntW::new(self, 0)
+            }
+        }
+        #[doc = "Hash channel completion status; write one to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`hash_chann_raw_int::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`hash_chann_raw_int::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct HashChannRawIntSpec;
+        impl crate::RegisterSpec for HashChannRawIntSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`hash_chann_raw_int::R`](R) reader structure"]
+        impl crate::Readable for HashChannRawIntSpec {}
+        #[doc = "`write(|w| ..)` method takes [`hash_chann_raw_int::W`](W) writer structure"]
+        impl crate::Writable for HashChannRawIntSpec {
+            type Safety = crate::Unsafe;
+            const ONE_TO_MODIFY_FIELDS_BITMAP: u32 = 0xffff;
+        }
+        #[doc = "`reset()` method sets HASH_CHANN_RAW_INT to value 0"]
+        impl crate::Resettable for HashChannRawIntSpec {}
+    }
+    #[doc = "HASH_CHANN_RAW_INT_EN (rw) register accessor: Hash channel completion interrupt enable\n\nYou can [`read`](crate::Reg::read) this register and get [`hash_chann_raw_int_en::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`hash_chann_raw_int_en::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@hash_chann_raw_int_en`] module"]
+    #[doc(alias = "HASH_CHANN_RAW_INT_EN")]
+    pub type HashChannRawIntEn = crate::Reg<hash_chann_raw_int_en::HashChannRawIntEnSpec>;
+    #[doc = "Hash channel completion interrupt enable"]
+    pub mod hash_chann_raw_int_en {
+        #[doc = "Register `HASH_CHANN_RAW_INT_EN` reader"]
+        pub type R = crate::R<HashChannRawIntEnSpec>;
+        #[doc = "Register `HASH_CHANN_RAW_INT_EN` writer"]
+        pub type W = crate::W<HashChannRawIntEnSpec>;
+        #[doc = "Field `hash_chann_raw_int_en` reader - Interrupt-enable bits for hash channels 0 through 15"]
+        pub type HashChannRawIntEnR = crate::FieldReader<u16>;
+        #[doc = "Field `hash_chann_raw_int_en` writer - Interrupt-enable bits for hash channels 0 through 15"]
+        pub type HashChannRawIntEnW<'a, REG> = crate::FieldWriter<'a, REG, 16, u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Interrupt-enable bits for hash channels 0 through 15"]
+            #[inline(always)]
+            pub fn hash_chann_raw_int_en(&self) -> HashChannRawIntEnR {
+                HashChannRawIntEnR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:15 - Interrupt-enable bits for hash channels 0 through 15"]
+            #[inline(always)]
+            pub fn hash_chann_raw_int_en(
+                &mut self,
+            ) -> HashChannRawIntEnW<'_, HashChannRawIntEnSpec> {
+                HashChannRawIntEnW::new(self, 0)
+            }
+        }
+        #[doc = "Hash channel completion interrupt enable\n\nYou can [`read`](crate::Reg::read) this register and get [`hash_chann_raw_int_en::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`hash_chann_raw_int_en::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct HashChannRawIntEnSpec;
+        impl crate::RegisterSpec for HashChannRawIntEnSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`hash_chann_raw_int_en::R`](R) reader structure"]
+        impl crate::Readable for HashChannRawIntEnSpec {}
+        #[doc = "`write(|w| ..)` method takes [`hash_chann_raw_int_en::W`](W) writer structure"]
+        impl crate::Writable for HashChannRawIntEnSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets HASH_CHANN_RAW_INT_EN to value 0"]
+        impl crate::Resettable for HashChannRawIntEnSpec {}
+    }
+    #[doc = "CHANN_HASH_STATE_VAL (rw) register accessor: Hash channel %s indexed state data\n\nYou can [`read`](crate::Reg::read) this register and get [`chann_hash_state_val::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`chann_hash_state_val::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@chann_hash_state_val`] module"]
+    #[doc(alias = "CHANN_HASH_STATE_VAL")]
+    pub type ChannHashStateVal = crate::Reg<chann_hash_state_val::ChannHashStateValSpec>;
+    #[doc = "Hash channel %s indexed state data"]
+    pub mod chann_hash_state_val {
+        #[doc = "Register `CHANN%s_HASH_STATE_VAL` reader"]
+        pub type R = crate::R<ChannHashStateValSpec>;
+        #[doc = "Register `CHANN%s_HASH_STATE_VAL` writer"]
+        pub type W = crate::W<ChannHashStateValSpec>;
+        #[doc = "Field `state` reader - State word selected by the state address register"]
+        pub type StateR = crate::FieldReader<u32>;
+        #[doc = "Field `state` writer - State word selected by the state address register"]
+        pub type StateW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        impl R {
+            #[doc = "Bits 0:31 - State word selected by the state address register"]
+            #[inline(always)]
+            pub fn state(&self) -> StateR {
+                StateR::new(self.bits)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:31 - State word selected by the state address register"]
+            #[inline(always)]
+            pub fn state(&mut self) -> StateW<'_, ChannHashStateValSpec> {
+                StateW::new(self, 0)
+            }
+        }
+        #[doc = "Hash channel %s indexed state data\n\nYou can [`read`](crate::Reg::read) this register and get [`chann_hash_state_val::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`chann_hash_state_val::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct ChannHashStateValSpec;
+        impl crate::RegisterSpec for ChannHashStateValSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`chann_hash_state_val::R`](R) reader structure"]
+        impl crate::Readable for ChannHashStateValSpec {}
+        #[doc = "`write(|w| ..)` method takes [`chann_hash_state_val::W`](W) writer structure"]
+        impl crate::Writable for ChannHashStateValSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets CHANN%s_HASH_STATE_VAL to value 0"]
+        impl crate::Resettable for ChannHashStateValSpec {}
+    }
+    #[doc = "CHANN_HASH_STATE_VAL_ADDR (rw) register accessor: Hash channel %s state-word selector\n\nYou can [`read`](crate::Reg::read) this register and get [`chann_hash_state_val_addr::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`chann_hash_state_val_addr::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@chann_hash_state_val_addr`] module"]
+    #[doc(alias = "CHANN_HASH_STATE_VAL_ADDR")]
+    pub type ChannHashStateValAddr =
+        crate::Reg<chann_hash_state_val_addr::ChannHashStateValAddrSpec>;
+    #[doc = "Hash channel %s state-word selector"]
+    pub mod chann_hash_state_val_addr {
+        #[doc = "Register `CHANN%s_HASH_STATE_VAL_ADDR` reader"]
+        pub type R = crate::R<ChannHashStateValAddrSpec>;
+        #[doc = "Register `CHANN%s_HASH_STATE_VAL_ADDR` writer"]
+        pub type W = crate::W<ChannHashStateValAddrSpec>;
+        #[doc = "Field `index` reader - State word index"]
+        pub type IndexR = crate::FieldReader;
+        #[doc = "Field `index` writer - State word index"]
+        pub type IndexW<'a, REG> = crate::FieldWriter<'a, REG, 5>;
+        impl R {
+            #[doc = "Bits 0:4 - State word index"]
+            #[inline(always)]
+            pub fn index(&self) -> IndexR {
+                IndexR::new((self.bits & 0x1f) as u8)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:4 - State word index"]
+            #[inline(always)]
+            pub fn index(&mut self) -> IndexW<'_, ChannHashStateValAddrSpec> {
+                IndexW::new(self, 0)
+            }
+        }
+        #[doc = "Hash channel %s state-word selector\n\nYou can [`read`](crate::Reg::read) this register and get [`chann_hash_state_val_addr::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`chann_hash_state_val_addr::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct ChannHashStateValAddrSpec;
+        impl crate::RegisterSpec for ChannHashStateValAddrSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`chann_hash_state_val_addr::R`](R) reader structure"]
+        impl crate::Readable for ChannHashStateValAddrSpec {}
+        #[doc = "`write(|w| ..)` method takes [`chann_hash_state_val_addr::W`](W) writer structure"]
+        impl crate::Writable for ChannHashStateValAddrSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets CHANN%s_HASH_STATE_VAL_ADDR to value 0"]
+        impl crate::Resettable for ChannHashStateValAddrSpec {}
     }
     #[doc = "IN_SYM_CHN0_CTRL (rw) register accessor: Sym channel 0 control register (no-DMA mode)\n\nYou can [`read`](crate::Reg::read) this register and get [`in_sym_chn0_ctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`in_sym_chn0_ctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@in_sym_chn0_ctrl`] module"]
     #[doc(alias = "IN_SYM_CHN0_CTRL")]

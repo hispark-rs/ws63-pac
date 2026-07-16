@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Model the SPACC hash-channel control, descriptor-ring, completion, error, and
+  state-port registers required by the token-owned SHA/HMAC backend.
+
+### Fixed
+
+- Correct SPACC clear-command, bus-error, and clear-finish access modes so
+  consumers cannot read a write-only command or write a read-only status.
+
 ## [0.3.0] - 2026-07-14
 
 ### Changed
