@@ -29604,7 +29604,9 @@ pub mod pke {
         pke_failure_flag: PkeFailureFlag,
         _reserved17: [u8; 0x2c],
         pke_dram_clr: PkeDramClr,
-        _reserved18: [u8; 0x074c],
+        _reserved18: [u8; 0x2c],
+        pke_dram_mask: PkeDramMask,
+        _reserved19: [u8; 0x071c],
         pke_lock_ctrl: PkeLockCtrl,
         pke_lock_status: PkeLockStatus,
     }
@@ -29679,12 +29681,12 @@ pub mod pke {
         pub const fn pke_int_enable(&self) -> &PkeIntEnable {
             &self.pke_int_enable
         }
-        #[doc = "0x84 - PKE unmasked interrupt status"]
+        #[doc = "0x84 - PKE unmasked interrupt status; write the observed finish code to clear"]
         #[inline(always)]
         pub const fn pke_int_nomask_status(&self) -> &PkeIntNomaskStatus {
             &self.pke_int_nomask_status
         }
-        #[doc = "0x8c - PKE alarm status register"]
+        #[doc = "0x8c - PKE alarm status register; the documented clean code is writable"]
         #[inline(always)]
         pub const fn pke_alarm_status(&self) -> &PkeAlarmStatus {
             &self.pke_alarm_status
@@ -29698,6 +29700,11 @@ pub mod pke {
         #[inline(always)]
         pub const fn pke_dram_clr(&self) -> &PkeDramClr {
             &self.pke_dram_clr
+        }
+        #[doc = "0xf0 - Mask word XORed with every PKE data-RAM word"]
+        #[inline(always)]
+        pub const fn pke_dram_mask(&self) -> &PkeDramMask {
+            &self.pke_dram_mask
         }
         #[doc = "0x810 - PKE lock control register"]
         #[inline(always)]
@@ -30412,10 +30419,10 @@ pub mod pke {
         #[doc = "`reset()` method sets PKE_INT_ENABLE to value 0"]
         impl crate::Resettable for PkeIntEnableSpec {}
     }
-    #[doc = "PKE_INT_NOMASK_STATUS (rw) register accessor: PKE unmasked interrupt status\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_int_nomask_status::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_int_nomask_status::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@pke_int_nomask_status`] module"]
+    #[doc = "PKE_INT_NOMASK_STATUS (rw) register accessor: PKE unmasked interrupt status; write the observed finish code to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_int_nomask_status::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_int_nomask_status::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@pke_int_nomask_status`] module"]
     #[doc(alias = "PKE_INT_NOMASK_STATUS")]
     pub type PkeIntNomaskStatus = crate::Reg<pke_int_nomask_status::PkeIntNomaskStatusSpec>;
-    #[doc = "PKE unmasked interrupt status"]
+    #[doc = "PKE unmasked interrupt status; write the observed finish code to clear"]
     pub mod pke_int_nomask_status {
         #[doc = "Register `PKE_INT_NOMASK_STATUS` reader"]
         pub type R = crate::R<PkeIntNomaskStatusSpec>;
@@ -30423,6 +30430,8 @@ pub mod pke {
         pub type W = crate::W<PkeIntNomaskStatusSpec>;
         #[doc = "Field `finish_int_nomask` reader - Finish interrupt status (expect 0x5 after completion)"]
         pub type FinishIntNomaskR = crate::FieldReader;
+        #[doc = "Field `finish_int_nomask` writer - Finish interrupt status (expect 0x5 after completion)"]
+        pub type FinishIntNomaskW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
         impl R {
             #[doc = "Bits 0:3 - Finish interrupt status (expect 0x5 after completion)"]
             #[inline(always)]
@@ -30430,8 +30439,14 @@ pub mod pke {
                 FinishIntNomaskR::new((self.bits & 0x0f) as u8)
             }
         }
-        impl W {}
-        #[doc = "PKE unmasked interrupt status\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_int_nomask_status::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_int_nomask_status::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        impl W {
+            #[doc = "Bits 0:3 - Finish interrupt status (expect 0x5 after completion)"]
+            #[inline(always)]
+            pub fn finish_int_nomask(&mut self) -> FinishIntNomaskW<'_, PkeIntNomaskStatusSpec> {
+                FinishIntNomaskW::new(self, 0)
+            }
+        }
+        #[doc = "PKE unmasked interrupt status; write the observed finish code to clear\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_int_nomask_status::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_int_nomask_status::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct PkeIntNomaskStatusSpec;
         impl crate::RegisterSpec for PkeIntNomaskStatusSpec {
             type Ux = u32;
@@ -30445,10 +30460,10 @@ pub mod pke {
         #[doc = "`reset()` method sets PKE_INT_NOMASK_STATUS to value 0"]
         impl crate::Resettable for PkeIntNomaskStatusSpec {}
     }
-    #[doc = "PKE_ALARM_STATUS (rw) register accessor: PKE alarm status register\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_alarm_status::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_alarm_status::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@pke_alarm_status`] module"]
+    #[doc = "PKE_ALARM_STATUS (rw) register accessor: PKE alarm status register; the documented clean code is writable\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_alarm_status::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_alarm_status::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@pke_alarm_status`] module"]
     #[doc(alias = "PKE_ALARM_STATUS")]
     pub type PkeAlarmStatus = crate::Reg<pke_alarm_status::PkeAlarmStatusSpec>;
-    #[doc = "PKE alarm status register"]
+    #[doc = "PKE alarm status register; the documented clean code is writable"]
     pub mod pke_alarm_status {
         #[doc = "Register `PKE_ALARM_STATUS` reader"]
         pub type R = crate::R<PkeAlarmStatusSpec>;
@@ -30456,6 +30471,8 @@ pub mod pke {
         pub type W = crate::W<PkeAlarmStatusSpec>;
         #[doc = "Field `alarm_int` reader - Security alarm interrupt"]
         pub type AlarmIntR = crate::FieldReader;
+        #[doc = "Field `alarm_int` writer - Security alarm interrupt"]
+        pub type AlarmIntW<'a, REG> = crate::FieldWriter<'a, REG, 4>;
         impl R {
             #[doc = "Bits 0:3 - Security alarm interrupt"]
             #[inline(always)]
@@ -30463,8 +30480,14 @@ pub mod pke {
                 AlarmIntR::new((self.bits & 0x0f) as u8)
             }
         }
-        impl W {}
-        #[doc = "PKE alarm status register\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_alarm_status::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_alarm_status::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        impl W {
+            #[doc = "Bits 0:3 - Security alarm interrupt"]
+            #[inline(always)]
+            pub fn alarm_int(&mut self) -> AlarmIntW<'_, PkeAlarmStatusSpec> {
+                AlarmIntW::new(self, 0)
+            }
+        }
+        #[doc = "PKE alarm status register; the documented clean code is writable\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_alarm_status::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_alarm_status::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct PkeAlarmStatusSpec;
         impl crate::RegisterSpec for PkeAlarmStatusSpec {
             type Ux = u32;
@@ -30542,6 +30565,47 @@ pub mod pke {
         }
         #[doc = "`reset()` method sets PKE_DRAM_CLR to value 0"]
         impl crate::Resettable for PkeDramClrSpec {}
+    }
+    #[doc = "PKE_DRAM_MASK (rw) register accessor: Mask word XORed with every PKE data-RAM word\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_dram_mask::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_dram_mask::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@pke_dram_mask`] module"]
+    #[doc(alias = "PKE_DRAM_MASK")]
+    pub type PkeDramMask = crate::Reg<pke_dram_mask::PkeDramMaskSpec>;
+    #[doc = "Mask word XORed with every PKE data-RAM word"]
+    pub mod pke_dram_mask {
+        #[doc = "Register `PKE_DRAM_MASK` reader"]
+        pub type R = crate::R<PkeDramMaskSpec>;
+        #[doc = "Register `PKE_DRAM_MASK` writer"]
+        pub type W = crate::W<PkeDramMaskSpec>;
+        #[doc = "Field `dram_mask` reader - Current PKE data-RAM mask word"]
+        pub type DramMaskR = crate::FieldReader<u32>;
+        #[doc = "Field `dram_mask` writer - Current PKE data-RAM mask word"]
+        pub type DramMaskW<'a, REG> = crate::FieldWriter<'a, REG, 32, u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Current PKE data-RAM mask word"]
+            #[inline(always)]
+            pub fn dram_mask(&self) -> DramMaskR {
+                DramMaskR::new(self.bits)
+            }
+        }
+        impl W {
+            #[doc = "Bits 0:31 - Current PKE data-RAM mask word"]
+            #[inline(always)]
+            pub fn dram_mask(&mut self) -> DramMaskW<'_, PkeDramMaskSpec> {
+                DramMaskW::new(self, 0)
+            }
+        }
+        #[doc = "Mask word XORed with every PKE data-RAM word\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_dram_mask::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_dram_mask::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct PkeDramMaskSpec;
+        impl crate::RegisterSpec for PkeDramMaskSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`pke_dram_mask::R`](R) reader structure"]
+        impl crate::Readable for PkeDramMaskSpec {}
+        #[doc = "`write(|w| ..)` method takes [`pke_dram_mask::W`](W) writer structure"]
+        impl crate::Writable for PkeDramMaskSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets PKE_DRAM_MASK to value 0"]
+        impl crate::Resettable for PkeDramMaskSpec {}
     }
     #[doc = "PKE_LOCK_CTRL (rw) register accessor: PKE lock control register\n\nYou can [`read`](crate::Reg::read) this register and get [`pke_lock_ctrl::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`pke_lock_ctrl::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@pke_lock_ctrl`] module"]
     #[doc(alias = "PKE_LOCK_CTRL")]
