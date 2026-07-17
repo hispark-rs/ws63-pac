@@ -12,12 +12,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   state-port registers required by the token-owned SHA/HMAC backend.
 - Model SPACC symmetric DMA rings and KM/KLAD keyslot/clear-key registers needed
   by the token-owned AES backend.
+- Add the `GLP_UART_RX_WAKE_INT` and `TIMING_GEN_INT` interrupt vectors and
+  linker defaults.
+- Complete the SSI v151 SPI0/SPI1 register window, including the 36-entry data
+  register array and the missing DMA, interrupt-clear, ID, and extension
+  registers.
+
+### Changed
+
+- **Breaking:** replace the incorrect single SPI data register at offset `0x60`
+  with `spi_drnm(n)` covering the vendor-defined window at `0x2c..0xb8`.
+- **Breaking:** regenerate UART registers as 32-bit register accesses while
+  preserving each field's effective width.
 
 ### Fixed
 
 - Correct SPACC clear-command, bus-error, and clear-finish access modes so
   consumers cannot read a write-only command or write a read-only status.
 - Correct the AES key-length encodings and symmetric/KLAD W1C access modes.
+- Correct audited read-only and write-only access semantics across UART, GPIO,
+  I2C, PWM, DMA, SFC, and TSENSOR.
+- Remove the duplicate PKE interrupt association from SPACC; IRQ 63 remains
+  owned by PKE and IRQ 64 by SPACC.
 
 ## [0.3.0] - 2026-07-14
 
