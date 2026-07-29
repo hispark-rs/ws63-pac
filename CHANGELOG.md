@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.4.3] - 2026-07-30
+
+### Changed
+
+- Rename the WLMAC diagnostic accessor from `rx_filter_command` to
+  `rx_filter_control` because the register contains the packed state produced
+  by the mask-ROM filter helper, not its input command.
+
+### Fixed
+
+- Correct the generated VAP0 station/BSSID field descriptions to network byte
+  order, matching the register layout verified on WS63 silicon.
+
 ## [0.4.2] - 2026-07-30
 
 ### Added

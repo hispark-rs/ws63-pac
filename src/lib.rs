@@ -36319,7 +36319,7 @@ pub mod wlmac_stats {
     #[doc = "Register block"]
     pub struct RegisterBlock {
         _reserved0: [u8; 0x48],
-        rx_filter_command: RxFilterCommand,
+        rx_filter_control: RxFilterControl,
         _reserved1: [u8; 0x03b4],
         vap0_station_address_tail: Vap0StationAddressTail,
         vap0_address_heads: Vap0AddressHeads,
@@ -36336,17 +36336,17 @@ pub mod wlmac_stats {
         rx_failed_mpdu_in_ampdu_count: RxFailedMpduInAmpduCount,
     }
     impl RegisterBlock {
-        #[doc = "0x48 - Read-only diagnostic view of the active MAC receive-filter command. The underlying control register is programmed by the vendor WLMAC state machine; this alias deliberately exposes no write capability"]
+        #[doc = "0x48 - Read-only diagnostic view of the packed MAC receive-filter control state. The mask-ROM hal_set_rx_filter_reg helper expands its command bits into this register; this alias deliberately exposes no write capability"]
         #[inline(always)]
-        pub const fn rx_filter_command(&self) -> &RxFilterCommand {
-            &self.rx_filter_command
+        pub const fn rx_filter_control(&self) -> &RxFilterControl {
+            &self.rx_filter_control
         }
         #[doc = "0x400 - Read-only diagnostic view of station-address bytes 2 through 5 for hardware VAP0"]
         #[inline(always)]
         pub const fn vap0_station_address_tail(&self) -> &Vap0StationAddressTail {
             &self.vap0_station_address_tail
         }
-        #[doc = "0x404 - Read-only diagnostic view combining the first two BSSID bytes in the low halfword and the first two station-address bytes in the high halfword"]
+        #[doc = "0x404 - Read-only diagnostic view combining BSSID bytes 0 and 1 in the low halfword and station-address bytes 0 and 1 in the high halfword"]
         #[inline(always)]
         pub const fn vap0_address_heads(&self) -> &Vap0AddressHeads {
             &self.vap0_address_heads
@@ -36387,31 +36387,31 @@ pub mod wlmac_stats {
             &self.rx_failed_mpdu_in_ampdu_count
         }
     }
-    #[doc = "RX_FILTER_COMMAND (r) register accessor: Read-only diagnostic view of the active MAC receive-filter command. The underlying control register is programmed by the vendor WLMAC state machine; this alias deliberately exposes no write capability\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_filter_command::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_filter_command`] module"]
-    #[doc(alias = "RX_FILTER_COMMAND")]
-    pub type RxFilterCommand = crate::Reg<rx_filter_command::RxFilterCommandSpec>;
-    #[doc = "Read-only diagnostic view of the active MAC receive-filter command. The underlying control register is programmed by the vendor WLMAC state machine; this alias deliberately exposes no write capability"]
-    pub mod rx_filter_command {
-        #[doc = "Register `RX_FILTER_COMMAND` reader"]
-        pub type R = crate::R<RxFilterCommandSpec>;
-        #[doc = "Field `command` reader - Active vendor receive-filter command"]
-        pub type CommandR = crate::FieldReader<u32>;
+    #[doc = "RX_FILTER_CONTROL (r) register accessor: Read-only diagnostic view of the packed MAC receive-filter control state. The mask-ROM hal_set_rx_filter_reg helper expands its command bits into this register; this alias deliberately exposes no write capability\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_filter_control::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_filter_control`] module"]
+    #[doc(alias = "RX_FILTER_CONTROL")]
+    pub type RxFilterControl = crate::Reg<rx_filter_control::RxFilterControlSpec>;
+    #[doc = "Read-only diagnostic view of the packed MAC receive-filter control state. The mask-ROM hal_set_rx_filter_reg helper expands its command bits into this register; this alias deliberately exposes no write capability"]
+    pub mod rx_filter_control {
+        #[doc = "Register `RX_FILTER_CONTROL` reader"]
+        pub type R = crate::R<RxFilterControlSpec>;
+        #[doc = "Field `control` reader - Active packed receive-filter control state"]
+        pub type ControlR = crate::FieldReader<u32>;
         impl R {
-            #[doc = "Bits 0:31 - Active vendor receive-filter command"]
+            #[doc = "Bits 0:31 - Active packed receive-filter control state"]
             #[inline(always)]
-            pub fn command(&self) -> CommandR {
-                CommandR::new(self.bits)
+            pub fn control(&self) -> ControlR {
+                ControlR::new(self.bits)
             }
         }
-        #[doc = "Read-only diagnostic view of the active MAC receive-filter command. The underlying control register is programmed by the vendor WLMAC state machine; this alias deliberately exposes no write capability\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_filter_command::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
-        pub struct RxFilterCommandSpec;
-        impl crate::RegisterSpec for RxFilterCommandSpec {
+        #[doc = "Read-only diagnostic view of the packed MAC receive-filter control state. The mask-ROM hal_set_rx_filter_reg helper expands its command bits into this register; this alias deliberately exposes no write capability\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_filter_control::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RxFilterControlSpec;
+        impl crate::RegisterSpec for RxFilterControlSpec {
             type Ux = u32;
         }
-        #[doc = "`read()` method returns [`rx_filter_command::R`](R) reader structure"]
-        impl crate::Readable for RxFilterCommandSpec {}
-        #[doc = "`reset()` method sets RX_FILTER_COMMAND to value 0"]
-        impl crate::Resettable for RxFilterCommandSpec {}
+        #[doc = "`read()` method returns [`rx_filter_control::R`](R) reader structure"]
+        impl crate::Readable for RxFilterControlSpec {}
+        #[doc = "`reset()` method sets RX_FILTER_CONTROL to value 0"]
+        impl crate::Resettable for RxFilterControlSpec {}
     }
     #[doc = "VAP0_STATION_ADDRESS_TAIL (r) register accessor: Read-only diagnostic view of station-address bytes 2 through 5 for hardware VAP0\n\nYou can [`read`](crate::Reg::read) this register and get [`vap0_station_address_tail::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@vap0_station_address_tail`] module"]
     #[doc(alias = "VAP0_STATION_ADDRESS_TAIL")]
@@ -36421,10 +36421,10 @@ pub mod wlmac_stats {
     pub mod vap0_station_address_tail {
         #[doc = "Register `VAP0_STATION_ADDRESS_TAIL` reader"]
         pub type R = crate::R<Vap0StationAddressTailSpec>;
-        #[doc = "Field `bytes` reader - Station-address bytes 2 through 5 in little-endian order"]
+        #[doc = "Field `bytes` reader - Station-address bytes 2 through 5 in network byte order"]
         pub type BytesR = crate::FieldReader<u32>;
         impl R {
-            #[doc = "Bits 0:31 - Station-address bytes 2 through 5 in little-endian order"]
+            #[doc = "Bits 0:31 - Station-address bytes 2 through 5 in network byte order"]
             #[inline(always)]
             pub fn bytes(&self) -> BytesR {
                 BytesR::new(self.bits)
@@ -36440,30 +36440,30 @@ pub mod wlmac_stats {
         #[doc = "`reset()` method sets VAP0_STATION_ADDRESS_TAIL to value 0"]
         impl crate::Resettable for Vap0StationAddressTailSpec {}
     }
-    #[doc = "VAP0_ADDRESS_HEADS (r) register accessor: Read-only diagnostic view combining the first two BSSID bytes in the low halfword and the first two station-address bytes in the high halfword\n\nYou can [`read`](crate::Reg::read) this register and get [`vap0_address_heads::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@vap0_address_heads`] module"]
+    #[doc = "VAP0_ADDRESS_HEADS (r) register accessor: Read-only diagnostic view combining BSSID bytes 0 and 1 in the low halfword and station-address bytes 0 and 1 in the high halfword\n\nYou can [`read`](crate::Reg::read) this register and get [`vap0_address_heads::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@vap0_address_heads`] module"]
     #[doc(alias = "VAP0_ADDRESS_HEADS")]
     pub type Vap0AddressHeads = crate::Reg<vap0_address_heads::Vap0AddressHeadsSpec>;
-    #[doc = "Read-only diagnostic view combining the first two BSSID bytes in the low halfword and the first two station-address bytes in the high halfword"]
+    #[doc = "Read-only diagnostic view combining BSSID bytes 0 and 1 in the low halfword and station-address bytes 0 and 1 in the high halfword"]
     pub mod vap0_address_heads {
         #[doc = "Register `VAP0_ADDRESS_HEADS` reader"]
         pub type R = crate::R<Vap0AddressHeadsSpec>;
-        #[doc = "Field `bssid` reader - First two BSSID bytes in little-endian order"]
+        #[doc = "Field `bssid` reader - BSSID bytes 0 and 1 in network byte order"]
         pub type BssidR = crate::FieldReader<u16>;
-        #[doc = "Field `station` reader - First two station-address bytes in little-endian order"]
+        #[doc = "Field `station` reader - Station-address bytes 0 and 1 in network byte order"]
         pub type StationR = crate::FieldReader<u16>;
         impl R {
-            #[doc = "Bits 0:15 - First two BSSID bytes in little-endian order"]
+            #[doc = "Bits 0:15 - BSSID bytes 0 and 1 in network byte order"]
             #[inline(always)]
             pub fn bssid(&self) -> BssidR {
                 BssidR::new((self.bits & 0xffff) as u16)
             }
-            #[doc = "Bits 16:31 - First two station-address bytes in little-endian order"]
+            #[doc = "Bits 16:31 - Station-address bytes 0 and 1 in network byte order"]
             #[inline(always)]
             pub fn station(&self) -> StationR {
                 StationR::new(((self.bits >> 16) & 0xffff) as u16)
             }
         }
-        #[doc = "Read-only diagnostic view combining the first two BSSID bytes in the low halfword and the first two station-address bytes in the high halfword\n\nYou can [`read`](crate::Reg::read) this register and get [`vap0_address_heads::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Read-only diagnostic view combining BSSID bytes 0 and 1 in the low halfword and station-address bytes 0 and 1 in the high halfword\n\nYou can [`read`](crate::Reg::read) this register and get [`vap0_address_heads::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct Vap0AddressHeadsSpec;
         impl crate::RegisterSpec for Vap0AddressHeadsSpec {
             type Ux = u32;
@@ -36480,10 +36480,10 @@ pub mod wlmac_stats {
     pub mod vap0_bssid_tail {
         #[doc = "Register `VAP0_BSSID_TAIL` reader"]
         pub type R = crate::R<Vap0BssidTailSpec>;
-        #[doc = "Field `bytes` reader - BSSID bytes 2 through 5 in little-endian order"]
+        #[doc = "Field `bytes` reader - BSSID bytes 2 through 5 in network byte order"]
         pub type BytesR = crate::FieldReader<u32>;
         impl R {
-            #[doc = "Bits 0:31 - BSSID bytes 2 through 5 in little-endian order"]
+            #[doc = "Bits 0:31 - BSSID bytes 2 through 5 in network byte order"]
             #[inline(always)]
             pub fn bytes(&self) -> BytesR {
                 BytesR::new(self.bits)
