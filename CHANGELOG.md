@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Generate the read-only `WlmacStats` register block used to snapshot the six
+  receive counters consumed by the WS63 mask-ROM statistics helper.
+
 ## [0.4.0] - 2026-07-17
 
 ### Added

@@ -36306,6 +36306,220 @@ pub mod fama_remap {
         impl crate::Resettable for RemapDstBaseSpec {}
     }
 }
+#[doc = "Read-only Wi-Fi MAC receive statistics used by the WS63 mask-ROM hh503_get_mac_rx_statistics_data implementation"]
+pub type WlmacStats = crate::Periph<wlmac_stats::RegisterBlock, 0x4421_0000>;
+impl core::fmt::Debug for WlmacStats {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        f.debug_struct("WlmacStats").finish()
+    }
+}
+#[doc = "Read-only Wi-Fi MAC receive statistics used by the WS63 mask-ROM hh503_get_mac_rx_statistics_data implementation"]
+pub mod wlmac_stats {
+    #[repr(C)]
+    #[doc = "Register block"]
+    pub struct RegisterBlock {
+        _reserved0: [u8; 0x0a38],
+        rx_ampdu_count: RxAmpduCount,
+        _reserved1: [u8; 0x0c],
+        rx_success_mpdu_count: RxSuccessMpduCount,
+        rx_failed_mpdu_count: RxFailedMpduCount,
+        _reserved3: [u8; 0x0c],
+        rx_filtered_mpdu_count: RxFilteredMpduCount,
+        _reserved4: [u8; 0xdc],
+        rx_success_mpdu_in_ampdu_count: RxSuccessMpduInAmpduCount,
+        rx_failed_mpdu_in_ampdu_count: RxFailedMpduInAmpduCount,
+    }
+    impl RegisterBlock {
+        #[doc = "0xa38 - Received aggregate MPDU count; the mask-ROM helper consumes the low 16 bits"]
+        #[inline(always)]
+        pub const fn rx_ampdu_count(&self) -> &RxAmpduCount {
+            &self.rx_ampdu_count
+        }
+        #[doc = "0xa48 - Received non-aggregate MPDUs with a valid FCS"]
+        #[inline(always)]
+        pub const fn rx_success_mpdu_count(&self) -> &RxSuccessMpduCount {
+            &self.rx_success_mpdu_count
+        }
+        #[doc = "0xa4c - Received non-aggregate MPDUs with an invalid FCS"]
+        #[inline(always)]
+        pub const fn rx_failed_mpdu_count(&self) -> &RxFailedMpduCount {
+            &self.rx_failed_mpdu_count
+        }
+        #[doc = "0xa5c - MPDUs rejected by the MAC receive filter; the mask-ROM helper consumes the low 16 bits"]
+        #[inline(always)]
+        pub const fn rx_filtered_mpdu_count(&self) -> &RxFilteredMpduCount {
+            &self.rx_filtered_mpdu_count
+        }
+        #[doc = "0xb3c - MPDUs with a valid FCS received inside an aggregate"]
+        #[inline(always)]
+        pub const fn rx_success_mpdu_in_ampdu_count(&self) -> &RxSuccessMpduInAmpduCount {
+            &self.rx_success_mpdu_in_ampdu_count
+        }
+        #[doc = "0xb40 - MPDUs with an invalid FCS received inside an aggregate"]
+        #[inline(always)]
+        pub const fn rx_failed_mpdu_in_ampdu_count(&self) -> &RxFailedMpduInAmpduCount {
+            &self.rx_failed_mpdu_in_ampdu_count
+        }
+    }
+    #[doc = "RX_AMPDU_COUNT (r) register accessor: Received aggregate MPDU count; the mask-ROM helper consumes the low 16 bits\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_ampdu_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_ampdu_count`] module"]
+    #[doc(alias = "RX_AMPDU_COUNT")]
+    pub type RxAmpduCount = crate::Reg<rx_ampdu_count::RxAmpduCountSpec>;
+    #[doc = "Received aggregate MPDU count; the mask-ROM helper consumes the low 16 bits"]
+    pub mod rx_ampdu_count {
+        #[doc = "Register `RX_AMPDU_COUNT` reader"]
+        pub type R = crate::R<RxAmpduCountSpec>;
+        #[doc = "Field `count` reader - Received aggregate MPDU count"]
+        pub type CountR = crate::FieldReader<u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Received aggregate MPDU count"]
+            #[inline(always)]
+            pub fn count(&self) -> CountR {
+                CountR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        #[doc = "Received aggregate MPDU count; the mask-ROM helper consumes the low 16 bits\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_ampdu_count::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RxAmpduCountSpec;
+        impl crate::RegisterSpec for RxAmpduCountSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rx_ampdu_count::R`](R) reader structure"]
+        impl crate::Readable for RxAmpduCountSpec {}
+        #[doc = "`reset()` method sets RX_AMPDU_COUNT to value 0"]
+        impl crate::Resettable for RxAmpduCountSpec {}
+    }
+    #[doc = "RX_SUCCESS_MPDU_COUNT (r) register accessor: Received non-aggregate MPDUs with a valid FCS\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_success_mpdu_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_success_mpdu_count`] module"]
+    #[doc(alias = "RX_SUCCESS_MPDU_COUNT")]
+    pub type RxSuccessMpduCount = crate::Reg<rx_success_mpdu_count::RxSuccessMpduCountSpec>;
+    #[doc = "Received non-aggregate MPDUs with a valid FCS"]
+    pub mod rx_success_mpdu_count {
+        #[doc = "Register `RX_SUCCESS_MPDU_COUNT` reader"]
+        pub type R = crate::R<RxSuccessMpduCountSpec>;
+        #[doc = "Field `count` reader - Successful received MPDU count"]
+        pub type CountR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Successful received MPDU count"]
+            #[inline(always)]
+            pub fn count(&self) -> CountR {
+                CountR::new(self.bits)
+            }
+        }
+        #[doc = "Received non-aggregate MPDUs with a valid FCS\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_success_mpdu_count::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RxSuccessMpduCountSpec;
+        impl crate::RegisterSpec for RxSuccessMpduCountSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rx_success_mpdu_count::R`](R) reader structure"]
+        impl crate::Readable for RxSuccessMpduCountSpec {}
+        #[doc = "`reset()` method sets RX_SUCCESS_MPDU_COUNT to value 0"]
+        impl crate::Resettable for RxSuccessMpduCountSpec {}
+    }
+    #[doc = "RX_FAILED_MPDU_COUNT (r) register accessor: Received non-aggregate MPDUs with an invalid FCS\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_failed_mpdu_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_failed_mpdu_count`] module"]
+    #[doc(alias = "RX_FAILED_MPDU_COUNT")]
+    pub type RxFailedMpduCount = crate::Reg<rx_failed_mpdu_count::RxFailedMpduCountSpec>;
+    #[doc = "Received non-aggregate MPDUs with an invalid FCS"]
+    pub mod rx_failed_mpdu_count {
+        #[doc = "Register `RX_FAILED_MPDU_COUNT` reader"]
+        pub type R = crate::R<RxFailedMpduCountSpec>;
+        #[doc = "Field `count` reader - Failed received MPDU count"]
+        pub type CountR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Failed received MPDU count"]
+            #[inline(always)]
+            pub fn count(&self) -> CountR {
+                CountR::new(self.bits)
+            }
+        }
+        #[doc = "Received non-aggregate MPDUs with an invalid FCS\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_failed_mpdu_count::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RxFailedMpduCountSpec;
+        impl crate::RegisterSpec for RxFailedMpduCountSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rx_failed_mpdu_count::R`](R) reader structure"]
+        impl crate::Readable for RxFailedMpduCountSpec {}
+        #[doc = "`reset()` method sets RX_FAILED_MPDU_COUNT to value 0"]
+        impl crate::Resettable for RxFailedMpduCountSpec {}
+    }
+    #[doc = "RX_FILTERED_MPDU_COUNT (r) register accessor: MPDUs rejected by the MAC receive filter; the mask-ROM helper consumes the low 16 bits\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_filtered_mpdu_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_filtered_mpdu_count`] module"]
+    #[doc(alias = "RX_FILTERED_MPDU_COUNT")]
+    pub type RxFilteredMpduCount = crate::Reg<rx_filtered_mpdu_count::RxFilteredMpduCountSpec>;
+    #[doc = "MPDUs rejected by the MAC receive filter; the mask-ROM helper consumes the low 16 bits"]
+    pub mod rx_filtered_mpdu_count {
+        #[doc = "Register `RX_FILTERED_MPDU_COUNT` reader"]
+        pub type R = crate::R<RxFilteredMpduCountSpec>;
+        #[doc = "Field `count` reader - Filtered received MPDU count"]
+        pub type CountR = crate::FieldReader<u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Filtered received MPDU count"]
+            #[inline(always)]
+            pub fn count(&self) -> CountR {
+                CountR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        #[doc = "MPDUs rejected by the MAC receive filter; the mask-ROM helper consumes the low 16 bits\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_filtered_mpdu_count::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RxFilteredMpduCountSpec;
+        impl crate::RegisterSpec for RxFilteredMpduCountSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rx_filtered_mpdu_count::R`](R) reader structure"]
+        impl crate::Readable for RxFilteredMpduCountSpec {}
+        #[doc = "`reset()` method sets RX_FILTERED_MPDU_COUNT to value 0"]
+        impl crate::Resettable for RxFilteredMpduCountSpec {}
+    }
+    #[doc = "RX_SUCCESS_MPDU_IN_AMPDU_COUNT (r) register accessor: MPDUs with a valid FCS received inside an aggregate\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_success_mpdu_in_ampdu_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_success_mpdu_in_ampdu_count`] module"]
+    #[doc(alias = "RX_SUCCESS_MPDU_IN_AMPDU_COUNT")]
+    pub type RxSuccessMpduInAmpduCount =
+        crate::Reg<rx_success_mpdu_in_ampdu_count::RxSuccessMpduInAmpduCountSpec>;
+    #[doc = "MPDUs with a valid FCS received inside an aggregate"]
+    pub mod rx_success_mpdu_in_ampdu_count {
+        #[doc = "Register `RX_SUCCESS_MPDU_IN_AMPDU_COUNT` reader"]
+        pub type R = crate::R<RxSuccessMpduInAmpduCountSpec>;
+        #[doc = "Field `count` reader - Successful MPDUs inside aggregate count"]
+        pub type CountR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Successful MPDUs inside aggregate count"]
+            #[inline(always)]
+            pub fn count(&self) -> CountR {
+                CountR::new(self.bits)
+            }
+        }
+        #[doc = "MPDUs with a valid FCS received inside an aggregate\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_success_mpdu_in_ampdu_count::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RxSuccessMpduInAmpduCountSpec;
+        impl crate::RegisterSpec for RxSuccessMpduInAmpduCountSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rx_success_mpdu_in_ampdu_count::R`](R) reader structure"]
+        impl crate::Readable for RxSuccessMpduInAmpduCountSpec {}
+        #[doc = "`reset()` method sets RX_SUCCESS_MPDU_IN_AMPDU_COUNT to value 0"]
+        impl crate::Resettable for RxSuccessMpduInAmpduCountSpec {}
+    }
+    #[doc = "RX_FAILED_MPDU_IN_AMPDU_COUNT (r) register accessor: MPDUs with an invalid FCS received inside an aggregate\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_failed_mpdu_in_ampdu_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_failed_mpdu_in_ampdu_count`] module"]
+    #[doc(alias = "RX_FAILED_MPDU_IN_AMPDU_COUNT")]
+    pub type RxFailedMpduInAmpduCount =
+        crate::Reg<rx_failed_mpdu_in_ampdu_count::RxFailedMpduInAmpduCountSpec>;
+    #[doc = "MPDUs with an invalid FCS received inside an aggregate"]
+    pub mod rx_failed_mpdu_in_ampdu_count {
+        #[doc = "Register `RX_FAILED_MPDU_IN_AMPDU_COUNT` reader"]
+        pub type R = crate::R<RxFailedMpduInAmpduCountSpec>;
+        #[doc = "Field `count` reader - Failed MPDUs inside aggregate count"]
+        pub type CountR = crate::FieldReader<u32>;
+        impl R {
+            #[doc = "Bits 0:31 - Failed MPDUs inside aggregate count"]
+            #[inline(always)]
+            pub fn count(&self) -> CountR {
+                CountR::new(self.bits)
+            }
+        }
+        #[doc = "MPDUs with an invalid FCS received inside an aggregate\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_failed_mpdu_in_ampdu_count::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RxFailedMpduInAmpduCountSpec;
+        impl crate::RegisterSpec for RxFailedMpduInAmpduCountSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rx_failed_mpdu_in_ampdu_count::R`](R) reader structure"]
+        impl crate::Readable for RxFailedMpduInAmpduCountSpec {}
+        #[doc = "`reset()` method sets RX_FAILED_MPDU_IN_AMPDU_COUNT to value 0"]
+        impl crate::Resettable for RxFailedMpduInAmpduCountSpec {}
+    }
+}
 #[doc = "Bluetooth exchange-memory control used while changing shared RAM ownership"]
 pub type BtEmCtl = crate::Periph<bt_em_ctl::RegisterBlock, 0x4900_3000>;
 impl core::fmt::Debug for BtEmCtl {
@@ -36712,6 +36926,8 @@ pub struct Peripherals {
     pub share_mem_ctl: ShareMemCtl,
     #[doc = "FAMA_REMAP"]
     pub fama_remap: FamaRemap,
+    #[doc = "WLMAC_STATS"]
+    pub wlmac_stats: WlmacStats,
     #[doc = "BT_EM_CTL"]
     pub bt_em_ctl: BtEmCtl,
     #[doc = "RISCV_PATCH"]
@@ -36775,6 +36991,7 @@ impl Peripherals {
                 rf_wb_ctl: RfWbCtl::steal(),
                 share_mem_ctl: ShareMemCtl::steal(),
                 fama_remap: FamaRemap::steal(),
+                wlmac_stats: WlmacStats::steal(),
                 bt_em_ctl: BtEmCtl::steal(),
                 riscv_patch: RiscvPatch::steal(),
             }
