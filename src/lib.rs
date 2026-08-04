@@ -36331,7 +36331,12 @@ pub mod wlmac_stats {
         rx_failed_mpdu_count: RxFailedMpduCount,
         _reserved7: [u8; 0x0c],
         rx_filtered_mpdu_count: RxFilteredMpduCount,
-        _reserved8: [u8; 0xdc],
+        _reserved8: [u8; 0x10],
+        rx_replay_failure_count: RxReplayFailureCount,
+        rx_mic_failure_count: RxMicFailureCount,
+        _reserved10: [u8; 0x04],
+        rx_key_search_failure_count: RxKeySearchFailureCount,
+        _reserved11: [u8; 0xbc],
         rx_success_mpdu_in_ampdu_count: RxSuccessMpduInAmpduCount,
         rx_failed_mpdu_in_ampdu_count: RxFailedMpduInAmpduCount,
     }
@@ -36375,6 +36380,21 @@ pub mod wlmac_stats {
         #[inline(always)]
         pub const fn rx_filtered_mpdu_count(&self) -> &RxFilteredMpduCount {
             &self.rx_filtered_mpdu_count
+        }
+        #[doc = "0xa70 - Receive replay failures reported by the MAC statistics helper. The WS63 mask-ROM hh503_get_mac_statistics_data implementation reads this register; TKIP occupies the high halfword and CCMP the low halfword"]
+        #[inline(always)]
+        pub const fn rx_replay_failure_count(&self) -> &RxReplayFailureCount {
+            &self.rx_replay_failure_count
+        }
+        #[doc = "0xa74 - Receive MIC failures reported by the MAC statistics helper. The WS63 mask-ROM hh503_get_mac_statistics_data implementation reads this register; TKIP occupies the high halfword and CCMP the low halfword"]
+        #[inline(always)]
+        pub const fn rx_mic_failure_count(&self) -> &RxMicFailureCount {
+            &self.rx_mic_failure_count
+        }
+        #[doc = "0xa7c - Receive key-search failures reported by the WS63 mask-ROM hh503_get_mac_statistics_data implementation"]
+        #[inline(always)]
+        pub const fn rx_key_search_failure_count(&self) -> &RxKeySearchFailureCount {
+            &self.rx_key_search_failure_count
         }
         #[doc = "0xb3c - MPDUs with a valid FCS received inside an aggregate"]
         #[inline(always)]
@@ -36602,6 +36622,99 @@ pub mod wlmac_stats {
         impl crate::Readable for RxFilteredMpduCountSpec {}
         #[doc = "`reset()` method sets RX_FILTERED_MPDU_COUNT to value 0"]
         impl crate::Resettable for RxFilteredMpduCountSpec {}
+    }
+    #[doc = "RX_REPLAY_FAILURE_COUNT (r) register accessor: Receive replay failures reported by the MAC statistics helper. The WS63 mask-ROM hh503_get_mac_statistics_data implementation reads this register; TKIP occupies the high halfword and CCMP the low halfword\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_replay_failure_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_replay_failure_count`] module"]
+    #[doc(alias = "RX_REPLAY_FAILURE_COUNT")]
+    pub type RxReplayFailureCount = crate::Reg<rx_replay_failure_count::RxReplayFailureCountSpec>;
+    #[doc = "Receive replay failures reported by the MAC statistics helper. The WS63 mask-ROM hh503_get_mac_statistics_data implementation reads this register; TKIP occupies the high halfword and CCMP the low halfword"]
+    pub mod rx_replay_failure_count {
+        #[doc = "Register `RX_REPLAY_FAILURE_COUNT` reader"]
+        pub type R = crate::R<RxReplayFailureCountSpec>;
+        #[doc = "Field `ccmp` reader - CCMP replay failure count"]
+        pub type CcmpR = crate::FieldReader<u16>;
+        #[doc = "Field `tkip` reader - TKIP replay failure count"]
+        pub type TkipR = crate::FieldReader<u16>;
+        impl R {
+            #[doc = "Bits 0:15 - CCMP replay failure count"]
+            #[inline(always)]
+            pub fn ccmp(&self) -> CcmpR {
+                CcmpR::new((self.bits & 0xffff) as u16)
+            }
+            #[doc = "Bits 16:31 - TKIP replay failure count"]
+            #[inline(always)]
+            pub fn tkip(&self) -> TkipR {
+                TkipR::new(((self.bits >> 16) & 0xffff) as u16)
+            }
+        }
+        #[doc = "Receive replay failures reported by the MAC statistics helper. The WS63 mask-ROM hh503_get_mac_statistics_data implementation reads this register; TKIP occupies the high halfword and CCMP the low halfword\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_replay_failure_count::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RxReplayFailureCountSpec;
+        impl crate::RegisterSpec for RxReplayFailureCountSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rx_replay_failure_count::R`](R) reader structure"]
+        impl crate::Readable for RxReplayFailureCountSpec {}
+        #[doc = "`reset()` method sets RX_REPLAY_FAILURE_COUNT to value 0"]
+        impl crate::Resettable for RxReplayFailureCountSpec {}
+    }
+    #[doc = "RX_MIC_FAILURE_COUNT (r) register accessor: Receive MIC failures reported by the MAC statistics helper. The WS63 mask-ROM hh503_get_mac_statistics_data implementation reads this register; TKIP occupies the high halfword and CCMP the low halfword\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_mic_failure_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_mic_failure_count`] module"]
+    #[doc(alias = "RX_MIC_FAILURE_COUNT")]
+    pub type RxMicFailureCount = crate::Reg<rx_mic_failure_count::RxMicFailureCountSpec>;
+    #[doc = "Receive MIC failures reported by the MAC statistics helper. The WS63 mask-ROM hh503_get_mac_statistics_data implementation reads this register; TKIP occupies the high halfword and CCMP the low halfword"]
+    pub mod rx_mic_failure_count {
+        #[doc = "Register `RX_MIC_FAILURE_COUNT` reader"]
+        pub type R = crate::R<RxMicFailureCountSpec>;
+        #[doc = "Field `ccmp` reader - CCMP MIC failure count"]
+        pub type CcmpR = crate::FieldReader<u16>;
+        #[doc = "Field `tkip` reader - TKIP MIC failure count"]
+        pub type TkipR = crate::FieldReader<u16>;
+        impl R {
+            #[doc = "Bits 0:15 - CCMP MIC failure count"]
+            #[inline(always)]
+            pub fn ccmp(&self) -> CcmpR {
+                CcmpR::new((self.bits & 0xffff) as u16)
+            }
+            #[doc = "Bits 16:31 - TKIP MIC failure count"]
+            #[inline(always)]
+            pub fn tkip(&self) -> TkipR {
+                TkipR::new(((self.bits >> 16) & 0xffff) as u16)
+            }
+        }
+        #[doc = "Receive MIC failures reported by the MAC statistics helper. The WS63 mask-ROM hh503_get_mac_statistics_data implementation reads this register; TKIP occupies the high halfword and CCMP the low halfword\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_mic_failure_count::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RxMicFailureCountSpec;
+        impl crate::RegisterSpec for RxMicFailureCountSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rx_mic_failure_count::R`](R) reader structure"]
+        impl crate::Readable for RxMicFailureCountSpec {}
+        #[doc = "`reset()` method sets RX_MIC_FAILURE_COUNT to value 0"]
+        impl crate::Resettable for RxMicFailureCountSpec {}
+    }
+    #[doc = "RX_KEY_SEARCH_FAILURE_COUNT (r) register accessor: Receive key-search failures reported by the WS63 mask-ROM hh503_get_mac_statistics_data implementation\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_key_search_failure_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_key_search_failure_count`] module"]
+    #[doc(alias = "RX_KEY_SEARCH_FAILURE_COUNT")]
+    pub type RxKeySearchFailureCount =
+        crate::Reg<rx_key_search_failure_count::RxKeySearchFailureCountSpec>;
+    #[doc = "Receive key-search failures reported by the WS63 mask-ROM hh503_get_mac_statistics_data implementation"]
+    pub mod rx_key_search_failure_count {
+        #[doc = "Register `RX_KEY_SEARCH_FAILURE_COUNT` reader"]
+        pub type R = crate::R<RxKeySearchFailureCountSpec>;
+        #[doc = "Field `count` reader - Receive key-search failure count"]
+        pub type CountR = crate::FieldReader<u16>;
+        impl R {
+            #[doc = "Bits 0:15 - Receive key-search failure count"]
+            #[inline(always)]
+            pub fn count(&self) -> CountR {
+                CountR::new((self.bits & 0xffff) as u16)
+            }
+        }
+        #[doc = "Receive key-search failures reported by the WS63 mask-ROM hh503_get_mac_statistics_data implementation\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_key_search_failure_count::R`](R). See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct RxKeySearchFailureCountSpec;
+        impl crate::RegisterSpec for RxKeySearchFailureCountSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`rx_key_search_failure_count::R`](R) reader structure"]
+        impl crate::Readable for RxKeySearchFailureCountSpec {}
+        #[doc = "`reset()` method sets RX_KEY_SEARCH_FAILURE_COUNT to value 0"]
+        impl crate::Resettable for RxKeySearchFailureCountSpec {}
     }
     #[doc = "RX_SUCCESS_MPDU_IN_AMPDU_COUNT (r) register accessor: MPDUs with a valid FCS received inside an aggregate\n\nYou can [`read`](crate::Reg::read) this register and get [`rx_success_mpdu_in_ampdu_count::R`]. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@rx_success_mpdu_in_ampdu_count`] module"]
     #[doc(alias = "RX_SUCCESS_MPDU_IN_AMPDU_COUNT")]
