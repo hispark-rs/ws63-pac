@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.4.4] - 2026-08-04
+
+### Added
+
+- Generate the read-only WLMAC CCMP/TKIP replay, MIC, and key-search failure
+  counters used by connectivity diagnostics.
+
 ## [0.4.3] - 2026-07-30
 
 ### Changed
