@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.4.5] - 2026-08-07
+
+### Fixed
+
+- Rename interrupt 47 from the misleading `SLE_INT` label to `GLE_INT`,
+  matching the vendor SDK's BGLE baseband interrupt identity.
+
 ## [0.4.4] - 2026-08-04
 
 ### Added

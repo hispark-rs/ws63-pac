@@ -948,8 +948,8 @@ pub mod interrupt {
         WLMAC_INT = 45,
         #[doc = "46 - BLE_INT"]
         BLE_INT = 46,
-        #[doc = "47 - SLE_INT"]
-        SLE_INT = 47,
+        #[doc = "47 - BGLE baseband interrupt (BT_BB_GLE_IRQN in the vendor SDK)"]
+        GLE_INT = 47,
         #[doc = "48 - TSENSOR_INT"]
         TSENSOR_INT = 48,
         #[doc = "49 - PMU_CMU_ERR_INT"]
