@@ -33256,22 +33256,22 @@ pub mod tcxo {
         pub const fn tcxo_status(&self) -> &TcxoStatus {
             &self.tcxo_status
         }
-        #[doc = "0x04 - TCXO count bits \\[15:0\\]"]
+        #[doc = "0x04 - TCXO counter bits \\[31:0\\] in the WS63 two-data-register SDK profile"]
         #[inline(always)]
         pub const fn tcxo_count0(&self) -> &TcxoCount0 {
             &self.tcxo_count0
         }
-        #[doc = "0x08 - TCXO count bits \\[31:16\\]"]
+        #[doc = "0x08 - TCXO counter bits \\[63:32\\] in the WS63 two-data-register SDK profile"]
         #[inline(always)]
         pub const fn tcxo_count1(&self) -> &TcxoCount1 {
             &self.tcxo_count1
         }
-        #[doc = "0x0c - TCXO count bits \\[47:32\\]"]
+        #[doc = "0x0c - Legacy compatibility accessor; not used by the WS63 two-data-register SDK profile, semantics unverified"]
         #[inline(always)]
         pub const fn tcxo_count2(&self) -> &TcxoCount2 {
             &self.tcxo_count2
         }
-        #[doc = "0x10 - TCXO count bits \\[63:48\\]"]
+        #[doc = "0x10 - Legacy compatibility accessor; not used by the WS63 two-data-register SDK profile, semantics unverified"]
         #[inline(always)]
         pub const fn tcxo_count3(&self) -> &TcxoCount3 {
             &self.tcxo_count3
@@ -33353,26 +33353,33 @@ pub mod tcxo {
         #[doc = "`reset()` method sets TCXO_STATUS to value 0"]
         impl crate::Resettable for TcxoStatusSpec {}
     }
-    #[doc = "TCXO_COUNT0 (rw) register accessor: TCXO count bits \\[15:0\\]\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count0::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count0::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@tcxo_count0`] module"]
+    #[doc = "TCXO_COUNT0 (rw) register accessor: TCXO counter bits \\[31:0\\] in the WS63 two-data-register SDK profile\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count0::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count0::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@tcxo_count0`] module"]
     #[doc(alias = "TCXO_COUNT0")]
     pub type TcxoCount0 = crate::Reg<tcxo_count0::TcxoCount0Spec>;
-    #[doc = "TCXO count bits \\[15:0\\]"]
+    #[doc = "TCXO counter bits \\[31:0\\] in the WS63 two-data-register SDK profile"]
     pub mod tcxo_count0 {
         #[doc = "Register `TCXO_COUNT0` reader"]
         pub type R = crate::R<TcxoCount0Spec>;
         #[doc = "Register `TCXO_COUNT0` writer"]
         pub type W = crate::W<TcxoCount0Spec>;
-        #[doc = "Field `count0` reader - Counter value bits \\[15:0\\]"]
+        #[doc = "Field `count0` reader - Legacy accessor for the low 16 bits of counter bits \\[31:0\\]; use count0_full for the complete word"]
         pub type Count0R = crate::FieldReader<u16>;
+        #[doc = "Field `count0_full` reader - Complete counter value bits \\[31:0\\]"]
+        pub type Count0FullR = crate::FieldReader<u32>;
         impl R {
-            #[doc = "Bits 0:15 - Counter value bits \\[15:0\\]"]
+            #[doc = "Bits 0:15 - Legacy accessor for the low 16 bits of counter bits \\[31:0\\]; use count0_full for the complete word"]
             #[inline(always)]
             pub fn count0(&self) -> Count0R {
                 Count0R::new((self.bits & 0xffff) as u16)
             }
+            #[doc = "Bits 0:31 - Complete counter value bits \\[31:0\\]"]
+            #[inline(always)]
+            pub fn count0_full(&self) -> Count0FullR {
+                Count0FullR::new(self.bits)
+            }
         }
         impl W {}
-        #[doc = "TCXO count bits \\[15:0\\]\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count0::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count0::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "TCXO counter bits \\[31:0\\] in the WS63 two-data-register SDK profile\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count0::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count0::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct TcxoCount0Spec;
         impl crate::RegisterSpec for TcxoCount0Spec {
             type Ux = u32;
@@ -33386,26 +33393,33 @@ pub mod tcxo {
         #[doc = "`reset()` method sets TCXO_COUNT0 to value 0"]
         impl crate::Resettable for TcxoCount0Spec {}
     }
-    #[doc = "TCXO_COUNT1 (rw) register accessor: TCXO count bits \\[31:16\\]\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count1::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count1::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@tcxo_count1`] module"]
+    #[doc = "TCXO_COUNT1 (rw) register accessor: TCXO counter bits \\[63:32\\] in the WS63 two-data-register SDK profile\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count1::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count1::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@tcxo_count1`] module"]
     #[doc(alias = "TCXO_COUNT1")]
     pub type TcxoCount1 = crate::Reg<tcxo_count1::TcxoCount1Spec>;
-    #[doc = "TCXO count bits \\[31:16\\]"]
+    #[doc = "TCXO counter bits \\[63:32\\] in the WS63 two-data-register SDK profile"]
     pub mod tcxo_count1 {
         #[doc = "Register `TCXO_COUNT1` reader"]
         pub type R = crate::R<TcxoCount1Spec>;
         #[doc = "Register `TCXO_COUNT1` writer"]
         pub type W = crate::W<TcxoCount1Spec>;
-        #[doc = "Field `count1` reader - Counter value bits \\[31:16\\]"]
+        #[doc = "Field `count1` reader - Legacy accessor for the low 16 bits of counter bits \\[63:32\\]; use count1_full for the complete word"]
         pub type Count1R = crate::FieldReader<u16>;
+        #[doc = "Field `count1_full` reader - Complete counter value bits \\[63:32\\]"]
+        pub type Count1FullR = crate::FieldReader<u32>;
         impl R {
-            #[doc = "Bits 0:15 - Counter value bits \\[31:16\\]"]
+            #[doc = "Bits 0:15 - Legacy accessor for the low 16 bits of counter bits \\[63:32\\]; use count1_full for the complete word"]
             #[inline(always)]
             pub fn count1(&self) -> Count1R {
                 Count1R::new((self.bits & 0xffff) as u16)
             }
+            #[doc = "Bits 0:31 - Complete counter value bits \\[63:32\\]"]
+            #[inline(always)]
+            pub fn count1_full(&self) -> Count1FullR {
+                Count1FullR::new(self.bits)
+            }
         }
         impl W {}
-        #[doc = "TCXO count bits \\[31:16\\]\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count1::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count1::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "TCXO counter bits \\[63:32\\] in the WS63 two-data-register SDK profile\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count1::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count1::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct TcxoCount1Spec;
         impl crate::RegisterSpec for TcxoCount1Spec {
             type Ux = u32;
@@ -33419,26 +33433,26 @@ pub mod tcxo {
         #[doc = "`reset()` method sets TCXO_COUNT1 to value 0"]
         impl crate::Resettable for TcxoCount1Spec {}
     }
-    #[doc = "TCXO_COUNT2 (rw) register accessor: TCXO count bits \\[47:32\\]\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count2::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count2::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@tcxo_count2`] module"]
+    #[doc = "TCXO_COUNT2 (rw) register accessor: Legacy compatibility accessor; not used by the WS63 two-data-register SDK profile, semantics unverified\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count2::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count2::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@tcxo_count2`] module"]
     #[doc(alias = "TCXO_COUNT2")]
     pub type TcxoCount2 = crate::Reg<tcxo_count2::TcxoCount2Spec>;
-    #[doc = "TCXO count bits \\[47:32\\]"]
+    #[doc = "Legacy compatibility accessor; not used by the WS63 two-data-register SDK profile, semantics unverified"]
     pub mod tcxo_count2 {
         #[doc = "Register `TCXO_COUNT2` reader"]
         pub type R = crate::R<TcxoCount2Spec>;
         #[doc = "Register `TCXO_COUNT2` writer"]
         pub type W = crate::W<TcxoCount2Spec>;
-        #[doc = "Field `count2` reader - Counter value bits \\[47:32\\]"]
+        #[doc = "Field `count2` reader - Legacy field; semantics unverified for the WS63 two-data-register profile"]
         pub type Count2R = crate::FieldReader<u16>;
         impl R {
-            #[doc = "Bits 0:15 - Counter value bits \\[47:32\\]"]
+            #[doc = "Bits 0:15 - Legacy field; semantics unverified for the WS63 two-data-register profile"]
             #[inline(always)]
             pub fn count2(&self) -> Count2R {
                 Count2R::new((self.bits & 0xffff) as u16)
             }
         }
         impl W {}
-        #[doc = "TCXO count bits \\[47:32\\]\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count2::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count2::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Legacy compatibility accessor; not used by the WS63 two-data-register SDK profile, semantics unverified\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count2::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count2::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct TcxoCount2Spec;
         impl crate::RegisterSpec for TcxoCount2Spec {
             type Ux = u32;
@@ -33452,26 +33466,26 @@ pub mod tcxo {
         #[doc = "`reset()` method sets TCXO_COUNT2 to value 0"]
         impl crate::Resettable for TcxoCount2Spec {}
     }
-    #[doc = "TCXO_COUNT3 (rw) register accessor: TCXO count bits \\[63:48\\]\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count3::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count3::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@tcxo_count3`] module"]
+    #[doc = "TCXO_COUNT3 (rw) register accessor: Legacy compatibility accessor; not used by the WS63 two-data-register SDK profile, semantics unverified\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count3::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count3::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@tcxo_count3`] module"]
     #[doc(alias = "TCXO_COUNT3")]
     pub type TcxoCount3 = crate::Reg<tcxo_count3::TcxoCount3Spec>;
-    #[doc = "TCXO count bits \\[63:48\\]"]
+    #[doc = "Legacy compatibility accessor; not used by the WS63 two-data-register SDK profile, semantics unverified"]
     pub mod tcxo_count3 {
         #[doc = "Register `TCXO_COUNT3` reader"]
         pub type R = crate::R<TcxoCount3Spec>;
         #[doc = "Register `TCXO_COUNT3` writer"]
         pub type W = crate::W<TcxoCount3Spec>;
-        #[doc = "Field `count3` reader - Counter value bits \\[63:48\\]"]
+        #[doc = "Field `count3` reader - Legacy field; semantics unverified for the WS63 two-data-register profile"]
         pub type Count3R = crate::FieldReader<u16>;
         impl R {
-            #[doc = "Bits 0:15 - Counter value bits \\[63:48\\]"]
+            #[doc = "Bits 0:15 - Legacy field; semantics unverified for the WS63 two-data-register profile"]
             #[inline(always)]
             pub fn count3(&self) -> Count3R {
                 Count3R::new((self.bits & 0xffff) as u16)
             }
         }
         impl W {}
-        #[doc = "TCXO count bits \\[63:48\\]\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count3::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count3::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        #[doc = "Legacy compatibility accessor; not used by the WS63 two-data-register SDK profile, semantics unverified\n\nYou can [`read`](crate::Reg::read) this register and get [`tcxo_count3::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`tcxo_count3::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
         pub struct TcxoCount3Spec;
         impl crate::RegisterSpec for TcxoCount3Spec {
             type Ux = u32;
